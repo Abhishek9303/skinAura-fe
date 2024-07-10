@@ -2,7 +2,8 @@ import Product from '@/app/components/product/Product';
 import ReviewSwiper from '@/app/components/swiper/ReviewSwiper';
 import React from 'react'
 
-const SingleProduct = () => {
+const SingleProduct = (props) => {
+  console.log(props)
   return (
     <>
       <div className="flex flex-col justify-center items-center ">
