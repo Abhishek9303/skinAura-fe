@@ -8,7 +8,6 @@ import Product from "./components/product/Product";
 import Link from "next/link";
 import Nav from "./components/Nav/Nav";
 
-
 const Page = () => {
   return (
     <>
