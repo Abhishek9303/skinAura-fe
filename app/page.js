@@ -6,12 +6,13 @@ import ProductPoster from "./components/homepageComp/ProductPoster";
 import InfluencerSection from "./components/homepageComp/InfluencerSection";
 import Product from "./components/product/Product";
 import Link from "next/link";
+import Nav from "./components/Nav/Nav";
 
 
 const Page = () => {
   return (
     <>
-    
+      <Nav/>
       <HomeSwiper1 />
       <div className="h-[80vh] w-full flex flex-col items-center justify-center gap-5">
         <h1 className="text-4xl">We Are The Best</h1>
