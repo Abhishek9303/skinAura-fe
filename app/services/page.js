@@ -28,7 +28,31 @@ const Services = () => {
             Take a Test Now
           </button>
         </div>
-        <div className="py-5 my-2 flex flex-col items-center justify-center gap-5">
+        <div className="py-8 my-2 flex flex-col items-center justify-center gap-16">
+          <ServiceCard
+            cardNumber={"1"}
+            serviceName={"Service Name"}
+            serviceDescription={
+              "Even out skin tone and smooth out photodamage."
+            }
+            serviceImage = {""}
+          />
+          <ServiceCard
+            cardNumber={"1"}
+            serviceName={"Service Name"}
+            serviceDescription={
+              "Even out skin tone and smooth out photodamage."
+            }
+            serviceImage = {""}
+          />
+          <ServiceCard
+            cardNumber={"1"}
+            serviceName={"Service Name"}
+            serviceDescription={
+              "Even out skin tone and smooth out photodamage."
+            }
+            serviceImage = {""}
+          />
           <ServiceCard
             cardNumber={"1"}
             serviceName={"Service Name"}

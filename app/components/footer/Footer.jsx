@@ -39,10 +39,10 @@ const Footer = () => {
         <div className="lg:block flex items-center justify-center py-5">
           <ul className="grid grid-cols-3 gap-5">
             <li>
-              <Link href="#">Home</Link>
+              <Link href="/">Home</Link>
             </li>
             <li>
-              <Link href="#">About</Link>
+              <Link href="/about-us">About</Link>
             </li>
             <li>
               <Link href="#">Instagram</Link>
@@ -59,10 +59,10 @@ const Footer = () => {
             </li>
 
             <li>
-              <Link href="#">Services</Link>
+              <Link href="/services">Services</Link>
             </li>
             <li>
-              <Link href="#">Products</Link>
+              <Link href="/products">Products</Link>
             </li>
             <li>
               <Link href="#">Youtube</Link>
