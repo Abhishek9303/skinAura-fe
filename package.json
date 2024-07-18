@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@next/font": "^14.2.5",
     "@remixicon/react": "^4.2.0",
     "@splidejs/react-splide": "^0.7.12",
     "next": "14.2.4",

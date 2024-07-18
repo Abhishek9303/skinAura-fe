@@ -15,6 +15,17 @@ module.exports = {
       screens: {
         'mobile': {'max': '768px'},
       },
+      fontFamily: {
+        juanaBold: ['juana-bold', 'sans-serif'],
+        juanaMedium: ['juana-medium', 'sans-serif'],
+        juanaLight: ['juana-light', 'sans-serif'],
+        juanaRegular: ['juana-regular', 'sans-serif'],
+        juanaThin: ['juana-thin', 'sans-serif'],
+        juanaSemibold: ['juana-semibold', 'sans-serif'],
+      },
+      color:{
+        primary : `#6A4D6F`
+      },
     },
   },
   plugins: [],

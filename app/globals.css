@@ -1,3 +1,28 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+    font-family:juana-bold ;
+    src: url('../public/fonts/juana-bold.otf');
+}
+@font-face {
+    font-family:juana-medium ;
+    src: url('../public/fonts/juana-medium.otf');
+}
+@font-face {
+    font-family:juana-light ;
+    src: url('../public/fonts/juana-light.otf');
+}
+@font-face {
+    font-family:juana-regular ;
+    src: url('../public/fonts/juana-regular.otf');
+}
+@font-face {
+    font-family:juana-thin ;
+    src: url('../public/fonts/juana-thin.otf');
+}
+@font-face {
+    font-family:juana-semibold ;
+    src: url('../public/fonts/juana-semibold.otf');
+}
