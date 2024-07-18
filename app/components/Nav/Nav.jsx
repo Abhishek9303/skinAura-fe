@@ -1,34 +1,94 @@
+"use client";
+
 import Link from "next/link";
-import React from "react";
-import { RiUser3Line, RiHandbagLine } from "@remixicon/react";
+import React, { useState, useEffect } from "react";
+import { RiUser3Line, RiHandbagLine ,RiMenuLine} from "@remixicon/react";
 
 const Nav = () => {
+  const [isMobile, setIsMobile] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
-    <div className="flex py-4 justify-between items-center  px-10">
-      <div className="logo">
-        <img src="/images/logo.png" className="w-[80px] h-[50px]" />
-      </div>
-      <div className="w-[65%] py-5 px-8 flex items-center justify-between">
-        {["Latest", "Products", "Services", "Centers", "Reviews", "About"].map(
-          (link) => (
-            <Link
-              key={link}
-              href={`/${link}`}
-              className="text-[15px] uppercase"
-            >
-              {link}
+    <div>
+      {isMobile ? (
+        <div className="relative flex py-4 justify-between items-center px-10">
+          <div className="logo">
+            <img src="/images/logo.png" className="sm:w-[80px] sm:h-[50px] w-[80px] h-[50px] " />
+          </div>
+          <div className="navRight flex justify-center items-center gap-5">
+            <Link className="" href={"#"}>
+              <RiUser3Line />
             </Link>
-          )
-        )}
-      </div>
-      <div className="navRight flex justify-center items-center gap-6">
-        <Link href={'#'}>
-        <RiUser3Line />
-        </Link>
-        <Link href={'#'}>
-        <RiHandbagLine />
-        </Link>
-      </div>
+            <Link href={"#"}>
+              <RiHandbagLine />
+            </Link>
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="p-2"
+            >
+              <RiMenuLine />
+            </button>
+          </div>
+          {isMenuOpen && (
+            <div className="absolute top-20 z-10 left-0 w-full bg-white py-5 px-8 flex flex-col items-center shadow-lg ">
+              {["Latest", "Products", "Services", "Centers", "Reviews", "About"].map(
+                (link) => (
+                  <Link
+                    key={link}
+                    href={`/${link}`}
+                    className="text-[15px] uppercase py-2 hover:font-bold"
+                  >
+                    {link}
+                  </Link>
+                )
+              )}
+            </div>
+          )}
+        </div>
+      ) : (
+        <div className="flex py-4 justify-between items-center px-10">
+          <div className="logo">
+            <img src="/images/logo.png" className="sm:w-[80px] sm:h-[50px]" />
+          </div>
+          <div className={`w-[65%] py-5 px-8 flex items-center justify-between ${isMobile && hidden }`}>
+            {[
+              "Latest",
+              "Products",
+              "Services",
+              "Centers",
+              "Reviews",
+              "About",
+            ].map((link) => (
+              <Link
+                key={link}
+                href={`/${link}`}
+                className="text-[15px] uppercase hover:font-bold"
+              >
+                {link}
+              </Link>
+            ))}
+          </div>
+          <div className="navRight flex justify-center items-center gap-6">
+            <Link className="" href={"#"}>
+              <RiUser3Line />
+            </Link>
+            <Link href={"#"}>
+              <RiHandbagLine />
+            </Link>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
