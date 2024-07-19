@@ -81,10 +81,10 @@ const Nav = () => {
           </div>
           <div className="navRight flex justify-center items-center gap-6">
             <Link className="" href={"#"}>
-              <RiUser3Line />
+              <RiHandbagLine />
             </Link>
             <Link href={"#"}>
-              <RiHandbagLine />
+              <RiUser3Line />
             </Link>
           </div>
         </div>

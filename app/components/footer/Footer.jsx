@@ -5,7 +5,7 @@ import { RiFacebookBoxLine, RiInstagramLine, RiMailLine, RiPhoneLine, RiYoutubeL
 const Footer = () => {
   return (
     <>
-      <div className=" bg-[#FAF7F7] lg:flex flex-row justify-center lg:justify-around items-center py-10 ">
+      <div className=" bg-[#ffffff] lg:px-[9vmax] lg:flex flex-row justify-center lg:justify-between items-center py-10 ">
         <div className="flex items-center justify-around">
           <img
             className="lg:w-[10vw] w-[20vw]"
@@ -80,7 +80,7 @@ const Footer = () => {
           <h2 className='text-center py-2 lg:hidden'>@ 2024 copyright All Right Reserved</h2>
       </div>
       <div className="py-2 bg-black text-center text-white">
-        <h3>#India’s Top Trusted Brand</h3>
+        <h6 >#India’s Top Trusted Brand</h6  >
       </div>
     </>
   );
