@@ -7,14 +7,13 @@ import { usePathname } from "next/navigation";
 
 export default function RootLayout({ children }) {
   const path = usePathname();
-  // console.log(path, 'ppppppppp');
   
   return (
     <html lang="en">
       <body suppressHydrationWarning>
-        {path === '/signup' || 'signin' ? (
+        {path === '/signup' || path === '/signin' ? (
           <>
-          {children}
+            {children}
           </>
         ) : (
           <>
