@@ -6,7 +6,7 @@ import Button from '../button/Button';
 const Product = (props) => {
   return (
     <>
-      <div className="w-[85vw] lg:w-[25vw] bg-white border-[1px] border-[#0000003b] shadow-md rounded-lg overflow-hidden transition-transform transform hover:scale-105">
+      <div className="w-[80vw] mx-auto lg:w-[24vw] bg-white border-[1px] border-[#0000003b] shadow-md rounded-lg overflow-hidden transition-transform transform hover:scale-105">
         <div className="h-[4.5vh] w-[35%] py-2 rounded-br-lg   bg-[#897F7F80] flex items-center justify-center">
           <div className="flex">
             <span className='text-[12px]'>⭐</span>
@@ -16,7 +16,7 @@ const Product = (props) => {
             <span className='text-[12px]'>⭐</span>
           </div>
         </div>
-        <div className="flex flex-col py-5 items-center justify-around">
+        <div className="flex flex-col py-3 items-center justify-around">
         <h1 className="font-semibold py-1 text-xl text-gray-800">
               {props.name ? props.name : "Product Name"}
             </h1>
@@ -27,7 +27,7 @@ const Product = (props) => {
             <h1 className="font-bold py-1 mb-2 text-xl text-gray-800">
               {props.name ? props.name : " $ 501/-"}
             </h1>
-            <div className="h-[0.15vh] bg-black mb-2"></div>
+            <div className="h-[0.15vh] bg-black mb-1"></div>
             <p className="text-sm py-1 text-gray-600">
               {props.tagline ? props.tagline : "Better skin quality with natural herbs"}
             </p>

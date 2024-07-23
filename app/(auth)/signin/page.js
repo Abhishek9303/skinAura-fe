@@ -8,15 +8,6 @@ const Signin = () => {
       <form className="lg:w-[45vmax] w-[50vmax] py-8 px-8 border-[0.5px] border-[#0000003b] shadow-md rounded-lg h-[auto] space-y-6">
          <h1 className="text-3xl text-center text-gray-600 font-bold">Login In</h1>
          
-         <div>
-           <label className="block text-gray-600 font-medium mb-2">Full Name</label>
-           <input type="text" placeholder="Full Name" className="w-full border-[0.5px] border-[#0000003b] shadow-md rounded-lg p-3" />
-         </div>
-         
-         <div>
-           <label className="block text-gray-600 font-medium mb-2">Email</label>
-           <input type="email" placeholder="Email" className="w-full border-[0.5px] border-[#0000003b] shadow-md rounded-lg p-3" />
-         </div>
          
          <div>
            <label className="block text-gray-600 font-medium mb-2">Phone No</label>
@@ -24,11 +15,11 @@ const Signin = () => {
          </div>
          
          <div>
-           <label className="block text-gray-600 font-medium mb-2">Confirm Password</label>
-           <input type="password" placeholder="Confirm Password" className="w-full border-[0.5px] border-[#0000003b] shadow-md rounded-lg p-3" />
+           <label className="block text-gray-600 font-medium mb-2">Password</label>
+           <input type="password" placeholder="Confirm Password" className="w-full mb-5 border-[0.5px] border-[#0000003b] shadow-md rounded-lg p-3" />
          </div>
          
-         <button className="w-full bg-[#6A4D6F] text-white font-medium py-2 rounded-lg shadow-md hover:bg-gray-700 transition duration-300">Login</button>
+         <button className="w-full  bg-[#6A4D6F] text-white font-medium py-2 rounded-lg shadow-md hover:bg-gray-700 transition duration-300">Login</button>
          
          <div className="text-center text-gray-600 mt-4">
            Already have an account? <a href="/login" className="text-gray-600 font-bold hover:underline">Sign Up</a>

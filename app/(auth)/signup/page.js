@@ -25,7 +25,7 @@ const Signup = () => {
              
              <div>
                <label className="block text-gray-600 font-medium mb-2">Confirm Password</label>
-               <input type="password" placeholder="Confirm Password" className="w-full border-[0.5px] border-[#0000003b] shadow-md rounded-lg p-3" />
+               <input type="password" placeholder="Confirm Password" className="w-full mb-5 border-[0.5px] border-[#0000003b] shadow-md rounded-lg p-3" />
              </div>
              
              <button className="w-full bg-[#6A4D6F] text-white font-medium py-2 rounded-lg shadow-md hover:bg-gray-700 transition duration-300">Sign Up</button>

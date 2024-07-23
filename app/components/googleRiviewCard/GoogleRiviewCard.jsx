@@ -2,7 +2,7 @@ import React from 'react';
 
 const GoogleRiviewCard = ({ review, reviewer,...props }) => {
   return (
-    <div className="relative w-[20vmax] h-[16vmax] bg-[#d9d9d9cb] rounded-lg shadow-md">
+    <div className="relative md:w-[20vmax] md:h-[16vmax] bg-[#d9d9d9cb] rounded-lg shadow-md">
       <div className="h-[5vh] mb-8 w-[35%] py-2 rounded-tl-lg rounded-br-lg bg-[#6A4D6F] flex items-center justify-center">
         <div className="flex">
           <span className="text-[12px]">⭐</span>

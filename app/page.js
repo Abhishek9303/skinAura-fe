@@ -13,8 +13,8 @@ const Page = () => {
         
         <HomeSwiper1 />
         <div className="h-[80vh] w-full flex flex-col items-center justify-center gap-5">
-          <h1 className="text-4xl">We Are The Best</h1>
-          <p>we don’t say it our members say it</p>
+          <h1 className="text-5xl font-juanaRegular leading-none">We Are The Best</h1>
+          <p className="text-sm leading-none font-medium mb-3">"we don’t say it our members say it"</p>
           <ReviewSwiper />
         </div>
         <div className=" flex flex-col items-center justify-center gap-8">
