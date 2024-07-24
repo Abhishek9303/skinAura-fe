@@ -19,7 +19,7 @@ const Nav = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const links = ["Latest", "Products", "Services", "Centers", "Reviews", "About"];
+  const links = ["latest", "products", "services", "centers", "reviews", "about"];
 
   return (
     <div>
@@ -81,7 +81,7 @@ const Nav = () => {
             <Link href="#">
               <RiHandbagLine />
             </Link>
-            <Link href="#">
+            <Link href="/signin">
               <RiUser3Line />
             </Link>
           </div>

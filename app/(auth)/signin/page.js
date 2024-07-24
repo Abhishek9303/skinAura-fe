@@ -22,7 +22,7 @@ const Signin = () => {
          <button className="w-full  bg-[#6A4D6F] text-white font-medium py-2 rounded-lg shadow-md hover:bg-gray-700 transition duration-300">Login</button>
          
          <div className="text-center text-gray-600 mt-4">
-           Already have an account? <a href="/login" className="text-gray-600 font-bold hover:underline">Sign Up</a>
+           Already have an account? <a href="/signup" className="text-gray-600 font-bold hover:underline">Sign Up</a>
          </div>
       </form>
     </div>    
