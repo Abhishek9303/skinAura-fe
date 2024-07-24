@@ -4,7 +4,15 @@ import { Splide, SplideSlide, SplideTrack } from "@splidejs/react-splide";
 import "@splidejs/react-splide/css";
 const HomeSwiper1 = () => {
   return (
-    <Splide hasTrack={false}>
+    <Splide
+      hasTrack={false}
+      options={{
+        type: "loop",
+        perPage: 1,
+        autoplay: true,
+        interval: 3000,
+      }}
+    >
       <SplideTrack>
         <SplideSlide className="w-[100vw] bg-red-300 h-[50vh] flex items-center justify-center">
           Text 01

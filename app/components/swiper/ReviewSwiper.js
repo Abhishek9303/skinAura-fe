@@ -6,20 +6,37 @@ const ReviewSwiper = () => {
   return (
     <>
       <Splide
-      options={{perPage: 3, gap:"10px",breakpoints:{1024:{perPage: 3},640:{perPage:1}}}}
-        className="w-[80vw] h-[50vh]"
+        options={{
+          type:'loop',
+          perPage: 4,
+          gap: "10px",
+          breakpoints: {
+            1024: { perPage: 8 },
+            640: { perPage: 1 },
+          },
+        }}
+        className="w-[80vw] "
       >
-        <SplideSlide className="flex bg-gray-400 items-center justify-center h-[50vh] mx-3">
+        <SplideSlide className="flex bg-gray-400 items-center justify-center h-[60vh] ">
           Text 01
         </SplideSlide>
-        <SplideSlide className="flex bg-gray-400 items-center justify-center h-[50vh]">
+        <SplideSlide className="flex bg-gray-400 items-center justify-center h-[60vh]">
           Text 02
         </SplideSlide>
-        <SplideSlide className="flex bg-gray-400 items-center justify-center h-[50vh]">
+        <SplideSlide className="flex bg-gray-400 items-center justify-center h-[60vh]">
           Text 03
         </SplideSlide>
-        <SplideSlide className="flex bg-gray-400 items-center justify-center h-[50vh]">
+        <SplideSlide className="flex bg-gray-400 items-center justify-center h-[60vh]">
           Text 04
+        </SplideSlide>
+        <SplideSlide className="flex bg-gray-400 items-center justify-center h-[60vh]">
+          Text 05
+        </SplideSlide>
+        <SplideSlide className="flex bg-gray-400 items-center justify-center h-[60vh]">
+          Text 06
+        </SplideSlide>
+        <SplideSlide className="flex bg-gray-400 items-center justify-center h-[60vh]">
+          Text 07
         </SplideSlide>
       </Splide>
     </>
