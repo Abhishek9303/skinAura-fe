@@ -2,13 +2,13 @@
 import React from "react";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/react-splide/css";
-const ReviewSwiper = () => {
+const ReviewSwiper = (props) => {
   return (
     <>
       <Splide
         options={{
           type:'loop',
-          perPage: 4,
+          perPage: `${props?.perPage ? props.perPage : 4}`,
           gap: "10px",
           breakpoints: {
             1024: { perPage: 8 },

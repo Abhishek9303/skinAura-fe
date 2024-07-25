@@ -11,9 +11,7 @@ const InfluencerSection = () => {
           </p>
         </div>
         <ReviewSwiper />
-        <button className="h-[6vh] w-[45vw] lg:h-[8vh] lg:w-[15vw] bg-red-300 rounded-lg ">
-          Take a Test Now
-        </button>
+        
       </div>
     </>
   );

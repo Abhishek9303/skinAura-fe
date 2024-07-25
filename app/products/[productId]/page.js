@@ -1,15 +1,17 @@
 import Product from '@/app/components/product/Product';
+import ProductImages from '@/app/components/swiper/ProductImages';
 import ReviewSwiper from '@/app/components/swiper/ReviewSwiper';
 import React from 'react'
 
 const SingleProduct = (props) => {
-  console.log(props)
   return (
     <>
       <div className="flex flex-col justify-center items-center ">
         <div className="flex lg:flex-row flex-col py-10 items-center justify-center">
-          <div className="lg:w-[35vw] w-[80vw] lg:h-[40vh] h-[40vh] bg-black"></div>
-          <div className="lg:w-[45vw] w-[80vw] lg:h-[40vh] h-[50vh] bg-blue-200 lg:px-10 px-5 lg:py-5 py-2">
+          <div className="lg:w-[35vw] w-[80vw] lg:h-[40vh] h-[40vh] ">
+              <ProductImages height={"50vh"} />;
+          </div>
+          <div className="lg:w-[45vw] w-[80vw] lg:h-[40vh] h-[50vh]  lg:px-10 px-5 lg:py-5 py-2">
             <h1 className="text-2xl">Skin Aura’s Glglow Cream-UNISEX</h1>
             <p>53 people orderd last week</p>
             <div>star</div>
@@ -59,12 +61,12 @@ const SingleProduct = (props) => {
           <div className="w-[80vw] h-[60vh] my-5 rounded-2xl flex items-center justify-center bg-black"></div>
         </div>
         <div className="py-10">
-          <h1 className="text-center text-[3vmax]">Our Product Results</h1>
+          <h1 className="text-center text-[3vmax] font-juanaRegular">Our Product Results</h1>
           <p className="text-sm text-center">
             we don’t say it our members say it
           </p>
           <div className="py-10">
-            <ReviewSwiper />
+            <ReviewSwiper perPage={"3"}  />
           </div>
         </div>
         <div className='my-5'>
