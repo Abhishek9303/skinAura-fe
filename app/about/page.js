@@ -55,7 +55,7 @@ const About = () => {
          <h1 className='text-gray-600 text-[2vmax]'>Dr. Shahid’s photo</h1>
         </div>
       </div>
-      <div className='sohel w-full h-auto mt-40 flex md:flex-row flex-col-reverse items-center justify-between md:h-[30vmax]'>
+      <div className='sohel w-full h-auto mt-40 flex md:flex-row-reverse flex-col-reverse items-center justify-between md:h-[30vmax]'>
       <div className='content flex flex-col w-full md:w-auto'>
 
          <div className='w-full flex md:flex-col flex-row items-center justify-between md:items-start'>

@@ -1,12 +1,15 @@
 import React from 'react'
 
-const VideoDiv = ({text,src,...props}) => {
+const VideoDiv = ({ text, imgSrc, videoSrc, ...props }) => {
   return (
-    <div className='team-video px-5 flex items-center justify-center w-full min-h-[40vmax] rounded-lg bg-gray-300'>
-        <span className='text-gray-600 text-[3vmax]'>{text}</span>
-        {/* <video src={src}></video> */}
-        {/* <img src="" alt="" /> */}
-      </div>
+    <div className='team-video relative px-5 flex items-center justify-center w-full h-[40vmax] rounded-lg bg-gray-300 overflow-hidden'>
+      <span className='absolute z-10 text-white font-juanaLight text-[5vmax]'>{text}</span>
+      {videoSrc ? (
+        <video src={videoSrc} controls className='object-cover w-full h-full'></video>
+      ) : (
+        <img src={imgSrc} alt="img" className='absolute top-0 left-0 w-full h-full object-cover' />
+      )}
+    </div>
   )
 }
 
