@@ -43,7 +43,6 @@ const Nav = () => {
             <div className="absolute top-20 z-10 left-0 w-full bg-white py-5 px-8 flex flex-col items-center shadow-lg">
               {links.map((link) => {
                 const lowerCaseLink = `/${link}`.toLowerCase();
-                console.log(lowerCaseLink); // Debugging line
                 return (
                   <Link
                     key={link}
@@ -65,7 +64,6 @@ const Nav = () => {
           <div className={`w-[65%] py-5 px-8 flex items-center justify-between ${isMobile && 'hidden'}`}>
             {links.map((link) => {
               const lowerCaseLink = `${link.toLowerCase()}`;
-              console.log(lowerCaseLink); // Debugging line
               return (
                 <Link
                   key={link}

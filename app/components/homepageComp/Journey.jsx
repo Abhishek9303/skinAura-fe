@@ -31,7 +31,7 @@ const Journey = () => {
           <h1 className="text-[3vmax]">YOUR JOURNEY HERE</h1>
           <p className="w-[80vw] my-[5vh]" >you are not alone our “ experts “ are here for you</p>
         </div>
-        <div className="cards flex flex-col items-center justify-center w-[80vw] lg:flex-row gap-5 lg:gap-20 ">
+        <div className="cards flex flex-col items-center justify-center w-[80vw] lg:flex-row gap-5 lg:gap-12 ">
           {cards.map((card) => (
             <CustomCards
               key={card.title}

@@ -12,7 +12,7 @@ const Page = () => {
   return (
     <>
       <HomeSwiper1 />
-      <div className="h-[90vh] w-full flex flex-col items-center justify-center gap-5 mt-[40vh]">
+      <div className="h-[90vh] w-full flex flex-col items-center justify-center gap-5 mt-[33vh]">
         <h1 className="text-5xl font-juanaRegular leading-none text-center">
           We Are The Best
         </h1>
@@ -24,7 +24,7 @@ const Page = () => {
         </div>
       </div>
       <div className=" flex flex-col items-center justify-center gap-8 mt-[10vh]">
-        <h1 className="text-xl lg:text-[3vmax] text-center py-5 ">
+        <h1 className="text-xl lg:text-[3.5vmax] text-center py-5 font-juanaSemibold text-[#6A4D6F]	">
           Bad Skin Has Multiple Root Causes
         </h1>
         <div className="relative mt-[10vh]">
@@ -39,7 +39,7 @@ const Page = () => {
       <div className=" flex items-center justify-center mt-[10vh]">
         <div className="text-center flex flex-col gap-3 items-center justify-center">
           <p>we are providing here</p>
-          <h1 className="text-[3vmax] ">Three Step Plan</h1>
+          <h1 className="text-[3vmax] font-juanaSemibold">Three Step Plan</h1>
           <h4 className="text-[2vmax] lg:text-xl text-[#DF9D43] ">
             SKIN AURA’S HOLISTIC PLAN FOR HAIR FALL
           </h4>
@@ -61,12 +61,15 @@ const Page = () => {
       <div className="h-[50vh] py-5 my-[10vh]">
         <ProductPoster />
       </div>
-      <div className="">
+      <div className="flex flex-col justify-center items-center gap-5">
         <InfluencerSection />
+        <Button text={"Take a Test Now"} className="my-10" />
       </div>
       <div className=" flex flex-col items-center justify-center gap-2">
         <div className="text-center py-5">
-          <h1 className="text-[3vmax]">Why We are India’s Choice ?</h1>
+          <h1 className="text-[4vmax] font-juanaMedium">
+            Why We are India’s Choice ?
+          </h1>
           <p>"Because we provide Trust & Quality"</p>
         </div>
         <div className="relative h-[80vh] w-[80vw] bg-pink-200 rounded-3xl">
@@ -85,9 +88,7 @@ const Page = () => {
         <div className="h-[65vh] rounded-3xl w-[80vw] bg-red-200 relative object-cover object-center">
           <img src="" alt="product image" />
         </div>
-        <button className="h-[6vh] w-[45vw] lg:h-[8vh] lg:w-[15vw] bg-red-300 rounded-lg ">
-          Take a Test Now
-        </button>
+        <Button text={"Take a Test Now"} className="mt-10" />
       </div>
       <div className="flex flex-col items-center justify-center">
         <div className="text-center">
