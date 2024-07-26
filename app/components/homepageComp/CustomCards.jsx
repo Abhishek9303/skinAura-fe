@@ -3,7 +3,7 @@ import '../../../public/styles/homepageCss/stylesCustomCard.css'
 const CustomCards = (props) => {
   return (
     <>
-      <div className="cardMain py-5">
+      <div className="cardMain py-5 ">
         <div className="cardText">
           <h1>{props.title}</h1>
           <p>{props.description}</p>

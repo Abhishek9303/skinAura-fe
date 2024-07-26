@@ -66,12 +66,19 @@ const SingleProduct = (props) => {
             <ReviewSwiper perPage={"3"}  />
           </div>
         </div>
-        <div className='my-5'>
-          <h1 className='text-center font-juanaRegular md:text-[2.8vmax] text-[3.5vmax] mb-12'>You May Also like</h1>
-          <div className='flex lg:flex-row flex-col my-5 gap-20'>
-              <Product/>
-              <Product/>
-              <Product/>
+      </div>
+        <div className="w-full">
+        <div className="text-center py-5 mb-8">
+          <h1 className="md:text-[3vmax] mt-8 text-[3.5vmax] font-juanaRegular">Sujjested Ones</h1>
+          <p>“Healthy & Beautiful”</p>
+        </div>
+
+        <div className='md:w-[85vmax] w-full px-6 mx-auto flex flex-wrap gap-8 items-center justify-between pb-10'>
+          <div className=" w-full flex flex-wrap gap-10 items-center justify-between">
+            <Product id={1} key={1} name={"new product"} addToCart={true}  />
+            <Product id={2} key={2} name={"product 01"} addToCart={true} />
+            <Product id={3} key={3} name={"product 02"} addToCart={true} />
+            <Product id={4} key={4} name={"product 03"} addToCart={true} />
           </div>
         </div>
       </div>
