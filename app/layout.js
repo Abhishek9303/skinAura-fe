@@ -11,10 +11,21 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body suppressHydrationWarning>
-        {path === '/signup' || path === '/signin' ? (
-          <>
+        {path === '/signup' || path === '/signin' || path === '/cart' ? (
+         <>
+         {
+          path === '/cart' ? (
+            <>
+            <Nav />
             {children}
           </>
+          ) : (
+            <>
+            {children}
+          </>
+          )
+        }
+         </>
         ) : (
           <>
             <Nav />

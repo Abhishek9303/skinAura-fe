@@ -12,7 +12,7 @@ const Services = () => {
       <div className='w-full py-6 pb-5 mb-12 flex md:flex-row items-center border-b border-[#0000008b] justify-between'>
         <div>
           <h1 className='text-[3vmax] text-center leading-[0.7vmax] border-b border-[#0000008b] text-primary font-juanaSemibold py-8'>Our Srvices</h1>
-          <p className='leading-[0.3vmax] text-primary  font-juanaRegular py-6 md:py-8'>Follow the SKIN AURA Socials</p>
+          <p className='leading-[0.3vmax] text-primary  font-juanaRegular py-6 md:py-8'>UNCOVE THE NAATURAL YOU</p>
         </div>
         <div className='flex items-center justify-between mb-5 gap-5'>
         <Button text='Take A Test Now' className='rounded-full' />
