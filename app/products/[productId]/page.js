@@ -4,6 +4,7 @@ import ReviewSwiper from '@/app/components/swiper/ReviewSwiper';
 import VideoDiv from '../../components/videoDiv/VideoDiv';
 import React from 'react'
 import Button from '@/app/components/button/Button';
+import QuantityBtn from '@/app/components/quantityBtn/QuantityBtn';
 
 const SingleProduct = (props) => {
   return (
@@ -14,15 +15,16 @@ const SingleProduct = (props) => {
               <ProductImages height={"50vh"} />
           </div>
           <div className="md:ml-16 lg:w-[45vw] w-[80vw] lg:h-[40vh] h-[28vh]  lg:px-10 px-5 lg:py-5 py-16">
-            <h1 className="text-3xl mb-3">Skin Aura’s Glglow Cream-UNISEX</h1>
+            <h1 className="text-4xl mb-3 font-medium">Skin Aura’s Glglow Cream-UNISEX</h1>
             <p className='text-sm'>53 people orderd last week</p>
             <div>star</div>
             <h5 className="lg:text-base py-2">
               The most natural and trusted product of ours -
               (Product-Description)
             </h5>
-            <div className="flex items-start justify-between">
-              <h1 className='text-3xl mt-4 font-semibold'>MRP : ₹ 320 /-</h1>
+            <div className="flex items-start lg:w-[36vmax] mt-2 justify-between">
+              <h1 className='text-3xl mt-4 font-bold'>MRP : ₹ 320 /-</h1>
+              <QuantityBtn/>
             </div>
             <div className=" flex items-center py-10 gap-5">
             <Button text='Add To Cart' className='rounded-lg ' />
