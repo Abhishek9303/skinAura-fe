@@ -4,7 +4,7 @@ import React from 'react'
 const BeforeAfterReview = () => {
   return (
     <>
-      <div className="pb-3 border-none rounded w-[80vw] md:w-[40vw]  md:bg-red-600 lg:w-[28vw] flex flex-col bg-[#D9D9D9]">
+      <div className="pb-3 border-none rounded w-[80vw] md:w-[40vw] lg:w-[28vw] flex flex-col bg-[#D9D9D9]">
         <div className="lg:h-[23vh] h-[20vh] w-full flex items-center justify-around ">
           <div className="w-[45%] bg-black h-[90%]">
             <img src="" alt="image" />
