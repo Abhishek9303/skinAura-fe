@@ -11,7 +11,8 @@ const ReviewSwiper = (props) => {
           perPage: `${props?.perPage ? props.perPage : 4}`,
           gap: "10px",
           breakpoints: {
-            1024: { perPage: 8 },
+            1200: { perPage: 3 },
+            840: { perPage: 2 },
             640: { perPage: 1 },
           },
         }}
