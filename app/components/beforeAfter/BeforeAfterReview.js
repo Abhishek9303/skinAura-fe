@@ -6,10 +6,10 @@ const BeforeAfterReview = () => {
     <>
       <div className="pb-3 border-none rounded w-[80vw] md:w-[40vw] lg:w-[28vw] flex flex-col bg-[#D9D9D9]">
         <div className="lg:h-[23vh] h-[20vh] w-full flex items-center justify-around ">
-          <div className="w-[45%] bg-black h-[90%]">
+          <div className="w-[45%] bg-black rounded-md h-[90%]">
             <img src="" alt="image" />
           </div>
-          <div className="w-[45%] bg-black h-[90%]">
+          <div className="w-[45%] bg-black h-[90%] rounded-md">
             <img src="" alt="image" />
           </div>
         </div>

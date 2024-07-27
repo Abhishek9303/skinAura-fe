@@ -19,34 +19,47 @@ const Nav = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const links = ["latest", "products", "services", "centers", "reviews", "about"];
+  const links = [
+    "latest",
+    "products",
+    "services",
+    "centers",
+    "reviews",
+    "about",
+  ];
 
   return (
     <div>
       {isMobile ? (
-        <div className="relative flex py-4 justify-between items-center px-10">
+        <div className="flex flex-col">
+          <div className="relative flex py-3 justify-between items-center md:px-10 px-3">
           <div className="logo">
-            <img src="/images/logo.png" className="sm:w-[80px] sm:h-[50px] w-[80px] h-[50px]" />
+            <img
+              src="/images/logo.png"
+              className="w-[60px] h-[35px] md:w-[80px] md:h-[50px]"
+            />
           </div>
-          <div className="navRight flex justify-center items-center gap-5">
+          <div className="navRight flex justify-center items-center gap-2">
             <Link href="#">
-              <RiUser3Line />
+              <RiUser3Line/>
             </Link>
             <Link href="#">
-              <RiHandbagLine />
+              <RiHandbagLine/>
             </Link>
             <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="p-2">
-              <RiMenuLine />
+              <RiMenuLine/>
             </button>
           </div>
+          </div>
           {isMenuOpen && (
-            <div className="absolute top-20 z-10 left-0 w-full bg-white py-5 px-8 flex flex-col items-center shadow-lg">
+            <div className="w-full bg-white py-2 px-8 flex flex-col items-center shadow-lg">
               {links.map((link) => {
                 const lowerCaseLink = `/${link}`.toLowerCase();
                 return (
                   <Link
                     key={link}
                     href={lowerCaseLink}
+                    onClick={() => setIsMenuOpen(!isMenuOpen)}
                     className="text-[15px] uppercase py-2 hover:font-bold"
                   >
                     {link}
@@ -61,7 +74,11 @@ const Nav = () => {
           <div className="logo">
             <img src="/images/logo.png" className="sm:w-[80px] sm:h-[50px]" />
           </div>
-          <div className={`w-[65%] py-5 px-8 flex items-center justify-between ${isMobile && 'hidden'}`}>
+          <div
+            className={`w-[65%] py-5 px-8 flex items-center justify-between ${
+              isMobile && "hidden"
+            }`}
+          >
             {links.map((link) => {
               const lowerCaseLink = `${link.toLowerCase()}`;
               return (

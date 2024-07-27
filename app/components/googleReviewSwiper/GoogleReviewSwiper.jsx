@@ -18,15 +18,16 @@ const GoogleReviewSwiper = () => {
       }}
     >
       <SplideTrack>
-        <SplideSlide className="bg-red-300 h-auto rounded-2xl flex items-center justify-center">
+        <SplideSlide className=" h-auto rounded-2xl flex items-center justify-center">
           <GoogleRiviewCard reviewer={"Abhay"} />
         </SplideSlide>
-        <SplideSlide className="bg-red-300 h-auto rounded-2xl flex items-center justify-center">
+        <SplideSlide className=" h-auto rounded-2xl flex items-center justify-center">
           <GoogleRiviewCard reviewer={"Abhay"} />
         </SplideSlide>
-        <SplideSlide className="bg-red-300 h-auto rounded-2xl flex items-center justify-center">
+        <SplideSlide className=" h-auto rounded-2xl flex items-center justify-center">
           <GoogleRiviewCard reviewer={"Abhay"} />
         </SplideSlide>
+        
         {/* Add more slides as needed */}
       </SplideTrack>
     </Splide>

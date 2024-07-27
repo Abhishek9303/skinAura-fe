@@ -15,16 +15,16 @@ const CenterSwiper = () => {
           }}
         >
           <SplideTrack>
-            <SplideSlide className="w-full bg-red-300 md:h-[40vmax] h-[30vmax] rounded-2xl flex items-center justify-center">
+            <SplideSlide className="w-full bg-red-300 md:h-[40vmax] h-[60vmax] md:rounded-2xl rounded-xl flex items-center justify-center">
             <h1 className="text-[3vmax]">Center 1</h1>
             </SplideSlide>
-            <SplideSlide className="w-full bg-red-300 md:h-[40vmax] h-[30vmax] rounded-2xl flex items-center justify-center">
+            <SplideSlide className="w-full bg-red-300 md:h-[40vmax] h-[60vmax] md:rounded-2xl rounded-xl flex items-center justify-center">
             <h1 className="text-[3vmax]">Center 1</h1>
             </SplideSlide>
-            <SplideSlide className="w-full bg-red-300 md:h-[40vmax] h-[30vmax] rounded-2xl flex items-center justify-center">
+            <SplideSlide className="w-full bg-red-300 md:h-[40vmax] h-[60vmax] md:rounded-2xl rounded-xl flex items-center justify-center">
             <h1 className="text-[3vmax]">Center 1</h1>
             </SplideSlide>
-            <SplideSlide className="w-full bg-red-300 md:h-[40vmax] h-[30vmax] rounded-2xl flex items-center justify-center">
+            <SplideSlide className="w-full bg-red-300 md:h-[40vmax] h-[60vmax] md:rounded-2xl rounded-xl flex items-center justify-center">
             <h1 className="text-[3vmax]">Center 1</h1>
             </SplideSlide>
           </SplideTrack>
