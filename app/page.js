@@ -36,7 +36,7 @@ const Page = () => {
         <h1 className="md:text-[3vmax] md:whitespace-nowrap text-wrap text-[4vmax] lg:text-[3.5vmax] text-center md:py-5 pt-5 font-juanaSemibold text-[#6A4D6F]	">
           Bad Skin Has Multiple Root Causes
         </h1>
-        <div className="relative overflow-hidden bg-red-500 md:w-[85vmax] xs:w-[90%] rounded-lg mt-0 md:mt-10">
+        <div className="relative overflow-hidden flex items-center justify-center md:w-[85vmax] xs:w-[90%] rounded-lg mt-0 md:mt-10">
           <img
             src="/images/image01.webp"
             className="object-cover xs:h-[30vmax]"
