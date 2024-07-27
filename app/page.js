@@ -21,7 +21,7 @@ const Page = () => {
         <HomeSwiper1 />
         <Scroller />
       </div>
-      <div className="md:h-[43vmax] h:[120vmax] py-12 w-full flex flex-col items-center justify-center gap-5 md:mt-[25vh] ">
+      <div className="lg:h-[43vmax] h:[120vmax] lg:py-12 md:py-10 w-full flex flex-col items-center justify-center gap-5  ">
         <h1 className="text-5xl font-juanaRegular leading-none text-center">
           We Are The Best
         </h1>
