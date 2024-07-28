@@ -7,7 +7,9 @@ const ProductPoster = () => {
         <div className="flex flex-col justify-around items-left">
           <p className="md:text-[1.2vmax]">15% of on every order</p>
           <h1 className="text-[3.5vmax] font-juanaRegular text-[#6A4D6F ]">Subscribe and Save</h1>
+          <div>
           <Button text={"Shop now"} className=" md:mt-8 mt-5 rounded-full" />
+          </div>
         </div>
       </div>
     </>

@@ -33,13 +33,13 @@ const Page = () => {
         </div>
       </div>
       <div className=" flex flex-col items-center justify-center gap-8 mt-10 md:mt-[15vh]">
-        <h1 className="md:text-[3vmax] md:whitespace-nowrap text-wrap text-[4vmax] lg:text-[3.5vmax] text-center md:py-5 pt-5 font-juanaSemibold text-[#6A4D6F]	">
+        <h1 className="md:text-[4vmax] md:whitespace-nowrap text-[4.1vmax] text-wrap lg:text-[3.5vmax] text-center md:py-5 pt-5 font-juanaSemibold text-[#6A4D6F]	">
           Bad Skin Has Multiple Root Causes
         </h1>
-        <div className="relative overflow-hidden bg-red-500 md:w-[85vmax] xs:w-[90%] rounded-lg mt-0 md:mt-10">
+        <div className="relative overflow-hidden md:w-[85vmax] md:h-[45vmax] px-5 sm:h-[30vmax] rounded-lg mt-0 md:mt-10">
           <img
             src="/images/image01.webp"
-            className="object-cover xs:h-[30vmax]"
+            className="w-full h-full object-cover object-center  "
             alt="internet required"
           />
         </div>
@@ -113,11 +113,11 @@ const Page = () => {
           <h1 className="md:text-[3vmax] text-[4vmax] font-juanaRegular">The must haves</h1>
           <p className="xs:text-sm">“Green and Safe”</p>
         </div>
-        <div className="md:w-[85vmax] w-full md:px-6 px-2 mx-auto flex flex-wrap md:gap-8 gap-2 items-center justify-between md:pb-16 pb-8">
-          {/* <div className=" w-full flex flex-wrap gap-10 items-center justify-between"> */}
-            <Product id={1} key={1} name={"new product"} addToCart={true} />
-            <Product id={1} key={1} name={"new product"} addToCart={true} />
-          {/* </div> */}
+        <div className="md:w-[85vmax] w-full px-2 mx-auto flex flex-wrap md:gap-8 gap-5 items-center justify-center md:pb-16 pb-8">
+            <Product id={1} key={1} name={"501/-"} addToCart={true} />
+            <Product id={1} key={1} name={"501/-"} addToCart={true} />
+            <Product id={1} key={1} name={"501/-"} addToCart={true} />
+            <Product id={1} key={1} name={"501/-"} addToCart={true} />
         </div>
         <Button text={"View All"} className="rounded-lg" />
       </div>

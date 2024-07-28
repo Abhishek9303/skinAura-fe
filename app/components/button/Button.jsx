@@ -2,13 +2,13 @@ import React from 'react';
 
 const Button = ({ text, className = '', ...props }) => {
   return (
-    <button 
-      className={`bg-[#6A4D6F] xs:w-[20vmax] md:w-[15vmax] hover:bg-[#4b334f] flex items-center justify-center md:px-16 px-12 text-white xs:text-[2vmax] text-nowrap md:py-3 py-2 ${className}`} 
+    <button
+      className={`bg-[#6A4D6F] hover:bg-[#4b334f] flex items-center justify-center px-5 py-1 text-white md:px-12 md:py-3 text-[1.8vmax] md:text-[1.1vmax] ${className}`}
       {...props}
     >
       {text}
     </button>
   );
-}
+};
 
 export default Button;
