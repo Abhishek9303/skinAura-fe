@@ -43,7 +43,7 @@ const Nav = () => {
             <Link href="#">
               <RiUser3Line/>
             </Link>
-            <Link href="#">
+            <Link href="/cart">
               <RiHandbagLine/>
             </Link>
             <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="p-2">
