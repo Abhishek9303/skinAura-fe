@@ -84,8 +84,8 @@ const About = () => {
             />
           </div>
         </div>
-        <div className="img flex items-center mb-8 justify-center md:w-[50%] w-full md:h-full h-[30vmax] rounded-lg bg-gray-300 ">
-          <h1 className="text-gray-600 text-[2vmax]">Dr. Sohel’s photo</h1>
+        <div className="img flex items-center mb-8 justify-center md:w-[50%] w-full md:h-full h-[45vmax] rounded-lg bg-gray-300 ">
+          <h1 className="text-gray-600 text-[2vmax]">Dr. Shahid’s photo</h1>
         </div>
       </div>
       <div className="sohel w-full h-auto md:mt-40 mt-16 flex md:flex-row flex-col-reverse items-center justify-between md:h-[30vmax]">
@@ -123,8 +123,8 @@ const About = () => {
             />
           </div>
         </div>
-        <div className="img flex items-center mb-8 justify-center md:w-[50%] w-full md:h-full h-[30vmax] rounded-lg bg-gray-300 ">
-          <h1 className="text-gray-600 text-[2vmax]">Dr. Shahid’s photo</h1>
+        <div className="img flex items-center mb-8 justify-center md:w-[50%] w-full md:h-full h-[45vmax] rounded-lg bg-gray-300 ">
+          <h1 className="text-gray-600 text-[2vmax]">Dr. Sohel’s photo</h1>
         </div>
       </div>
 
