@@ -40,7 +40,7 @@ const Nav = () => {
             />
           </div>
           <div className="navRight flex justify-center items-center gap-2">
-            <Link href="#">
+            <Link href="/profile">
               <RiUser3Line/>
             </Link>
             <Link href="/cart">
@@ -93,10 +93,10 @@ const Nav = () => {
             })}
           </div>
           <div className="navRight flex justify-center items-center gap-6">
-            <Link href="#">
+            <Link href="/cart">
               <RiHandbagLine />
             </Link>
-            <Link href="/signin">
+            <Link href="/profile">
               <RiUser3Line />
             </Link>
           </div>

@@ -1,16 +1,8 @@
-import React from "react";
+import React from 'react'
 
-const Page = () => {
+const profile = (props) => {
   return (
-    <div className="w-full flex items-center justify-center lg:h-screen">
-      <div
-        className="hidden lg:block h-full w-[40%] bg-cover bg-center"
-        style={{
-          backgroundImage:
-            "url('https://images.unsplash.com/photo-1552046122-03184de85e08?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')",
-        }}
-      ></div>
-      <div className="flex items-center justify-center w-full lg:w-[60%] p-5 md:px-24">
+    <div>
         <form className=" bg-white shadow-md border-[0.5px] border-[#0000003b] rounded-lg lg:p-8 p-5 w-full md:space-y-2">
           <h1 className="text-2xl font-semibold text-center text-gray-700">
             Contact Information
@@ -126,9 +118,8 @@ const Page = () => {
             Submit
           </button>
         </form>
-      </div>
     </div>
-  );
-};
+  )
+}
 
-export default Page;
+export default profile
