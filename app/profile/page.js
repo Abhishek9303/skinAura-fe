@@ -11,8 +11,8 @@ const Page = () => {
   };
 
   return (
-    <div className="w-full flex flex-col lg:flex-row items-center justify-between overflow-hidden lg:h-auto">
-      <div className="w-full h-auto rounded-tr-lg rounded-br-lg bg-[#d9d9d92a] lg:w-[50%]">
+    <div className="w-full flex flex-col lg:flex-row items-center justify-between lg:h-screen">
+      <div className="w-full h-auto rounded-tr-lg rounded-br-lg lg:w-[60%]">
         <div className="flex items-center justify-between p-5 md:px-16">
           <h1 className="text-xl font-bold">Hey! UserName</h1>
           <button 
@@ -31,10 +31,13 @@ const Page = () => {
           <UserInfoForm />
         </div>
       </div>
-      <div className="right w-full lg:w-[50%] lg:h-screen overflow-y-auto flex flex-wrap lg:flex-row flex-col items-center justify-center gap-5 md:px-16 p-5">
-        <OrderCard />
-        <OrderCard />
-        <OrderCard />
+      <div className="right w-full lg:w-[40%] lg:h-screen flex flex-col">
+        <h1 className="text-xl text-center py-2 font-bold">Recently Brought</h1>
+        <div className="w-full overflow-y-auto flex-1 flex flex-wrap lg:flex-row flex-col items-center md:px-16 p-5 justify-center gap-5">
+          <OrderCard />
+          <OrderCard />
+          <OrderCard />
+        </div>
       </div>
     </div>
   );
