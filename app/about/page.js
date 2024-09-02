@@ -4,7 +4,7 @@ import {
   RiYoutubeFill,
 } from "@remixicon/react";
 import React from "react";
-import Button from "../components/button/button";
+import Button from "../../app/components/button/Button";
 import VideoDiv from "../components/videoDiv/VideoDiv";
 import Link from "next/link";
 import GoogleReviewSwiper from "../components/googleReviewSwiper/GoogleReviewSwiper";

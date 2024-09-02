@@ -7,7 +7,7 @@ import InfluencerSection from "./components/homepageComp/InfluencerSection";
 import Product from "./components/product/Product";
 import Link from "next/link";
 import Button from "./components/button/Button";
-import Scroller from "./components/scroller/scroller";
+import Scroller from "../app/components/scroller/Scroller";
 import VideoDiv from "./components/videoDiv/VideoDiv";
 import CenterSwiper from "./components/centerSwiper/CenterSwiper";
 import GoogleRiviewCard from "./components/googleRiviewCard/GoogleRiviewCard";

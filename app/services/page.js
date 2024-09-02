@@ -1,6 +1,6 @@
 import React from 'react';
 import { RiFacebookBoxFill, RiInstagramFill, RiYoutubeFill } from '@remixicon/react';
-import Button from '../components/button/button';
+import Button from '@/app/components/button/Button';
 import VideoDiv from '../components/videoDiv/VideoDiv';
 import Link from 'next/link';
 import ServiceCard from '../components/serviceCard/ServiceCard';
