@@ -2,7 +2,7 @@
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import Footer from "../app/components/footer/Footer";
-import Nav from "../app/components/nav/Nav";
+import Nav from "@/app/components/nav/Nav";
 import { usePathname } from "next/navigation";
 
 export default function RootLayout({ children }) {
