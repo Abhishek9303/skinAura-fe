@@ -12,6 +12,7 @@
     "@next/font": "^14.2.5",
     "@remixicon/react": "^4.2.0",
     "@splidejs/react-splide": "^0.7.12",
+    "axios": "^1.7.7",
     "next": "14.2.4",
     "react": "^18",
     "react-dom": "^18"
