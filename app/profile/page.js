@@ -1,11 +1,12 @@
 'use client'
+import userProtectionRoute from "../../store/user/userProtectionRoute"
 import React, { useState } from "react";
 import UserInfoForm from "../components/userInfoForm/UserInfoForm";
 import OrderCard from "../components/orderCard/OrderCard";
-
+import useUserStore from "../../store/user/userProfile";
 const Page = () => {
   const [isFormVisible, setIsFormVisible] = useState(false);
-
+  const { user } = useUserStore();
   const toggleFormVisibility = () => {
     setIsFormVisible(!isFormVisible);
   };
@@ -14,7 +15,7 @@ const Page = () => {
     <div className="w-full flex flex-col lg:flex-row items-center justify-between lg:h-screen">
       <div className="w-full h-auto rounded-tr-lg rounded-br-lg lg:w-[60%]">
         <div className="flex items-center justify-between p-5 md:px-16">
-          <h1 className="text-xl font-bold">Hey! UserName</h1>
+          <h1 className="text-xl font-bold">Hey! {user.name}</h1>
           <button 
             className="border-1 bg-[#6A4D6F] text-white md:px-8 px-4 py-2 rounded-lg lg:hidden"
             onClick={toggleFormVisibility}
@@ -43,4 +44,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default userProtectionRoute(Page);

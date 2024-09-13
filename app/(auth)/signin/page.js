@@ -14,23 +14,20 @@ const SingIn = () => {
     let config = {
       method: "post",
       maxBodyLength: Infinity,
-      url: "https://skin-aura-be.vercel.app/api/v1/user/login",
+      url: `${process.env.BACKEND_URL}api/v1/user/login`,
       headers: {
         "Content-Type": "application/json",
       },
       data: data,
     };
 
-    axios
-      .request(config)
-      .then((response) => {
-        // console.log(JSON.stringify(response.data));
+    axios.request(config).then((response) => {
         localStorage.setItem("token", response.data.data);
-      })
-      .catch((error) => {
+        router.push("/");
+      }).catch((error) => {
         console.log(error);
       });
-      router.push("/");
+      
   };
 
   return (
