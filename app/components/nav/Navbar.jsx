@@ -33,23 +33,26 @@ const Nav = () => {
       {isMobile ? (
         <div className="flex flex-col">
           <div className="relative flex py-3 justify-between items-center md:px-10 px-3">
-          <div className="logo">
-            <img
-              src="/images/logo.png"
-              className="w-[60px] h-[35px] md:w-[80px] md:h-[50px]"
-            />
-          </div>
-          <div className="navRight flex justify-center items-center gap-2">
-            <Link href="/profile">
-              <RiUser3Line/>
-            </Link>
-            <Link href="/cart">
-              <RiHandbagLine/>
-            </Link>
-            <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="p-2">
-              <RiMenuLine/>
-            </button>
-          </div>
+            <div className="logo">
+              <img
+                src="/images/logo.png"
+                className="w-[60px] h-[35px] md:w-[80px] md:h-[50px]"
+              />
+            </div>
+            <div className="navRight flex justify-center items-center gap-2">
+              <Link href="/profile">
+                <RiUser3Line />
+              </Link>
+              <Link href="/cart">
+                <RiHandbagLine />
+              </Link>
+              <button
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                className="p-2"
+              >
+                <RiMenuLine />
+              </button>
+            </div>
           </div>
           {isMenuOpen && (
             <div className="w-full bg-white py-2 px-8 flex flex-col items-center shadow-lg">
