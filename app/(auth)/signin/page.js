@@ -2,33 +2,76 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-const SingIn = () => {
+import { toast } from "react-toastify";
+
+const SignIn = () => {
   const router = useRouter();
   const [data, setData] = useState({
     mobileNo: "",
     password: "",
   });
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const axios = require("axios");
-    let config = {
-      method: "post",
-      maxBodyLength: Infinity,
-      url: `${process.env.BACKEND_URL}api/v1/user/login`,
-      headers: {
-        "Content-Type": "application/json",
-      },
-      data: data,
-    };
+  const [errors, setErrors] = useState({});
 
-    axios.request(config).then((response) => {
-        localStorage.setItem("token", response.data.data);
-        router.push("/");
-      }).catch((error) => {
-        console.log(error);
-      });
-      
+  const validateForm = () => {
+    let isValid = true;
+    let newErrors = {};
+
+    if (!data.mobileNo) {
+      newErrors.mobileNo = "Phone number is required";
+      isValid = false;
+    } else if (!/^\d{10}$/.test(data.mobileNo)) {
+      newErrors.mobileNo = "Invalid phone number format";
+      isValid = false;
+    }
+
+    if (!data.password) {
+      newErrors.password = "Password is required";
+      isValid = false;
+    } else if (data.password.length < 6) {
+      newErrors.password = "Password must be at least 6 characters long";
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+    return isValid;
   };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (validateForm()) {
+      let config = {
+        method: "post",
+        maxBodyLength: Infinity,
+        url: `${process.env.NEXT_PUBLIC_BACKEND_URL}api/v1/user/login`,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        data: data,
+      };
+
+      try {
+        const response = await axios.request(config);
+        if (response?.data?.status === true) {
+          toast.success("Login Success", {
+            theme: "dark",
+          });
+          localStorage.setItem("token", response.data.data);
+          localStorage.setItem("isAuthenticate", "true");
+          router.push("/");
+        }
+      } catch (error) {
+        toast.error(error.response?.data?.message || "Something went wrong", {
+          theme: "dark",
+        });
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (localStorage.getItem("isAuthenticate") === "true") {
+      router.push("/");
+    }
+  }, []);
 
   return (
     <div className="w-full flex items-center justify-center h-screen">
@@ -51,10 +94,13 @@ const SingIn = () => {
             <input
               onChange={(e) => setData({ ...data, mobileNo: e.target.value })}
               type="tel"
-              placeholder="123-456-7890"
+              placeholder="1234567890"
               name="mobileNo"
               className="w-full border-[0.5px] border-[#0000003b] shadow-md rounded-lg p-3"
             />
+            {errors.mobileNo && (
+              <p className="text-red-500 text-sm mt-1">{errors.mobileNo}</p>
+            )}
           </div>
           <div>
             <label className="block text-gray-600 font-medium mb-2">
@@ -66,17 +112,18 @@ const SingIn = () => {
               placeholder="Password"
               className="w-full mb-5 border-[0.5px] border-[#0000003b] shadow-md rounded-lg p-3"
             />
+            {errors.password && (
+              <p className="text-red-500 text-sm mt-1">{errors.password}</p>
+            )}
           </div>
           <button
-            onClick={(e) => {
-              handleSubmit(e);
-            }}
+            onClick={handleSubmit}
             className="w-full bg-[#6A4D6F] text-white font-medium py-2 rounded-lg shadow-md hover:bg-gray-700 transition duration-300"
           >
             Login
           </button>
           <div className="text-center text-gray-600 mt-4">
-            Already have an account?{" "}
+            Don't have an account?{" "}
             <a
               href="/signup"
               className="text-gray-600 font-bold hover:underline"
@@ -90,4 +137,4 @@ const SingIn = () => {
   );
 };
 
-export default SingIn;
+export default SignIn;

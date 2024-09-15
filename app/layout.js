@@ -1,38 +1,34 @@
-'use client';
+"use client";
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import Nav from "../app/components/nav/Navbar";
 import Footer from "../app/components/footer/Footer";
 import { usePathname } from "next/navigation";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function RootLayout({ children }) {
   const path = usePathname();
-  
+
+  const shouldShowNavAndFooter =
+    path !== "/signup" && path !== "/signin" && path !== "/cart";
+
   return (
     <html lang="en">
       <body suppressHydrationWarning>
-        {path === '/signup' || path === '/signin' || path === '/cart' ? (
-         <>
-         {
-          path !== '/cart' ? (
-            <>
-            {children}
-          </>
-          ) : (
-            <>
-            <Nav />
-            {children}
-          </>
-          )
-        }
-         </>
-        ) : (
-          <>
-            <Nav />
-            {children}
-            <Footer />
-          </>
-        )}
+        {shouldShowNavAndFooter && <Nav />}
+        {children}
+        {shouldShowNavAndFooter && <Footer />}
+        <ToastContainer
+          position="top-right"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          pauseOnHover
+          draggable
+          pauseOnFocusLoss
+        />
       </body>
     </html>
   );

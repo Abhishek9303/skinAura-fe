@@ -37,6 +37,8 @@ const withAuth = (WrappedComponent) => {
       }
       if (!storedToken) {
         clearUser();
+        window.localStorage.clear();
+        window.localStorage.setItem("isAuthenticate", false);
         router.push("/signin");
       }
     }, [router]);

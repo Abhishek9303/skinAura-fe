@@ -1,19 +1,72 @@
-"use client"
-// pages/signup/index.js
-
+"use client";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 const Signup = () => {
+  const notify = () => toast("Wow! This is a toast notification!");
+  const router = useRouter();
   const [data, setData] = useState({
-    name:"",
-    emailId:"",
-    mobileNo:"",
-    password:""
-  })
-  const handleSubmit=(e)=>{
+    name: "",
+    emailId: "",
+    mobileNo: "",
+    password: "",
+  });
+
+  const [isSubmitting, setIsSubmitting] = useState(false); // To prevent multiple submissions
+
+  const validateEmail = (email) => {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+  };
+
+  const validateMobileNo = (mobileNo) => {
+    const re = /^[0-9]{10}$/;
+    return re.test(mobileNo);
+  };
+
+  const handleSubmit = (e) => {
     e.preventDefault();
+
+    // Check if all fields are filled
+    if (!data.name || !data.emailId || !data.mobileNo || !data.password) {
+      toast("All fields are required", { theme: "dark" });
+      return;
+    }
+
+    // Validate email format
+    if (!validateEmail(data.emailId)) {
+      toast.error("Please enter a valid email address", { theme: "dark" });
+      return;
+    }
+
+    // Validate mobile number
+    if (!validateMobileNo(data.mobileNo)) {
+      toast.error("Please enter a valid 10-digit mobile number", {
+        theme: "dark",
+      });
+      return;
+    }
+
+    // Check if password length is at least 6 characters
+    if (data.password.length < 6) {
+      toast.error("Password must be at least 6 characters", {
+        theme: "dark",
+      });
+      return;
+    }
+
+    // Prevent multiple submissions
+    if (isSubmitting) {
+      toast.warning("Please wait while we process your request", {
+        theme: "dark",
+      });
+      return;
+    }
+
+    setIsSubmitting(true); // Set the submitting state to true
+
     const axios = require("axios");
-    // let data = data
     let config = {
       method: "post",
       maxBodyLength: Infinity,
@@ -27,13 +80,26 @@ const Signup = () => {
     axios
       .request(config)
       .then((response) => {
-        console.log(JSON.stringify(response.data));
+        console.log(response.data.data);
+        if (response.data.success === true) {
+          toast.success("Registered Successfully. Please Login.", {
+            theme: "dark",
+          });
+          router.push("/signin");
+        }
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
+        toast.error(
+          "An error occurred during registration. Please try again.",
+          { theme: "dark" }
+        );
+      })
+      .finally(() => {
+        setIsSubmitting(false); // Allow further submissions after the request is finished
       });
+  };
 
-  }
   return (
     <div className="w-full flex items-center justify-center h-screen">
       <div
@@ -53,9 +119,7 @@ const Signup = () => {
               Full Name
             </label>
             <input
-              onChange={(e) => {
-                setData({ ...data, name: e.target.value });
-              }}
+              onChange={(e) => setData({ ...data, name: e.target.value })}
               type="text"
               placeholder="Full Name"
               name="name"
@@ -67,9 +131,7 @@ const Signup = () => {
               Email
             </label>
             <input
-              onChange={(e) => {
-                setData({ ...data, emailId: e.target.value });
-              }}
+              onChange={(e) => setData({ ...data, emailId: e.target.value })}
               type="email"
               placeholder="Email"
               name="emailId"
@@ -80,37 +142,36 @@ const Signup = () => {
             <label className="block text-gray-600 font-medium mb-2">
               Phone No
             </label>
-            <input
-              onChange={(e) => {
-                setData({ ...data, mobileNo: e.target.value });
-              }}
-              type="tel"
-              placeholder="123-456-7890"
-              name="mobileNo"
-              className="w-full border-[0.5px] border-[#0000003b] shadow-md rounded-lg p-3"
-            />
+            <div className="flex">
+              <span className="bg-gray-200 p-3 rounded-l-lg">+91</span>
+              <input
+                onChange={(e) => setData({ ...data, mobileNo: e.target.value })}
+                type="tel"
+                placeholder="1234567890"
+                name="mobileNo"
+                className="w-full border-[0.5px] border-[#0000003b] shadow-md rounded-r-lg p-3"
+                maxLength="10"
+              />
+            </div>
           </div>
           <div>
             <label className="block text-gray-600 font-medium mb-2">
-              Confirm Password
+              Password
             </label>
             <input
-              onChange={(e) => {
-                setData({ ...data, password: e.target.value });
-              }}
+              onChange={(e) => setData({ ...data, password: e.target.value })}
               type="password"
-              placeholder="Confirm Password"
+              placeholder="Password (min 6 characters)"
               name="password"
               className="w-full mb-5 border-[0.5px] border-[#0000003b] shadow-md rounded-lg p-3"
             />
           </div>
           <button
-            onClick={(e) => {
-              handleSubmit(e);
-            }}
-            className="w-full bg-[#6A4D6F] text-white font-medium py-2 rounded-lg shadow-md hover:bg-gray-700 transition duration-300"
+            onClick={(e) => handleSubmit(e)}
+            disabled={isSubmitting}
+            className="w-full bg-[#6A4D6F] text-white font-medium py-2 rounded-lg shadow-md hover:bg-gray-700 transition duration-300 disabled:opacity-50"
           >
-            Sign Up
+            {isSubmitting ? "Signing Up..." : "Sign Up"}
           </button>
           <div className="text-center text-gray-600 mt-4">
             Already have an account?{" "}
@@ -122,7 +183,6 @@ const Signup = () => {
             </a>
           </div>
         </form>
-        {console.log(data)}
       </div>
     </div>
   );

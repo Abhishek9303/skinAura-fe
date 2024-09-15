@@ -1,3 +1,4 @@
+"use client"
 import React from "react";
 import HomeSwiper1 from "./components/swiper/HomeSwiper1";
 import ReviewSwiper from "./components/swiper/ReviewSwiper";
@@ -13,6 +14,8 @@ import CenterSwiper from "./components/centerSwiper/CenterSwiper";
 import GoogleRiviewCard from "./components/googleRiviewCard/GoogleRiviewCard";
 import GoogleReviewSwiper from "./components/googleReviewSwiper/GoogleReviewSwiper";
 import BeforeAfterReview from "./components/beforeAfter/BeforeAfterReview";
+import { ToastContainer,toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Page = () => {
   return (
@@ -43,12 +46,17 @@ const Page = () => {
             alt="internet required"
           />
         </div>
-        <Button text={"Take a Test Now"} className="md:mt-10 mt-3 rounded-full" />
+        <Button
+          text={"Take a Test Now"}
+          className="md:mt-10 mt-3 rounded-full"
+        />
       </div>
       <div className=" flex items-center justify-center md:mt-16 mt-12">
         <div className="text-center flex flex-col gap-3 items-center justify-center">
           <p className="text-sm">we are providing here</p>
-          <h1 className="md:text-[3vmax] text-[4vmax] font-juanaSemibold">Three Step Plan</h1>
+          <h1 className="md:text-[3vmax] text-[4vmax] font-juanaSemibold">
+            Three Step Plan
+          </h1>
           <h4 className="text-[2vmax] lg:text-xl text-[#DF9D43] ">
             SKIN AURA’S HOLISTIC PLAN FOR HAIR FALL
           </h4>
@@ -60,19 +68,28 @@ const Page = () => {
             ingredients from the most authentic sources, we personalize your
             treatment delivering assured results.
           </p>
-          <Button text={"Take a Test Now"} className="md:mt-12 mt-8 rounded-full" />
+          <Button
+            text={"Take a Test Now"}
+            className="md:mt-12 mt-8 rounded-full"
+          />
         </div>
       </div>
       <div className="flex flex-col items-center justify-center mt-12">
         <Journey />
-        <Button text={"Take a Test Now"} className="md:mt-16 mt-8 rounded-full" />
+        <Button
+          text={"Take a Test Now"}
+          className="md:mt-16 mt-8 rounded-full"
+        />
       </div>
       <div className="md:h-[50vh] mt-[7vmax]">
         <ProductPoster />
       </div>
       <div className="flex flex-col justify-center items-center gap-5">
         <InfluencerSection />
-        <Button text={"Take a Test Now"} className="md:my-8 my-5 rounded-full" />
+        <Button
+          text={"Take a Test Now"}
+          className="md:my-8 my-5 rounded-full"
+        />
       </div>
       <div className=" flex flex-col items-center justify-center gap-2">
         <div className="text-center mt-[5vmax] mb-8">
@@ -91,9 +108,9 @@ const Page = () => {
         </h1>
         <p className="text-center xs:text-sm">“Family Members”</p>
         <div className="flex flex-col md:flex-col lg:flex-row items-center justify-center gap-10 mt-10">
-          <BeforeAfterReview/>
-          <BeforeAfterReview/>
-          <BeforeAfterReview/>
+          <BeforeAfterReview />
+          <BeforeAfterReview />
+          <BeforeAfterReview />
         </div>
       </div>
       <div className="md:py-10 flex flex-col items-center justify-around md:gap-5 gap-3">
@@ -110,14 +127,16 @@ const Page = () => {
       </div>
       <div className="w-full flex flex-col items-center justify-center">
         <div className="text-center my-10">
-          <h1 className="md:text-[3vmax] text-[4vmax] font-juanaRegular">The must haves</h1>
+          <h1 className="md:text-[3vmax] text-[4vmax] font-juanaRegular">
+            The must haves
+          </h1>
           <p className="xs:text-sm">“Green and Safe”</p>
         </div>
         <div className="md:w-[85vmax] w-full px-2 mx-auto flex flex-wrap md:gap-8 gap-5 items-center justify-center md:pb-16 pb-8">
-            <Product id={1} key={1} name={"501/-"} addToCart={true} />
-            <Product id={1} key={1} name={"501/-"} addToCart={true} />
-            <Product id={1} key={1} name={"501/-"} addToCart={true} />
-            <Product id={1} key={1} name={"501/-"} addToCart={true} />
+          <Product id={1} key={1} name={"501/-"} addToCart={true} />
+          <Product id={1} key={1} name={"501/-"} addToCart={true} />
+          <Product id={1} key={1} name={"501/-"} addToCart={true} />
+          <Product id={1} key={1} name={"501/-"} addToCart={true} />
         </div>
         <Button text={"View All"} className="rounded-lg" />
       </div>
@@ -128,6 +147,7 @@ const Page = () => {
           <GoogleReviewSwiper />
         </div>
       </div>
+      
     </>
   );
 };
