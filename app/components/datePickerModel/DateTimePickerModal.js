@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
@@ -10,6 +11,7 @@ const DateTimePickerModal = ({ isOpen, onClose }) => {
   const [date, setDate] = useState(new Date());
   const [timeSlot, setTimeSlot] = useState("");
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false); // For loader
 
   const handleDateChange = (selectedDate) => {
     setDate(selectedDate);
@@ -20,20 +22,64 @@ const DateTimePickerModal = ({ isOpen, onClose }) => {
     setTimeSlot(event.target.value);
   };
 
-  const handleSubmit = () => {
-    const today = new Date();
-    if (date < today) {
-      toast.error("Please select a valid date", {dark: true});
-      return;
-    }
+ const handleSubmit = () => {
+   const today = new Date();
+   const selectedDate = new Date(date.setHours(0, 0, 0, 0)); // Only compare the date part
 
-    const formattedDate = format(date, "yyyy-MM-dd");
-    const selectedData = {
-      date: formattedDate,
-      timeSlot,
-    };
-    onClose();
-  };
+   // If the selected date is today, validate the time slot
+   if (selectedDate.getTime() === today.setHours(0, 0, 0, 0)) {
+     const currentTime = today.getHours();
+     const [startHour] = timeSlot.split("-")[0].split(":");
+
+     // Check if the current time is earlier than the start of the selected time slot
+     if (currentTime >= parseInt(startHour, 10)) {
+       toast.error("Please select a valid time slot for today");
+       return;
+     }
+   } else if (selectedDate < today) {
+     // If selected date is before today, show error
+     toast.error("Please select a valid date");
+     return;
+   }
+
+   setIsLoading(true); // Start loader
+
+   const axios = require("axios");
+   let data = JSON.stringify({
+     meetingTiming: timeSlot,
+     meetingDate: format(date, "yyyy-MM-dd"),
+   });
+
+   let config = {
+     method: "post",
+     maxBodyLength: Infinity,
+     url: `${process.env.BACKEND_URL}api/v1/user/createMeeting`,
+     headers: {
+       "auth-token": window.localStorage.getItem("token"),
+       "Content-Type": "application/json",
+     },
+     data: data,
+   };
+
+   axios
+     .request(config)
+     .then((response) => {
+       if (response.data.success === true) {
+         toast.success("Meeting scheduled successfully");
+       } else {
+        
+         toast.error(response.data.data);
+       }
+     })
+     .catch((error) => {
+       toast.error(error.response.data.data);
+     })
+     .finally(() => {
+       setIsLoading(false); // Stop loader
+       onClose();
+     });
+
+ };
 
   if (!isOpen) return null;
 
@@ -49,7 +95,7 @@ const DateTimePickerModal = ({ isOpen, onClose }) => {
         <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:w-4/5 w-11/12">
           <div className="flex-grow flex flex-col justify-center">
             <h2 className="text-lg font-semibold mb-4 text-white">
-              Select Date and Time Slot
+              Choose Date and Time Slot
             </h2>
             <div className="w-full md:w-auto h-80vh">
               <Calendar
@@ -83,8 +129,9 @@ const DateTimePickerModal = ({ isOpen, onClose }) => {
         <button
           onClick={handleSubmit}
           className="w-2/5 bg-blue-600 text-white py-2 rounded hover:bg-blue-700 mt-4"
+          disabled={isLoading}
         >
-          Submit
+          {isLoading ? "Scheduling..." : "Schedule Meeting"}
         </button>
       </div>
     </div>

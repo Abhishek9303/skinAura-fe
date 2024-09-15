@@ -7,6 +7,7 @@ const useUserStore = create((set) => ({
     emailId: "",
     mobileNo: "",
     role: "",
+    isAuthorized: false,
   },
   // Actions to modify user data
   setUser: (newUser) =>
@@ -15,7 +16,7 @@ const useUserStore = create((set) => ({
     })),
   clearUser: () =>
     set(() => ({
-      user: { name: "", emailId: "", mobileNo: "", role: "" },
+      user: { name: "", emailId: "", mobileNo: "", role: "" , isAuthorized: false },
     })),
 }));
 

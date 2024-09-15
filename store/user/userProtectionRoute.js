@@ -8,7 +8,6 @@ const withAuth = (WrappedComponent) => {
     const router = useRouter();
     const validateUser = (token) => {
       const axios = require("axios");
-
       let config = {
         method: "get",
         maxBodyLength: Infinity,
@@ -22,7 +21,8 @@ const withAuth = (WrappedComponent) => {
             name: response.data.data.name,
             emailId: response.data.data.emailId,
             mobileNo : response.data.data.mobileNo,
-            role : response.data.data.role
+            role : response.data.data.role,
+            isAuthorized: true,
           })
         })
         .catch((error) => {

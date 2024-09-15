@@ -21,13 +21,15 @@ export default function RootLayout({ children }) {
         {shouldShowNavAndFooter && <Footer />}
         <ToastContainer
           position="top-right"
-          autoClose={3000}
+          autoClose={5000}
           hideProgressBar={false}
           newestOnTop={false}
           closeOnClick
-          pauseOnHover
-          draggable
+          rtl={false}
           pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="dark"
         />
       </body>
     </html>

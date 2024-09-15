@@ -42,7 +42,7 @@ const SignIn = () => {
       let config = {
         method: "post",
         maxBodyLength: Infinity,
-        url: `${process.env.NEXT_PUBLIC_BACKEND_URL}api/v1/user/login`,
+        url: `${process.env.BACKEND_URL}api/v1/user/login`,
         headers: {
           "Content-Type": "application/json",
         },
@@ -75,6 +75,7 @@ const SignIn = () => {
 
   return (
     <div className="w-full flex items-center justify-center h-screen">
+    
       <div
         className="hidden md:block h-full w-[40%] bg-cover bg-center"
         style={{
@@ -112,9 +113,7 @@ const SignIn = () => {
               placeholder="Password"
               className="w-full mb-5 border-[0.5px] border-[#0000003b] shadow-md rounded-lg p-3"
             />
-            {errors.password && (
-              <p className="text-red-500 text-sm mt-1">{errors.password}</p>
-            )}
+  
           </div>
           <button
             onClick={handleSubmit}

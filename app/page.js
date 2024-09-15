@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import HomeSwiper1 from "./components/swiper/HomeSwiper1";
 import ReviewSwiper from "./components/swiper/ReviewSwiper";
 import Journey from "./components/homepageComp/Journey";
@@ -15,19 +15,44 @@ import GoogleRiviewCard from "./components/googleRiviewCard/GoogleRiviewCard";
 import GoogleReviewSwiper from "./components/googleReviewSwiper/GoogleReviewSwiper";
 import BeforeAfterReview from "./components/beforeAfter/BeforeAfterReview";
 import { ToastContainer,toast } from "react-toastify";
+import useUserStore from "../store/user/userProfile";
 import "react-toastify/dist/ReactToastify.css";
 import DateTimePickerModal from "./components/datePickerModel/DateTimePickerModal";
+import { useRouter } from "next/navigation";
 
 const Page = () => {
+  const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const { user, setUser, clearUser } = useUserStore();
+  const [token, setToken] = useState(null);
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
+  useEffect(() => {
+    setToken(localStorage.getItem("isAuthenticate"));
+  }, [])
+  
   return (
     <>
-      {isModalOpen && (
-        <DateTimePickerModal isOpen={isModalOpen} onClose={closeModal} />
-      )}
+      {isModalOpen &&
+        (token ? (
+          <DateTimePickerModal isOpen={isModalOpen} onClose={closeModal} />
+        ) : (
+          (() => {
+            closeModal();
+            toast("Please Login First", {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "dark",
+            });
+            router.push("/signin");
+            return null;
+          })()
+        ))}
       <div className="relative">
         <HomeSwiper1 />
         <Scroller />
@@ -141,9 +166,9 @@ const Page = () => {
         </div>
         <div className="md:w-[85vmax] w-full px-2 mx-auto flex flex-wrap md:gap-8 gap-5 items-center justify-center md:pb-16 pb-8">
           <Product id={1} key={1} name={"501/-"} addToCart={true} />
-          <Product id={1} key={1} name={"501/-"} addToCart={true} />
-          <Product id={1} key={1} name={"501/-"} addToCart={true} />
-          <Product id={1} key={1} name={"501/-"} addToCart={true} />
+          <Product id={1} key={2} name={"501/-"} addToCart={true} />
+          <Product id={1} key={3} name={"501/-"} addToCart={true} />
+          <Product id={1} key={4} name={"501/-"} addToCart={true} />
         </div>
         <Button text={"View All"} className="rounded-lg" />
       </div>

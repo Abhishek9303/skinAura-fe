@@ -7,6 +7,7 @@ const cards = [
     image: "/images/cardimg01.png",
     step: "step 1",
     timeTaken: "(takes 2-4 min)",
+    key : 1
   },
   {
     title: "Take The Skin Test",
@@ -14,6 +15,7 @@ const cards = [
     image: "/images/cardimg01.png",
     step: "step 1",
     timeTaken: "(takes 2-4 min)",
+    key: 2
   },
   {
     title: "Take The Skin Test",
@@ -21,6 +23,7 @@ const cards = [
     image: "/images/cardimg01.png",
     step: "step 1",
     timeTaken: "(takes 2-4 min)",
+    key : 3
   },
 ];
 const Journey = () => {
@@ -36,10 +39,10 @@ const Journey = () => {
           </p>
         </div>
         <div className="cards grid lg:grid-cols-3 grid-rows-1 py-5  gap-8 ">
-          {cards.map((card) => (
+          {cards.map((card,index) => (
             <CustomCards
               className="h-[50vh]"
-              key={card.title}
+              key={index}
               title={card.title}
               description={card.description}
               step={card.step}
