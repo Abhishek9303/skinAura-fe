@@ -1,5 +1,5 @@
 "use client"
-import React from "react";
+import React, { useState } from "react";
 import HomeSwiper1 from "./components/swiper/HomeSwiper1";
 import ReviewSwiper from "./components/swiper/ReviewSwiper";
 import Journey from "./components/homepageComp/Journey";
@@ -16,10 +16,18 @@ import GoogleReviewSwiper from "./components/googleReviewSwiper/GoogleReviewSwip
 import BeforeAfterReview from "./components/beforeAfter/BeforeAfterReview";
 import { ToastContainer,toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import DateTimePickerModal from "./components/datePickerModel/DateTimePickerModal";
 
 const Page = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
   return (
     <>
+      {isModalOpen && (
+        <DateTimePickerModal isOpen={isModalOpen} onClose={closeModal} />
+      )}
       <div className="relative">
         <HomeSwiper1 />
         <Scroller />
@@ -46,10 +54,9 @@ const Page = () => {
             alt="internet required"
           />
         </div>
-        <Button
-          text={"Take a Test Now"}
-          className="md:mt-10 mt-3 rounded-full"
-        />
+        <button onClick={openModal} className="md:mt-10 mt-3">
+          <Button text={"Take a Test Now"} className="rounded-full" />
+        </button>
       </div>
       <div className=" flex items-center justify-center md:mt-16 mt-12">
         <div className="text-center flex flex-col gap-3 items-center justify-center">
@@ -68,12 +75,12 @@ const Page = () => {
             ingredients from the most authentic sources, we personalize your
             treatment delivering assured results.
           </p>
-          <Button
-            text={"Take a Test Now"}
-            className="md:mt-12 mt-8 rounded-full"
-          />
+          <button onClick={openModal} className="md:mt-10 mt-3">
+            <Button text={"Take a Test Now"} className="rounded-full" />
+          </button>
         </div>
       </div>
+
       <div className="flex flex-col items-center justify-center mt-12">
         <Journey />
         <Button
@@ -147,7 +154,6 @@ const Page = () => {
           <GoogleReviewSwiper />
         </div>
       </div>
-      
     </>
   );
 };
