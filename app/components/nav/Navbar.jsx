@@ -33,11 +33,13 @@ const Nav = () => {
       {isMobile ? (
         <div className="flex flex-col">
           <div className="relative flex py-3 justify-between items-center md:px-10 px-3">
-            <div className="logo">
-              <img
-                src="/images/logo.png"
-                className="w-[60px] h-[35px] md:w-[80px] md:h-[50px]"
-              />
+            <div className="logo cursor-pointer">
+              <Link href={"/"} className="cursor-pointer">
+                <img
+                  src="/images/logo.png"
+                  className="w-[60px] h-[35px] md:w-[80px] md:h-[50px] "
+                />
+              </Link>
             </div>
             <div className="navRight flex justify-center items-center gap-2">
               <Link href="/profile">

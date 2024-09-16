@@ -4,15 +4,16 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { format } from "date-fns";
 import { toast } from "react-toastify";
-
+import useUserStore from "../../../store/user/userProfile";
 const timeSlots = ["12:00-2:00", "2:00-4:00", "4:00-6:00"];
 
 const DateTimePickerModal = ({ isOpen, onClose }) => {
   const [date, setDate] = useState(new Date());
   const [timeSlot, setTimeSlot] = useState("");
   const [error, setError] = useState("");
+  const [token, setToken] = useState(null);
   const [isLoading, setIsLoading] = useState(false); // For loader
-
+  const { user, setUser, clearUser } = useUserStore();
   const handleDateChange = (selectedDate) => {
     setDate(selectedDate);
     setError("");
@@ -46,7 +47,7 @@ const DateTimePickerModal = ({ isOpen, onClose }) => {
 
    const axios = require("axios");
    let data = JSON.stringify({
-     meetingTiming: timeSlot,
+     meetingTime: timeSlot,
      meetingDate: format(date, "yyyy-MM-dd"),
    });
 
@@ -64,6 +65,7 @@ const DateTimePickerModal = ({ isOpen, onClose }) => {
    axios
      .request(config)
      .then((response) => {
+      
        if (response.data.success === true) {
          toast.success("Meeting scheduled successfully");
        } else {
@@ -72,7 +74,19 @@ const DateTimePickerModal = ({ isOpen, onClose }) => {
        }
      })
      .catch((error) => {
-       toast.error(error.response.data.data);
+       
+       if(error.response.status === 401){
+          clearUser();
+         window.localStorage.removeItem("token");
+         window.location.href = "/signin";
+        toast.error("Please login to schedule a meeting");
+        return;
+       }
+       if(error.response.data.data.length > 0){
+          toast.warn(error.response.data.data,{theme:"dark"});
+          return
+       }
+       toast.error(error.response.data.error);
      })
      .finally(() => {
        setIsLoading(false); // Stop loader

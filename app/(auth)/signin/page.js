@@ -3,6 +3,8 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 const SignIn = () => {
   const router = useRouter();
@@ -11,6 +13,8 @@ const SignIn = () => {
     password: "",
   });
   const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false); // For form submission
+  const [skeletonLoading, setSkeletonLoading] = useState(true); // For skeleton loader
 
   const validateForm = () => {
     let isValid = true;
@@ -39,6 +43,7 @@ const SignIn = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (validateForm()) {
+      setLoading(true); // Start form submission loader
       let config = {
         method: "post",
         maxBodyLength: Infinity,
@@ -60,14 +65,26 @@ const SignIn = () => {
           router.push("/");
         }
       } catch (error) {
-        toast.error(error.response?.data?.message || "Something went wrong", {
+        toast.error(error.response?.data?.data || "Something went wrong", {
           theme: "dark",
         });
+      } finally {
+        setLoading(false); // Stop form submission loader
       }
     }
   };
 
+  // Handle "Enter" key press for form submission
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      handleSubmit(e);
+    }
+  };
+
   useEffect(() => {
+    // Simulate skeleton loading delay
+    setTimeout(() => setSkeletonLoading(false), 1000);
+
     if (localStorage.getItem("isAuthenticate") === "true") {
       router.push("/");
     }
@@ -75,7 +92,6 @@ const SignIn = () => {
 
   return (
     <div className="w-full flex items-center justify-center h-screen">
-    
       <div
         className="hidden md:block h-full w-[40%] bg-cover bg-center"
         style={{
@@ -84,53 +100,68 @@ const SignIn = () => {
         }}
       ></div>
       <div className="flex items-center justify-center w-full md:w-[60%] p-5 md:p-12">
-        <form className="w-full max-w-md p-8 border-[0.5px] border-[#0000003b] shadow-md rounded-lg space-y-6">
-          <h1 className="md:text-3xl text-2xl text-center text-gray-600 font-bold">
-            Log In
-          </h1>
-          <div>
-            <label className="block text-gray-600 font-medium mb-2">
-              Phone No
-            </label>
-            <input
-              onChange={(e) => setData({ ...data, mobileNo: e.target.value })}
-              type="tel"
-              placeholder="1234567890"
-              name="mobileNo"
-              className="w-full border-[0.5px] border-[#0000003b] shadow-md rounded-lg p-3"
-            />
-            {errors.mobileNo && (
-              <p className="text-red-500 text-sm mt-1">{errors.mobileNo}</p>
-            )}
+        {skeletonLoading ? (
+          <div className="w-full max-w-md">
+            <Skeleton height={400} count={1} className="mb-4" />
           </div>
-          <div>
-            <label className="block text-gray-600 font-medium mb-2">
-              Password
-            </label>
-            <input
-              onChange={(e) => setData({ ...data, password: e.target.value })}
-              type="password"
-              placeholder="Password"
-              className="w-full mb-5 border-[0.5px] border-[#0000003b] shadow-md rounded-lg p-3"
-            />
-  
-          </div>
-          <button
-            onClick={handleSubmit}
-            className="w-full bg-[#6A4D6F] text-white font-medium py-2 rounded-lg shadow-md hover:bg-gray-700 transition duration-300"
+        ) : (
+          <form
+            className="w-full max-w-md p-8 border-[0.5px] border-[#0000003b] shadow-md rounded-lg space-y-6"
+            onKeyPress={handleKeyPress} // Handle Enter key
           >
-            Login
-          </button>
-          <div className="text-center text-gray-600 mt-4">
-            Don't have an account?{" "}
-            <a
-              href="/signup"
-              className="text-gray-600 font-bold hover:underline"
+            <h1 className="md:text-3xl text-2xl text-center text-gray-600 font-bold">
+              Log In
+            </h1>
+            <div>
+              <label className="block text-gray-600 font-medium mb-2">
+                Phone No
+              </label>
+              <div className="flex">
+                <span className="bg-gray-200 p-3 rounded-l-lg">+91</span>
+                <input
+                  onChange={(e) =>
+                    setData({ ...data, mobileNo: e.target.value })
+                  }
+                  type="tel"
+                  placeholder="1234567890"
+                  name="mobileNo"
+                  className="w-full border-[0.5px] border-[#0000003b] shadow-md rounded-r-lg p-3"
+                  maxLength="10"
+                />
+              </div>
+            </div>
+            <div>
+              <label className="block text-gray-600 font-medium mb-2">
+                Password
+              </label>
+              <input
+                onChange={(e) => setData({ ...data, password: e.target.value })}
+                type="password"
+                placeholder="Password"
+                className="w-full mb-5 border-[0.5px] border-[#0000003b] shadow-md rounded-lg p-3"
+              />
+              {errors.password && (
+                <p className="text-red-500 text-sm mt-1">{errors.password}</p>
+              )}
+            </div>
+            <button
+              onClick={handleSubmit}
+              className="w-full bg-[#6A4D6F] text-white font-medium py-2 rounded-lg shadow-md hover:bg-gray-700 transition duration-300"
+              disabled={loading} // Disable button when loading
             >
-              Sign Up
-            </a>
-          </div>
-        </form>
+              {loading ? "Signing in..." : "Login"}
+            </button>
+            <div className="text-center text-gray-600 mt-4">
+              Don't have an account?{" "}
+              <a
+                href="/signup"
+                className="text-gray-600 font-bold hover:underline"
+              >
+                Sign Up
+              </a>
+            </div>
+          </form>
+        )}
       </div>
     </div>
   );
