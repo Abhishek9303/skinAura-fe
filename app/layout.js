@@ -11,7 +11,7 @@ export default function RootLayout({ children }) {
   const path = usePathname();
 
   const shouldShowNavAndFooter =
-    path !== "/signup" && path !== "/signin" && path !== "/cart";
+    path !== "/signup" && path !== "/signin" && path !== "/cart" && path !== "/adminLogin";
 
   return (
     <html lang="en">

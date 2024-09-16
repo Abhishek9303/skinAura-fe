@@ -5,7 +5,7 @@ import "react-calendar/dist/Calendar.css";
 import { format } from "date-fns";
 import { toast } from "react-toastify";
 import useUserStore from "../../../store/user/userProfile";
-const timeSlots = ["12:00-2:00", "2:00-4:00", "4:00-6:00"];
+const timeSlots = ["12:00 - 2:00", "2:00 - 4:00", "4:00 - 6:00"];
 
 const DateTimePickerModal = ({ isOpen, onClose }) => {
   const [date, setDate] = useState(new Date());

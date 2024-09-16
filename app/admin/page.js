@@ -1,12 +1,14 @@
 "use client";
 import React, { useState } from "react";
 import MeetingApproval from "../../app/admin/adminComponent/MeetingApproval";
+import withAuth from "./ProtectedRoute";
+import Skeleton from "react-loading-skeleton";
+import adminStore from "@/store/admin/adminProfile";
 
 // Define components for each tab
 const ScheduleMeeting = () => <div>Schedule Meeting Component</div>;
 const ManageUser = () => <div>Manage User Component</div>;
-const ManageSchedule = () => <div>Manage Schedule Component</div>;
-
+const ManageSchedule = () => <div>Manage Schedule Component</div>;;
 const tabs = [
   { id: 1, label: "Schedule Meeting", content: <MeetingApproval /> },
   // { id: 2, label: "Manage User", content: <ManageUser /> },
@@ -14,6 +16,7 @@ const tabs = [
 ];
 
 const Page = () => {
+  const {admin} = adminStore();
   const [activeTab, setActiveTab] = useState(tabs[0].id);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true); // Add this line
 
@@ -25,7 +28,7 @@ const Page = () => {
 
   return (
     <div className=" flex flex-col md:flex-row">
-      {/* Mobile Header (for small screens) */}
+      {console.log(admin)}
       <div className="md:hidden flex justify-between items-center bg-slate-500 p-4">
         <h1 className="text-xl font-bold">Admin Page</h1>
         <button
@@ -74,4 +77,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default withAuth(Page,['admin']);

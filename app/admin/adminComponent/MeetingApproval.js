@@ -1,31 +1,33 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
+import adminStore from "@/store/admin/adminProfile";
 
 const MeetingApproval = () => {
   const [meetings, setMeetings] = useState([]);
   const [isEditing, setIsEditing] = useState({}); // Track editing state for each meeting
-
+  const [token, setToken] = useState(null);
+  const {admin} = adminStore();
+  const fetchMeetings = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.BACKEND_URL}api/v1/admin/getAllMeetingReq`,
+        {
+          headers: {
+            "auth-token": `${admin.token}`, // Use environment variable for token
+          },
+        }
+      );
+      setMeetings(response.data.data);
+    } catch (error) {
+      console.error(
+        "Error fetching meetings:",
+        error.response ? error.response.data : error.message
+      );
+    }
+  };
   useEffect(() => {
-    const fetchMeetings = async () => {
-      try {
-        const response = await axios.get(
-          `${process.env.BACKEND_URL}api/v1/admin/getAllMeetingReq`,
-          {
-            headers: {
-              "auth-token": `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2OTc4NTQwOWEzOWYzNDE0ZmQ2ZTkxNSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcyMTMxODY2M30.hfjRRwnaLnRino8FuWNL9WYZRiNgx0yTrerF7WSq4Fo`, // Use environment variable for token
-            },
-          }
-        );
-        setMeetings(response.data.data);
-      } catch (error) {
-        console.error(
-          "Error fetching meetings:",
-          error.response ? error.response.data : error.message
-        );
-      }
-    };
-
+    setToken(window.localStorage.getItem("token"));
     fetchMeetings();
   }, []);
 
@@ -75,9 +77,9 @@ const saveMeetingChanges = async (id, updatedData) => {
   const config = {
     method: "put",
     maxBodyLength: Infinity,
-    url: `${process.env.BACKEND_URL}api/v1/admin/approveMeeting?meetingId=${id}`,
+    url: `http://localhost:5000/api/v1/admin/approveMeeting?meetingId=${id}`,
     headers: {
-      "auth-token": `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2OTc4NTQwOWEzOWYzNDE0ZmQ2ZTkxNSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcyMTMxODY2M30.hfjRRwnaLnRino8FuWNL9WYZRiNgx0yTrerF7WSq4Fo`, // Use environment variable for token
+      "auth-token": admin.token, // Use environment variable for token
       "Content-Type": "application/json",
     },
     data: data,
@@ -86,7 +88,6 @@ const saveMeetingChanges = async (id, updatedData) => {
   try {
     const response = await axios.request(config);
     toast.success("Meeting updated successfully!");
-    console.log("Meeting updated successfully:", response.data);
     // Optionally update the local state if needed
   } catch (error) {
     toast.error(
@@ -112,9 +113,10 @@ const saveMeetingChanges = async (id, updatedData) => {
             key={meeting._id}
             className="bg-white p-4 rounded-lg shadow hover:bg-gray-50 transition"
           >
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col space-y-4">
               {isEditing[meeting._id] ? (
-                <div className="flex flex-col w-full space-y-2">
+                <div className="flex flex-col w-full space-y-4">
+                  {/* Meeting Link */}
                   <div>
                     <label className="block text-sm">Meeting Link:</label>
                     <input
@@ -126,6 +128,8 @@ const saveMeetingChanges = async (id, updatedData) => {
                       className="p-2 border rounded w-full"
                     />
                   </div>
+
+                  {/* Meeting Date */}
                   <div>
                     <label className="block text-sm">Meeting Date:</label>
                     <input
@@ -141,6 +145,8 @@ const saveMeetingChanges = async (id, updatedData) => {
                       className="p-2 border rounded w-full"
                     />
                   </div>
+
+                  {/* Meeting Time Slot */}
                   <div>
                     <label className="block text-sm">Meeting Time Slot:</label>
                     <select
@@ -160,6 +166,8 @@ const saveMeetingChanges = async (id, updatedData) => {
                       <option value="2:00 - 4:00">2:00 - 4:00</option>
                     </select>
                   </div>
+
+                  {/* Status */}
                   <div>
                     <label className="block text-sm">Status:</label>
                     <select
@@ -171,10 +179,13 @@ const saveMeetingChanges = async (id, updatedData) => {
                     >
                       <option value="pending">Pending</option>
                       <option value="approved">Approved</option>
-                      <option value="declined">Declined</option>
+                      <option value="completed">Completed</option>
+                      <option value="cancelled">Cancelled</option>
                     </select>
                   </div>
-                  <div className="flex justify-end space-x-4">
+
+                  {/* Save & Cancel Buttons */}
+                  <div className="flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-4 justify-end">
                     <button
                       onClick={() =>
                         saveMeetingChanges(meeting._id, {
@@ -184,24 +195,32 @@ const saveMeetingChanges = async (id, updatedData) => {
                           status: meeting.status,
                         })
                       }
-                      className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                      className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 w-full sm:w-auto"
                     >
                       Save
                     </button>
                     <button
                       onClick={() => toggleEdit(meeting._id)}
-                      className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
+                      className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 w-full sm:w-auto"
                     >
                       Cancel
                     </button>
                   </div>
                 </div>
               ) : (
-                <>
-                  <div className="w-full">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-4 sm:space-y-0">
+                  <div className="w-full space-y-2">
+                    {/* Displaying Meeting Information */}
                     <p className="text-sm font-medium">
                       <span className="font-bold">Link:</span>{" "}
-                      {meeting.meetingLink || "No link"}
+                      {meeting.meetingLink
+                        ? meeting.meetingLink.split(" ").length > 3
+                          ? `${meeting.meetingLink
+                              .split(" ")
+                              .slice(0, 3)
+                              .join(" ")}...`
+                          : meeting.meetingLink
+                        : "No link"}
                     </p>
                     <p className="text-sm">
                       <span className="font-bold">Date:</span>{" "}
@@ -213,7 +232,7 @@ const saveMeetingChanges = async (id, updatedData) => {
                           year: "numeric",
                         }
                       )}{" "}
-                      |<span className="font-bold"> Time:</span>{" "}
+                      | <span className="font-bold">Time:</span>{" "}
                       {meeting.meetingTime || "No time"}
                     </p>
                     <p className="text-sm">
@@ -221,21 +240,23 @@ const saveMeetingChanges = async (id, updatedData) => {
                       {meeting.status}
                     </p>
                   </div>
-                  <div className="flex space-x-4">
+
+                  {/* Edit & Delete Buttons */}
+                  <div className="flex space-x-4 sm:space-x-4 justify-between sm:justify-end">
                     <button
                       onClick={() => toggleEdit(meeting._id)}
-                      className="px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600"
+                      className="px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600 w-full sm:w-auto"
                     >
                       Edit
                     </button>
                     <button
                       onClick={() => handleDelete(meeting._id)}
-                      className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+                      className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 w-full sm:w-auto"
                     >
                       Delete
                     </button>
                   </div>
-                </>
+                </div>
               )}
             </div>
           </li>
