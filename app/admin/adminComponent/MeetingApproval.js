@@ -77,7 +77,7 @@ const saveMeetingChanges = async (id, updatedData) => {
   const config = {
     method: "put",
     maxBodyLength: Infinity,
-    url: `http://localhost:5000/api/v1/admin/approveMeeting?meetingId=${id}`,
+    url: `${process.env.BACKEND_URL}api/v1/admin/approveMeeting?meetingId=${id}`,
     headers: {
       "auth-token": admin.token, // Use environment variable for token
       "Content-Type": "application/json",
