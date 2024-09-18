@@ -4,16 +4,17 @@ import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import { RiUser3Line, RiHandbagLine, RiMenuLine } from "@remixicon/react";
 import { toast } from "react-toastify";
-
+import {useRouter} from "next/navigation";
 const Nav = () => {
   const [isMobile, setIsMobile] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [token, setToken] = useState(null);
-
+  const Router = useRouter();
   const handleLogOut = ()=>{
     window.localStorage.clear()
-    toast.success("Log-out Succesfully")
+    toast.success("Log-out Succesfully");
+    Router.push("/")
   }
 
   useEffect(() => {
