@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import Link from "next/link";
 
 const SignIn = () => {
   const router = useRouter();
@@ -144,6 +145,8 @@ const SignIn = () => {
                 <p className="text-red-500 text-sm mt-1">{errors.password}</p>
               )}
             </div>
+            <Link href="/resetPassword">Forgot Password ? </Link>
+
             <button
               onClick={handleSubmit}
               className="w-full bg-[#6A4D6F] text-white font-medium py-2 rounded-lg shadow-md hover:bg-gray-700 transition duration-300"
