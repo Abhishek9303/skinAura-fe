@@ -15,7 +15,8 @@ export default function RootLayout({ children }) {
     path !== "/signin" &&
     path !== "/cart" &&
     path !== "/adminLogin" &&
-    path !== "/resetPassword";
+    path !== "/resetPassword" &&
+    path !== "/resetPassword/token"
 
   return (
     <html lang="en">
