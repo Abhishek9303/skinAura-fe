@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import Link from "next/link";
+import { RiEyeLine, RiEyeOffLine } from "@remixicon/react";
 
 const SignIn = () => {
   const router = useRouter();
@@ -16,6 +17,7 @@ const SignIn = () => {
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false); // For form submission
   const [skeletonLoading, setSkeletonLoading] = useState(true); // For skeleton loader
+  const [showPassword, setShowPassword] = useState(false); // For password visibility
 
   const validateForm = () => {
     let isValid = true;
@@ -130,22 +132,47 @@ const SignIn = () => {
                   maxLength="10"
                 />
               </div>
+              {errors.mobileNo && (
+                <p className="text-red-500 text-sm mt-1">{errors.mobileNo}</p>
+              )}
             </div>
             <div>
               <label className="block text-gray-600 font-medium mb-2">
                 Password
               </label>
-              <input
-                onChange={(e) => setData({ ...data, password: e.target.value })}
-                type="password"
-                placeholder="Password"
-                className="w-full mb-5 border-[0.5px] border-[#0000003b] shadow-md rounded-lg p-3"
-              />
+              <div className="relative flex items-center">
+                <input
+                  onChange={(e) =>
+                    setData({ ...data, password: e.target.value })
+                  }
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Password"
+                  className="w-full border-[0.5px] border-[#0000003b] shadow-md rounded-lg p-3 pr-10"
+                />
+                <button
+                  type="button"
+                  className="absolute right-3 flex items-center"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? (
+                    <RiEyeOffLine className="h-5 w-5 text-gray-500" />
+                  ) : (
+                    <RiEyeLine className="h-5 w-5 text-gray-500" />
+                  )}
+                </button>
+              </div>
               {errors.password && (
                 <p className="text-red-500 text-sm mt-1">{errors.password}</p>
               )}
             </div>
-            <Link href="/resetPassword">Forgot Password ? </Link>
+            <div className="flex justify-between items-center">
+              <Link
+                href="/resetPassword"
+                className="text-gray-600 hover:underline"
+              >
+                Forgot Password?
+              </Link>
+            </div>
 
             <button
               onClick={handleSubmit}

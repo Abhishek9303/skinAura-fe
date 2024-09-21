@@ -43,7 +43,7 @@ const SendToken = () => {
       try {
         const response = await axios.request(config);
         if (response?.data?.status === true) {
-          toast.success("Token sent to your email", {
+          toast.success("Reset Link sent to your email", {
             theme: "dark",
           });
           router.push("/signin");
