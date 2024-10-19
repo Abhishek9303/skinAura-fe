@@ -13,7 +13,7 @@ const DateTimePickerModal = ({ isOpen, onClose }) => {
   const [error, setError] = useState("");
   const [token, setToken] = useState(null);
   const [isLoading, setIsLoading] = useState(false); // For loader
-  const { user, setUser, clearUser } = useUserStore();
+  const { clearUser } = useUserStore();
   const handleDateChange = (selectedDate) => {
     setDate(selectedDate);
     setError("");

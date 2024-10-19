@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import MeetingApproval from "../../app/admin/adminComponent/MeetingApproval";
+import ManageProducts from "./productComp/ProductManage";
 import withAuth from "./ProtectedRoute";
 import Skeleton from "react-loading-skeleton";
 import adminStore from "@/store/admin/adminProfile";
@@ -11,7 +12,7 @@ const ManageUser = () => <div>Manage User Component</div>;
 const ManageSchedule = () => <div>Manage Schedule Component</div>;;
 const tabs = [
   { id: 1, label: "Schedule Meeting", content: <MeetingApproval /> },
-  // { id: 2, label: "Manage User", content: <ManageUser /> },
+  { id: 2, label: "Manage Product", content: <ManageProducts /> },
   // { id: 3, label: "Manage Schedule", content: <ManageSchedule /> },
 ];
 

@@ -15,7 +15,7 @@ const OrderCard = () => {
             </div>
             <div className='flex w-full items-center md:justify-end justify-between'>
             <h1 className='text-[2.3vmax] md:hidden md:mb-5 font-bold'>₹ 320 /-</h1> 
-            <Button text={'Buy Now'} className='rounded-lg'/>
+            <Button  text={'Buy Now'} className='rounded-lg'/>
             </div>
         </div>
         </div>

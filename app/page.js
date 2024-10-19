@@ -27,9 +27,7 @@ const Page = () => {
   const [token, setToken] = useState(null);
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
-  useEffect(() => {
-    setToken(localStorage.getItem("isAuthenticate"));
-  }, [])
+
   
   return (
     <>
@@ -165,7 +163,11 @@ const Page = () => {
           <p className="xs:text-sm">“Green and Safe”</p>
         </div>
         <div className="md:w-[85vmax] w-full px-2 mx-auto flex flex-wrap md:gap-8 gap-5 items-center justify-center md:pb-16 pb-8">
-          <Product id={1} key={1} name={"501/-"} addToCart={true} />
+          <Product
+            id={"66eff3e454a5aaf9a608262c"}
+            name={"501/-"}
+            addToCart={true}
+          />
           <Product id={1} key={2} name={"501/-"} addToCart={true} />
           <Product id={1} key={3} name={"501/-"} addToCart={true} />
           <Product id={1} key={4} name={"501/-"} addToCart={true} />

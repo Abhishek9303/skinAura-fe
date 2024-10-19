@@ -27,8 +27,8 @@ const SingleProduct = (props) => {
               <QuantityBtn/>
             </div>
             <div className=" flex items-center md:py-10 pt-10 gap-5">
-            <Button text='Add To Cart' className='rounded-lg ' />
-            <Button text='Buy Now' className='rounded-lg ' />
+            <Button text='Add To Cart' className='rounded-lg cursor-pointer' />
+            <Button text='Buy Now' className='rounded-lg cursor-pointer' />
             </div>
           </div>
         </div>

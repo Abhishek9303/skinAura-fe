@@ -20,13 +20,17 @@ const withAuth = (WrappedComponent) => {
           setUser({
             name: response.data.data.name,
             emailId: response.data.data.emailId,
-            mobileNo : response.data.data.mobileNo,
-            role : response.data.data.role,
+            mobileNo: response.data.data.mobileNo,
+            role: response.data.data.role,
+            token: token,
+            currentCart: response.data.data.currentCart,
             isAuthorized: true,
-          })
+          });
         })
         .catch((error) => {
           console.log(error);
+        }).finally(() => {
+          setToken(token);
         });
     };
     useEffect(() => {

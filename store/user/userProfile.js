@@ -8,6 +8,8 @@ const useUserStore = create((set) => ({
     mobileNo: "",
     role: "",
     isAuthorized: false,
+    authToken : "",
+    currentCart : "",
   },
   // Actions to modify user data
   setUser: (newUser) =>
