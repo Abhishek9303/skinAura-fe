@@ -26,7 +26,7 @@ const AddressModal = ({
     const fetchAddresses = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/api/v1/common/getAddress",
+          `${process.env.BACKEND_URL}common/getAddress`,
           {
             headers: {
               "auth-token": window.localStorage.getItem("token"),
@@ -43,6 +43,7 @@ const AddressModal = ({
 
     if (isOpen) {
       fetchAddresses();
+      setSelectedAddressId(null); // Reset selected address ID when the modal opens
     }
   }, [isOpen]);
 
@@ -64,7 +65,7 @@ const AddressModal = ({
     if (showForm && validateFields()) {
       try {
         const response = await axios.post(
-          "http://localhost:5000/api/v1/user/addAddress",
+          `${process.env.BACKEND_URL}user/addAddress`,
           {
             ...newAddress,
           },

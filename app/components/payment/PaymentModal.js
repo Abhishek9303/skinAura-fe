@@ -23,7 +23,7 @@ const PaymentModal = ({
   ) => {
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/v1/user/newOrder",
+        `${process.env.BACKEND_URL}user/newOrder`,
         {
           productId,
           quantity,
