@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useEffect, useState } from "react";
 import HomeSwiper1 from "./components/swiper/HomeSwiper1";
 import ReviewSwiper from "./components/swiper/ReviewSwiper";
@@ -6,7 +6,6 @@ import Journey from "./components/homepageComp/Journey";
 import ProductPoster from "./components/homepageComp/ProductPoster";
 import InfluencerSection from "./components/homepageComp/InfluencerSection";
 import Product from "./components/product/Product";
-import Link from "next/link";
 import Button from "./components/button/Button";
 import Scroller from "../app/components/scroller/Scroller";
 import VideoDiv from "./components/videoDiv/VideoDiv";
@@ -14,21 +13,38 @@ import CenterSwiper from "./components/centerSwiper/CenterSwiper";
 import GoogleRiviewCard from "./components/googleRiviewCard/GoogleRiviewCard";
 import GoogleReviewSwiper from "./components/googleReviewSwiper/GoogleReviewSwiper";
 import BeforeAfterReview from "./components/beforeAfter/BeforeAfterReview";
-import { ToastContainer,toast } from "react-toastify";
+import { toast } from "react-toastify";
 import useUserStore from "../store/user/userProfile";
 import "react-toastify/dist/ReactToastify.css";
 import DateTimePickerModal from "./components/datePickerModel/DateTimePickerModal";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 
 const Page = () => {
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { user, setUser, clearUser } = useUserStore();
+  const [products, setProducts] = useState([]);
   const [token, setToken] = useState(null);
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
-  
+  const getProducts = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.BACKEND_URL}api/v1/common/getProduct`
+      );
+      if (response.data.success) {
+        setProducts(response.data.data.slice(0, 3));
+      }
+    } catch (error) {
+      console.error("Error fetching products:", error);
+    }
+  };
+  useEffect(() => {
+    getProducts();
+  }, []);
+
   return (
     <>
       {isModalOpen &&
@@ -162,16 +178,20 @@ const Page = () => {
           </h1>
           <p className="xs:text-sm">“Green and Safe”</p>
         </div>
-        <div className="md:w-[85vmax] w-full px-2 mx-auto flex flex-wrap md:gap-8 gap-5 items-center justify-center md:pb-16 pb-8">
-          <Product
-            id={"66eff3e454a5aaf9a608262c"}
-            name={"501/-"}
-            addToCart={true}
-          />
-          <Product id={1} key={2} name={"501/-"} addToCart={true} />
-          <Product id={1} key={3} name={"501/-"} addToCart={true} />
-          <Product id={1} key={4} name={"501/-"} addToCart={true} />
-        </div>
+        {products.length > 0 && (
+          <div className="md:w-[85vmax] w-full px-2 mx-auto flex flex-wrap md:gap-8 gap-5 items-center justify-center md:pb-16 pb-8">
+            {products.map((product) => (
+              <Product
+                id={product._id}
+                productId={product._id}
+                key={product._id}
+                name={product.name}
+                price={product.price}
+                addToCart={true}
+              />
+            ))}
+          </div>
+        )}
         <Button text={"View All"} className="rounded-lg" />
       </div>
 

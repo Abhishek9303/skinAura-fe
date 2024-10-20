@@ -1,179 +1,258 @@
-"use client";
-import React, { useState } from "react";
-import Button from "../../components/button/Button"; // Assuming your Button component is in a file named Button.js
+import React, { useEffect, useState } from "react";
+import Button from "@/app/components/button/Button";
+import axios from "axios";
 
-const AddressModal = ({ isOpen, onClose, onSubmit }) => {
-  const [addressData, setAddressData] = useState({
-    fullName: "",
+const AddressModal = ({
+  isOpen,
+  onClose,
+  onAddressSelect,
+  productId,
+  quantity,
+}) => {
+  const [showForm, setShowForm] = useState(false);
+  const [newAddress, setNewAddress] = useState({
     addressLine1: "",
-    addressLine2: "",
+    addressLine2: "", // Address Line 2
     city: "",
     state: "",
-    postalCode: "",
+    pinCode: "",
     country: "",
   });
+  const [addresses, setAddresses] = useState([]);
+  const [selectedAddressId, setSelectedAddressId] = useState(null);
+  const [errors, setErrors] = useState({});
 
-  const handleInputChange = (e) => {
-    setAddressData({
-      ...addressData,
-      [e.target.name]: e.target.value,
-    });
+  useEffect(() => {
+    const fetchAddresses = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:5000/api/v1/common/getAddress",
+          {
+            headers: {
+              "auth-token": window.localStorage.getItem("token"),
+            },
+          }
+        );
+        if (response.data.success) {
+          setAddresses(response.data.data);
+        }
+      } catch (error) {
+        console.error("Error fetching addresses:", error);
+      }
+    };
+
+    if (isOpen) {
+      fetchAddresses();
+    }
+  }, [isOpen]);
+
+  const validateFields = () => {
+    const newErrors = {};
+    if (!newAddress.addressLine1)
+      newErrors.addressLine1 = "Address Line 1 is required.";
+    if (!newAddress.city) newErrors.city = "City is required.";
+    if (!newAddress.state) newErrors.state = "State is required.";
+    if (!newAddress.pinCode) newErrors.pinCode = "Pin Code is required.";
+    if (!newAddress.country) newErrors.country = "Country is required.";
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = () => {
-    onSubmit(addressData);
-    setAddressData({
-      fullName: "",
-      addressLine1: "",
-      addressLine2: "",
-      city: "",
-      state: "",
-      postalCode: "",
-      country: "",
-    });
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (showForm && validateFields()) {
+      try {
+        const response = await axios.post(
+          "http://localhost:5000/api/v1/user/addAddress",
+          {
+            ...newAddress,
+          },
+          {
+            headers: {
+              "auth-token": window.localStorage.getItem("token"),
+            },
+          }
+        );
+
+        if (response.data.success) {
+          onAddressSelect({
+            ...newAddress,
+            productId,
+            quantity,
+            addressId: response.data.address._id, // Include the new address ID
+          });
+
+          // Reset the new address state
+          setNewAddress({
+            addressLine1: "",
+            addressLine2: "",
+            city: "",
+            state: "",
+            pinCode: "",
+            country: "",
+          });
+        } else {
+          console.error("Error adding address:", response.data.message);
+        }
+      } catch (error) {
+        console.error("Error adding address:", error);
+      }
+    } else if (selectedAddressId) {
+      // Find the selected address from the addresses array
+      const selectedAddressDetails = addresses.find(
+        (address) => address._id.toString() === selectedAddressId
+      );
+
+      if (selectedAddressDetails) {
+        onAddressSelect({
+          ...selectedAddressDetails, // Send the details of the selected address
+          productId,
+          quantity,
+          addressId: selectedAddressDetails._id, // Include the selected address ID
+        });
+      }
+    }
   };
+
+  if (!isOpen) return null; // Return null if the modal is not open
 
   return (
-    <>
-      {isOpen && (
-        <div className="fixed inset-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white w-full h-full md:h-auto md:max-w-md md:rounded-lg p-6 overflow-y-auto">
-            <h2 className="text-xl font-bold mb-4">Enter Your Address</h2>
-            <div className="mb-4">
-              <label
-                htmlFor="fullName"
-                className="block text-gray-700 font-semibold mb-1"
-              >
-                Full Name
-              </label>
-              <input
-                type="text"
-                id="fullName"
-                name="fullName"
-                value={addressData.fullName}
-                onChange={handleInputChange}
-                placeholder="Enter your full name"
-                className="w-full border border-gray-300 rounded-md px-3 py-2"
-              />
-            </div>
-            <div className="mb-4">
-              <label
-                htmlFor="addressLine1"
-                className="block text-gray-700 font-semibold mb-1"
-              >
-                Address Line 1
-              </label>
-              <input
-                type="text"
-                id="addressLine1"
-                name="addressLine1"
-                value={addressData.addressLine1}
-                onChange={handleInputChange}
-                placeholder="Enter address line 1"
-                className="w-full border border-gray-300 rounded-md px-3 py-2"
-              />
-            </div>
-            <div className="mb-4">
-              <label
-                htmlFor="addressLine2"
-                className="block text-gray-700 font-semibold mb-1"
-              >
-                Address Line 2
-              </label>
-              <input
-                type="text"
-                id="addressLine2"
-                name="addressLine2"
-                value={addressData.addressLine2}
-                onChange={handleInputChange}
-                placeholder="Enter address line 2 (optional)"
-                className="w-full border border-gray-300 rounded-md px-3 py-2"
-              />
-            </div>
-            <div className="mb-4">
-              <label
-                htmlFor="city"
-                className="block text-gray-700 font-semibold mb-1"
-              >
-                City
-              </label>
-              <input
-                type="text"
-                id="city"
-                name="city"
-                value={addressData.city}
-                onChange={handleInputChange}
-                placeholder="Enter city"
-                className="w-full border border-gray-300 rounded-md px-3 py-2"
-              />
-            </div>
-            <div className="mb-4">
-              <label
-                htmlFor="state"
-                className="block text-gray-700 font-semibold mb-1"
-              >
-                State
-              </label>
-              <input
-                type="text"
-                id="state"
-                name="state"
-                value={addressData.state}
-                onChange={handleInputChange}
-                placeholder="Enter state"
-                className="w-full border border-gray-300 rounded-md px-3 py-2"
-              />
-            </div>
-            <div className="mb-4">
-              <label
-                htmlFor="postalCode"
-                className="block text-gray-700 font-semibold mb-1"
-              >
-                Postal Code
-              </label>
-              <input
-                type="text"
-                id="postalCode"
-                name="postalCode"
-                value={addressData.postalCode}
-                onChange={handleInputChange}
-                placeholder="Enter postal code"
-                className="w-full border border-gray-300 rounded-md px-3 py-2"
-              />
-            </div>
-            <div className="mb-4">
-              <label
-                htmlFor="country"
-                className="block text-gray-700 font-semibold mb-1"
-              >
-                Country
-              </label>
-              <input
-                type="text"
-                id="country"
-                name="country"
-                value={addressData.country}
-                onChange={handleInputChange}
-                placeholder="Enter country"
-                className="w-full border border-gray-300 rounded-md px-3 py-2"
-              />
-            </div>
-            <div className="flex justify-end">
-              <Button
-                text="Submit"
-                className="bg-blue-500 hover:bg-blue-600 text-white rounded-md px-4 py-2"
-                onClick={handleSubmit}
-              />
-              <Button
-                text="Close"
-                className="ml-2 bg-gray-300 hover:bg-gray-400 text-gray-800 rounded-md px-4 py-2"
-                onClick={onClose}
-              />
-            </div>
-          </div>
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+      <div className="bg-white p-6 rounded-lg w-[80vw] md:w-[400px] relative">
+        <h2 className="text-2xl font-bold mb-4">Address</h2>
+
+        {/* Button to add new address */}
+        <div className="absolute top-4 right-4">
+          <Button
+            text={showForm ? "X" : "New Address"}
+            onClick={() => {
+              setShowForm((prev) => !prev);
+              setSelectedAddressId(null); // Reset selected address when toggling
+              if (showForm) {
+                setNewAddress({
+                  addressLine1: "",
+                  addressLine2: "",
+                  city: "",
+                  state: "",
+                  pinCode: "",
+                  country: "",
+                }); // Reset new address fields
+              }
+            }}
+            className="rounded-lg"
+          />
         </div>
-      )}
-    </>
+
+        {/* Existing addresses */}
+        <div className="mb-4">
+          <h3 className="text-lg font-medium mb-2">Select Existing Address:</h3>
+          {addresses.map((address) => (
+            <label key={address._id} className="block mb-2">
+              <input
+                type="radio"
+                value={address._id}
+                checked={selectedAddressId === address._id} // Direct comparison with ID
+                onChange={() => {
+                  setSelectedAddressId(address._id); // Set only the ID
+                  setShowForm(false); // Hide form if an existing address is selected
+                }}
+              />
+              <span className="ml-2">
+                {address.addressLine1}, {address.addressLine2}, {address.city},{" "}
+                {address.state}, {address.pinCode}, {address.country}
+              </span>
+            </label>
+          ))}
+        </div>
+
+        {showForm && (
+          <form onSubmit={handleSubmit} className="space-y-4 mb-4">
+            <h3 className="text-lg font-medium mb-2">Add New Address:</h3>
+            <input
+              type="text"
+              className="w-full p-2 border rounded"
+              placeholder="Address Line 1"
+              value={newAddress.addressLine1}
+              onChange={(e) =>
+                setNewAddress({ ...newAddress, addressLine1: e.target.value })
+              }
+              required
+            />
+            {errors.addressLine1 && (
+              <p className="text-red-500">{errors.addressLine1}</p>
+            )}
+            <input
+              type="text"
+              className="w-full p-2 border rounded"
+              placeholder="Address Line 2"
+              value={newAddress.addressLine2}
+              onChange={(e) =>
+                setNewAddress({ ...newAddress, addressLine2: e.target.value })
+              }
+            />
+            <input
+              type="text"
+              className="w-full p-2 border rounded"
+              placeholder="City"
+              value={newAddress.city}
+              onChange={(e) =>
+                setNewAddress({ ...newAddress, city: e.target.value })
+              }
+              required
+            />
+            {errors.city && <p className="text-red-500">{errors.city}</p>}
+            <input
+              type="text"
+              className="w-full p-2 border rounded"
+              placeholder="State"
+              value={newAddress.state}
+              onChange={(e) =>
+                setNewAddress({ ...newAddress, state: e.target.value })
+              }
+              required
+            />
+            {errors.state && <p className="text-red-500">{errors.state}</p>}
+            <input
+              type="text"
+              className="w-full p-2 border rounded"
+              placeholder="Pin Code"
+              value={newAddress.pinCode}
+              onChange={(e) =>
+                setNewAddress({ ...newAddress, pinCode: e.target.value })
+              }
+              required
+            />
+            {errors.pinCode && <p className="text-red-500">{errors.pinCode}</p>}
+            <input
+              type="text"
+              className="w-full p-2 border rounded"
+              placeholder="Country"
+              value={newAddress.country}
+              onChange={(e) =>
+                setNewAddress({ ...newAddress, country: e.target.value })
+              }
+              required
+            />
+            {errors.country && <p className="text-red-500">{errors.country}</p>}
+          </form>
+        )}
+
+        <div className="flex justify-center">
+          <Button
+            text="Proceed"
+            onClick={handleSubmit}
+            disabled={!selectedAddressId && !showForm}
+            className={`rounded-lg ${
+              !selectedAddressId && !showForm
+                ? "bg-gray-500 cursor-not-allowed"
+                : ""
+            }`}
+          />
+          <Button text="Cancel" onClick={onClose} className="rounded-lg ml-2" />
+        </div>
+      </div>
+    </div>
   );
 };
 

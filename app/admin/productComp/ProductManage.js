@@ -18,7 +18,7 @@ const ManageProduct = () => {
   const fetchProducts = async () => {
     try {
       const response = await axios.get(
-        "https://skin-aura-be.vercel.app/api/v1/admin/getProduct",
+        `${process.env.BACKEND_URL}api/v1/common/getProduct`,
         {
           headers: { "auth-token": authToken },
         }

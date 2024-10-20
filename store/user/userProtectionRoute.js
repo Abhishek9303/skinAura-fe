@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import useUserStore from "../../store/user/userProfile";
+import { toast } from "react-toastify";
 const withAuth = (WrappedComponent) => {
     return (props) => {
     const { user, setUser, clearUser } = useUserStore();
@@ -17,17 +18,25 @@ const withAuth = (WrappedComponent) => {
         },
       };
       axios.request(config).then((response) => {
-          setUser({
-            name: response.data.data.name,
-            emailId: response.data.data.emailId,
-            mobileNo: response.data.data.mobileNo,
-            role: response.data.data.role,
-            token: token,
-            currentCart: response.data.data.currentCart,
-            isAuthorized: true,
-          });
+          if(response.data.success){
+             setUser({
+               name: response.data.data.name,
+               emailId: response.data.data.emailId,
+               mobileNo: response.data.data.mobileNo,
+               role: response.data.data.role,
+               token: token,
+               currentCart: response.data.data.currentCart,
+               isAuthorized: true,
+             });
+             window.localStorage.setItem("isAuthenticate", true);
+             window.localStorage.setItem("token", token);
+          }
         })
         .catch((error) => {
+          clearUser();
+          window.localStorage.clear();
+          window.localStorage.setItem("isAuthenticate", false);
+          router.push("/signin");
           console.log(error);
         }).finally(() => {
           setToken(token);

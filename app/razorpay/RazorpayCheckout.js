@@ -1,14 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Script from "next/script";
-import { toast } from "react-toastify"; // Ensure you have react-toastify installed
-import axios from "axios"; // Import axios
-import useUserStore from "../../store/user/userProfile";
-import userProtectionRoute from "../../store/user/userProtectionRoute";
-const RazorpayCheckout = ({ name, amount, productId, quantity }) => {
-  
+import { toast } from "react-toastify";
+import axios from "axios";
+
+const RazorpayCheckout = ({ productId, quantity }) => {
   const [razorpayLoaded, setRazorpayLoaded] = useState(false);
-  const { user } = useUserStore();
-  
+  const [token, setToken] = useState(null);
+
+  useEffect(() => {
+    const storedToken = localStorage.getItem("token");
+    setToken(storedToken);
+  }, []);
+
   const buyNow = async () => {
     if (!razorpayLoaded) {
       toast.error("Razorpay SDK is not loaded. Please try again later.");
@@ -16,16 +19,16 @@ const RazorpayCheckout = ({ name, amount, productId, quantity }) => {
     }
 
     try {
-      // Call your backend to create a Razorpay order
+      console.log("RazorpayCheckout - productId:", productId); // Debugging log
       const orderResponse = await axios.post(
-        "http://localhost:5000/api/v1/user/createRazorpayOrder",
+        `${process.env.BACKEND_URL}api/v1/user/createRazorpayOrder`,
         {
-          productId: productId || "defaultProductId", // Ensure you pass the correct product ID
-          quantity: quantity || 1, // Default quantity
+          productId: productId,
+          quantity: quantity,
         },
         {
           headers: {
-            "auth-token": user.token, // Replace with your actual auth token
+            "auth-token": token,
             "Content-Type": "application/json",
           },
         }
@@ -42,27 +45,26 @@ const RazorpayCheckout = ({ name, amount, productId, quantity }) => {
         key:
           process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID ||
           "YOUR_TEST_RAZORPAY_KEY_ID",
-        amount: orderData.amount, // Amount from order response
-        currency: orderData.currency || "INR", // Use the currency from order response
-        name: name || "Your Product Name",
+        amount: orderData.amount,
+        currency: orderData.currency || "INR",
+        name: "Your Product Name",
         description: "Test Transaction",
-        order_id: orderData.order_id, // Use the order ID from your API
+        order_id: orderData.order_id,
         handler: function (response) {
           alert(
             "Payment successful! Payment ID: " + response.razorpay_payment_id
           );
-          // Handle post-payment logic here (e.g., verification)
         },
         prefill: {
-          name: "John Doe", // Customer's name (you can change this)
-          email: "johndoe@example.com", // Customer's email
-          contact: "9999999999", // Customer's phone number
+          name: "John Doe",
+          email: "johndoe@example.com",
+          contact: "9999999999",
         },
         notes: {
           address: "Customer Address",
         },
         theme: {
-          color: "#3399cc", // Customize checkout color
+          color: "#3399cc",
         },
       };
 
@@ -80,10 +82,7 @@ const RazorpayCheckout = ({ name, amount, productId, quantity }) => {
     <>
       <Script
         src="https://checkout.razorpay.com/v1/checkout.js"
-        onLoad={() => {
-          console.log("Razorpay SDK loaded successfully.");
-          setRazorpayLoaded(true);
-        }}
+        onLoad={() => setRazorpayLoaded(true)}
         onError={() => {
           console.error("Failed to load Razorpay SDK.");
           toast.error("Failed to load Razorpay SDK. Please try again later.");
@@ -91,7 +90,7 @@ const RazorpayCheckout = ({ name, amount, productId, quantity }) => {
       />
       <button
         className={`bg-[#6A4D6F] hover:bg-[#4b334f] cursor-pointer flex items-center justify-center px-5 py-2 text-white md:px-12 md:py-3 text-[1.8vmax] md:text-[1.1vmax]`}
-        onClick={buyNow}
+        onClick={buyNow} // Pass the function reference
       >
         Buy Now
       </button>
@@ -99,4 +98,4 @@ const RazorpayCheckout = ({ name, amount, productId, quantity }) => {
   );
 };
 
-export default userProtectionRoute(RazorpayCheckout);
+export default RazorpayCheckout;

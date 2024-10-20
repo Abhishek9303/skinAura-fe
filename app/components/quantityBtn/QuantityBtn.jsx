@@ -1,10 +1,7 @@
-"use client"
-import React, { useState } from "react";
+"use client";
+import React from "react";
 
-const QuantityBtn = () => {
-  // State to keep track of the quantity
-  const [quantity, setQuantity] = useState(1);
-
+const QuantityBtn = ({ quantity, setQuantity }) => {
   // Function to increase quantity
   const handleIncrement = () => {
     setQuantity((prevQuantity) => prevQuantity + 1);
