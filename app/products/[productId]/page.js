@@ -31,7 +31,7 @@ const SingleProduct = () => {
 
       try {
         const res = await axios.get(
-          `http://localhost:5000/api/v1/common/getProduct`
+          `${process.env.BACKEND_URL}api/v1/common/getProduct`
         );
         if (res.data.success && Array.isArray(res.data.data)) {
           const product = res.data.data.find(
