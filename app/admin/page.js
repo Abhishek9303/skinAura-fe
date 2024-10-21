@@ -11,7 +11,7 @@ import adminStore from "@/store/admin/adminProfile";
 const ScheduleMeeting = () => <div>Schedule Meeting Component</div>;
 const ManageUser = () => <div>Manage User Component</div>;
 const ManageSchedule = () => <div>Manage Schedule Component</div>;
-const ManageProducts = () => <div>Manage Products </div>;
+const ManageOrder = () => <div>Manage Products </div>;
 const tabs = [
   { id: 1, label: "Schedule Meeting", content: <MeetingApproval /> },
   { id: 2, label: "Manage Product", content: <ManageProducts /> },
