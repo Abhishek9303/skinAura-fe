@@ -15,7 +15,7 @@ const ManageOrder = () => <div>Manage Products </div>;
 const tabs = [
   { id: 1, label: "Schedule Meeting", content: <MeetingApproval /> },
   { id: 2, label: "Manage Product", content: <ManageProducts /> },
-  { id: 3, label: "Manage Orders", content: <ManageOrders /> },
+  // { id: 3, label: "Manage Orders", content: <ManageOrders /> },
   // { id: 3, label: "Manage Schedule", content: <ManageSchedule /> },
 ];
 
@@ -81,4 +81,4 @@ const Page = () => {
   );
 };
 
-export default withAuth(Page,['admin']);
+export default Page
