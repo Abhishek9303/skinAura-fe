@@ -2,14 +2,14 @@
 import React, { useState } from "react";
 import MeetingApproval from "../../app/admin/adminComponent/MeetingApproval";
 import ManageProducts from "./productComp/ProductManage";
-import withAuth from "./ProtectedRoute";
+import withAuth from "../../store/user/userProtectionRoute";
 import Skeleton from "react-loading-skeleton";
 import adminStore from "@/store/admin/adminProfile";
 
 // Define components for each tab
 const ScheduleMeeting = () => <div>Schedule Meeting Component</div>;
 const ManageUser = () => <div>Manage User Component</div>;
-const ManageSchedule = () => <div>Manage Schedule Component</div>;;
+const ManageSchedule = () => <div>Manage Schedule Component</div>;
 const tabs = [
   { id: 1, label: "Schedule Meeting", content: <MeetingApproval /> },
   { id: 2, label: "Manage Product", content: <ManageProducts /> },
