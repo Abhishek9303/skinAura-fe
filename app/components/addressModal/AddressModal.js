@@ -23,10 +23,11 @@ const AddressModal = ({
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
+
     const fetchAddresses = async () => {
       try {
         const response = await axios.get(
-          `${process.env.BACKEND_URL}common/getAddress`,
+          `${process.env.BACKEND_URL}api/v1/common/getAddress`,
           {
             headers: {
               "auth-token": window.localStorage.getItem("token"),
@@ -65,7 +66,7 @@ const AddressModal = ({
     if (showForm && validateFields()) {
       try {
         const response = await axios.post(
-          `${process.env.BACKEND_URL}user/addAddress`,
+          `${process.env.BACKEND_URL}api/v1/user/addAddress`,
           {
             ...newAddress,
           },
@@ -146,26 +147,30 @@ const AddressModal = ({
         </div>
 
         {/* Existing addresses */}
-        <div className="mb-4">
-          <h3 className="text-lg font-medium mb-2">Select Existing Address:</h3>
-          {addresses.map((address) => (
-            <label key={address._id} className="block mb-2">
-              <input
-                type="radio"
-                value={address._id}
-                checked={selectedAddressId === address._id} // Direct comparison with ID
-                onChange={() => {
-                  setSelectedAddressId(address._id); // Set only the ID
-                  setShowForm(false); // Hide form if an existing address is selected
-                }}
-              />
-              <span className="ml-2">
-                {address.addressLine1}, {address.addressLine2}, {address.city},{" "}
-                {address.state}, {address.pinCode}, {address.country}
-              </span>
-            </label>
-          ))}
-        </div>
+        {addresses.length > 0 && (
+          <div className="mb-4">
+            <h3 className="text-lg font-medium mb-2">
+              Select Existing Address:
+            </h3>
+            {addresses.map((address) => (
+              <label key={address._id} className="block mb-2">
+                <input
+                  type="radio"
+                  value={address._id}
+                  checked={selectedAddressId === address._id} // Direct comparison with ID
+                  onChange={() => {
+                    setSelectedAddressId(address._id); // Set only the ID
+                    setShowForm(false); // Hide form if an existing address is selected
+                  }}
+                />
+                <span className="ml-2">
+                  {address.addressLine1}, {address.addressLine2}, {address.city}
+                  , {address.state}, {address.pinCode}, {address.country}
+                </span>
+              </label>
+            ))}
+          </div>
+        )}
 
         {showForm && (
           <form onSubmit={handleSubmit} className="space-y-4 mb-4">

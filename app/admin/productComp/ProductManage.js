@@ -42,7 +42,7 @@ const ManageProduct = () => {
   const confirmDelete = async () => {
     try {
       await axios.delete(
-        `${process.env.BACKEND_URL}admin/deleteProduct?productId=${productToDelete}`,
+        `${process.env.BACKEND_URL}api/v1/admin/deleteProduct?productId=${productToDelete}`,
         {
           headers: { "auth-token": authToken },
         }

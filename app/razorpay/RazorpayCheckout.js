@@ -2,14 +2,38 @@ import React, { useEffect, useState } from "react";
 import Script from "next/script";
 import { toast } from "react-toastify";
 import axios from "axios";
+import useUserStore from "@/store/user/userProfile";
 
-const RazorpayCheckout = ({ productId, quantity }) => {
+const RazorpayCheckout = ({ productId, quantity, selectedAddress }) => {
   const [razorpayLoaded, setRazorpayLoaded] = useState(false);
+  const [productData,setProductData] = useState({})
+   const { user } = useUserStore();
+   const [razorpayId,setRazorpayId] = useState("")
+  const [totalPrice,setTotalPrice] = useState("")
   const [token, setToken] = useState(null);
+   const fetchProductData = async (productId) => {
+     if (!productId) {
+       console.error("Product ID is not defined");
+       return;
+     }
 
+     try {
+       const res = await axios.get(
+         `${process.env.BACKEND_URL}api/v1/common/getProduct?productId=${productId}`
+       );
+       if(res.data){
+        setProductData(res.data.data);
+        const totalPrice = res.data.data.price  * quantity
+        setTotalPrice(totalPrice)
+       }
+     } catch (error) {
+       console.error("Error fetching product data:", error);
+     }
+   };
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
     setToken(storedToken);
+    fetchProductData(productId)
   }, []);
 
   const buyNow = async () => {
@@ -19,12 +43,12 @@ const RazorpayCheckout = ({ productId, quantity }) => {
     }
 
     try {
-      console.log("RazorpayCheckout - productId:", productId); // Debugging log
       const orderResponse = await axios.post(
         `${process.env.BACKEND_URL}api/v1/user/createRazorpayOrder`,
         {
           productId: productId,
           quantity: quantity,
+          shippingAddress: selectedAddress,
         },
         {
           headers: {
@@ -45,23 +69,25 @@ const RazorpayCheckout = ({ productId, quantity }) => {
         key:
           process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID ||
           "YOUR_TEST_RAZORPAY_KEY_ID",
-        amount: orderData.amount,
+        amount: `${totalPrice * 100}`,
         currency: orderData.currency || "INR",
-        name: "Your Product Name",
-        description: "Test Transaction",
+        name: `${productData.name}`,
+        description: `${productData.description}`,
         order_id: orderData.order_id,
         handler: function (response) {
+          console.log(response,"response");
           alert(
             "Payment successful! Payment ID: " + response.razorpay_payment_id
           );
+          setRazorpayId(response.razorpay_payment_id);
         },
         prefill: {
-          name: "John Doe",
-          email: "johndoe@example.com",
-          contact: "9999999999",
+          name: `${user.name}`,
+          email: `${user.emailId}`,
+          contact: `${user.mobileNo}`,
         },
         notes: {
-          address: "Customer Address",
+          address: selectedAddress,
         },
         theme: {
           color: "#3399cc",

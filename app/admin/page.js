@@ -1,28 +1,32 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import MeetingApproval from "../../app/admin/adminComponent/MeetingApproval";
 import ManageProducts from "./productComp/ProductManage";
-import ManageOrders from "./adminComponent/ManageOrder";
-import withAuth from "../../store/user/userProtectionRoute";
 import Skeleton from "react-loading-skeleton";
 import adminStore from "@/store/admin/adminProfile";
+import ProtectedAdmin from "@/store/admin/adminProtectedRoute";
 
 // Define components for each tab
-const ScheduleMeeting = () => <div>Schedule Meeting Component</div>;
-const ManageUser = () => <div>Manage User Component</div>;
-const ManageSchedule = () => <div>Manage Schedule Component</div>;
-const ManageOrder = () => <div>Manage Products </div>;
 const tabs = [
   { id: 1, label: "Schedule Meeting", content: <MeetingApproval /> },
   { id: 2, label: "Manage Product", content: <ManageProducts /> },
-  // { id: 3, label: "Manage Orders", content: <ManageOrders /> },
-  // { id: 3, label: "Manage Schedule", content: <ManageSchedule /> },
+  // Add more tabs if needed
 ];
 
 const Page = () => {
-  const {admin} = adminStore();
+  const { admin } = adminStore();
   const [activeTab, setActiveTab] = useState(tabs[0].id);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true); // Add this line
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [loading, setLoading] = useState(true); // Loading state
+
+  // Simulate loading content
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false); // Set loading to false after 1 second
+    }, 1000);
+
+    return () => clearTimeout(timer); // Cleanup timer on unmount
+  }, []);
 
   // Function to render the content of the active tab
   const renderContent = () => {
@@ -31,7 +35,7 @@ const Page = () => {
   };
 
   return (
-    <div className=" flex flex-col md:flex-row">
+    <div className="flex flex-col md:flex-row">
       {console.log(admin)}
       <div className="md:hidden flex justify-between items-center bg-slate-500 p-4">
         <h1 className="text-xl font-bold">Admin Page</h1>
@@ -73,12 +77,14 @@ const Page = () => {
           <h2 className="text-2xl font-semibold mb-4">
             {tabs.find((tab) => tab.id === activeTab)?.label}
           </h2>
-          {/* Render the active tab's component */}
-          <div>{renderContent()}</div>
+          {/* Render the active tab's component or the loader */}
+          <div>
+            {loading ? <Skeleton count={5} height={30} /> : renderContent()}
+          </div>
         </div>
       </div>
     </div>
   );
 };
 
-export default Page
+export default ProtectedAdmin(Page);

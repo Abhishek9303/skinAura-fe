@@ -11,6 +11,7 @@ import QuantityBtn from "@/app/components/quantityBtn/QuantityBtn";
 import { useParams } from "next/navigation";
 import PaymentModal from "@/app/components/payment/PaymentModal"; // Import the PaymentModal component
 import AddressModal from "@/app/components/addressModal/AddressModal";
+import withAuth from "@/store/user/userProtectionRoute";
 
 const SingleProduct = () => {
   const { productId } = useParams();
@@ -21,46 +22,48 @@ const SingleProduct = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
+  const fetchProductData = async (productId) => {
+    if (!productId) {
+      console.error("Product ID is not defined");
+      return;
+    }
 
-  useEffect(() => {
-    const fetchProductData = async () => {
-      if (!productId) {
-        console.error("Product ID is not defined");
-        return;
-      }
-
-      try {
-        const res = await axios.get(
-          `${process.env.BACKEND_URL}api/v1/common/getProduct`
+    try {
+      const res = await axios.get(
+        `${process.env.BACKEND_URL}api/v1/common/getProduct`
+      );
+      if (res.data.success && Array.isArray(res.data.data)) {
+        const product = res.data.data.find(
+          (product) => product._id === productId
         );
-        if (res.data.success && Array.isArray(res.data.data)) {
-          const product = res.data.data.find(
-            (product) => product._id === productId
-          );
-          if (product) {
-            setProductData(product);
-          } else {
-            console.error(`Product with ID ${productId} not found`);
-          }
-          const allProducts = res.data.data.filter(
-            (product) => product._id !== productId
-          );
-          setOtherProducts(allProducts);
+        if (product) {
+          setProductData(product);
         } else {
-          console.error("Invalid response structure or no data available");
+          console.error(`Product with ID ${productId} not found`);
         }
-      } catch (error) {
-        console.error("Error fetching product data:", error);
+        const allProducts = res.data.data.filter(
+          (product) => product._id !== productId
+        );
+        setOtherProducts(allProducts);
+      } else {
+        console.error("Invalid response structure or no data available");
       }
-    };
-    fetchProductData();
+    } catch (error) {
+      console.error("Error fetching product data:", error);
+    }
+  };
+  useEffect(() => {
+    fetchProductData(productId);
   }, [productId]);
+
+
 
   const handleBuyNow = () => {
     setIsAddressModalOpen(true); // Open address modal first
   };
 
   const handleAddressSave = (addressData) => {
+    
     setSelectedAddress(addressData); // Set the selected address
     setIsAddressModalOpen(false); // Close the AddressModal
     setIsModalOpen(true); // Open the PaymentModal
@@ -201,4 +204,4 @@ const SingleProduct = () => {
   );
 };
 
-export default SingleProduct;
+export default withAuth(SingleProduct);

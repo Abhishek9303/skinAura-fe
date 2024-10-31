@@ -23,7 +23,7 @@ const PaymentModal = ({
   ) => {
     try {
       const response = await axios.post(
-        `${process.env.BACKEND_URL}user/newOrder`,
+        `${process.env.BACKEND_URL}api/v1/user/newOrder`,
         {
           productId,
           quantity,
@@ -112,7 +112,7 @@ const PaymentModal = ({
             className="bg-red-500 hover:bg-red-600"
           />
           {selectedPaymentMethod === "online" ? (
-            <RazorpayCheckout productId={productId} quantity={quantity} />
+            <RazorpayCheckout productId={productId} quantity={quantity} selectedAddress={selectedAddress}  />
           ) : (
             <Button text={"Buy Now"} onClick={() => handlePaymentConfirm()} />
           )}
