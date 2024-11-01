@@ -11,7 +11,7 @@ const ManageOrder = () => {
     const fetchOrders = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/api/v1/common/getProduct",
+          `${process.env.BACKEND_URL}api/v1/common/getProduct`,
           {
             headers: {
               "auth-token":admin.token,

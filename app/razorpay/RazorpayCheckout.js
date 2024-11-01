@@ -50,7 +50,7 @@ const RazorpayCheckout = ({ productId, quantity, selectedAddress }) => {
       };
       loadRazorpay();
     }
-  }, [productId, quantity]);
+  }, [productId]);
 
   const verifyPayment = async (
     orderCreationId,
@@ -60,7 +60,7 @@ const RazorpayCheckout = ({ productId, quantity, selectedAddress }) => {
   ) => {
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/v1/user/verifyPayment",
+        `${process.env.BACKEND_URL}api/v1/user/verifyPayment`,
         {
           orderCreationId,
           razorpayPaymentId,
