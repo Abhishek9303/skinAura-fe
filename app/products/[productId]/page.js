@@ -14,6 +14,7 @@ import AddressModal from "@/app/components/addressModal/AddressModal";
 import withAuth from "@/store/user/userProtectionRoute";
 import useUserStore from "../../../store/user/userProfile";
 import useAddToCart from "@/app/components/hooks/useAddToCart";
+
 const SingleProduct = () => {
   const { user } = useUserStore();
   const { productId } = useParams();
@@ -25,9 +26,11 @@ const SingleProduct = () => {
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
   const { addToCart, loading, error, response } = useAddToCart();
+
   const handleAddToCart = () => {
     addToCart([{ productId, quantity }]);
   };
+
   const fetchProductData = async (productId) => {
     if (!productId) {
       console.error("Product ID is not defined");
@@ -58,9 +61,19 @@ const SingleProduct = () => {
       console.error("Error fetching product data:", error);
     }
   };
+
   useEffect(() => {
     fetchProductData(productId);
   }, [productId]);
+
+  // Increment and decrement functions
+  const handleIncrement = () => {
+    setQuantity((prevQuantity) => prevQuantity + 1);
+  };
+
+  const handleDecrement = () => {
+    setQuantity((prevQuantity) => (prevQuantity > 1 ? prevQuantity - 1 : 1));
+  };
 
   const handleBuyNow = () => {
     setIsAddressModalOpen(true); // Open address modal first
@@ -100,7 +113,11 @@ const SingleProduct = () => {
               <h1 className="md:text-3xl text-[3vmax] mt-4 font-bold">
                 MRP : ₹ {productData?.price} /-
               </h1>
-              <QuantityBtn quantity={quantity} setQuantity={setQuantity} />
+              <QuantityBtn
+                quantity={quantity}
+                handleIncrement={handleIncrement}
+                handleDecrement={handleDecrement}
+              />
             </div>
             <div className="flex items-center md:py-10 pt-10 gap-5">
               <Button
@@ -181,8 +198,12 @@ const SingleProduct = () => {
                   productId={product._id}
                   key={product._id}
                   name={product.name}
+                  imgSrc={product.images[0]} // Assuming images is an array
                   price={product.price}
-                  addToCart={true}
+                  description={product.description}
+                  onClick={() =>
+                    console.log(`Clicked product: ${product.name}`)
+                  } // Implement your click handler
                 />
               ))}
             </div>
@@ -205,7 +226,7 @@ const SingleProduct = () => {
         quantity={quantity}
         selectedPaymentMethod={selectedPaymentMethod}
         setSelectedPaymentMethod={setSelectedPaymentMethod}
-        selectedAddress={selectedAddress} // Pass selected address to PaymentModal
+        selectedAddress={selectedAddress}
       />
     </>
   );

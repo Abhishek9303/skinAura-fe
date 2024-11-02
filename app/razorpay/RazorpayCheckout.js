@@ -4,53 +4,79 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import useUserStore from "@/store/user/userProfile";
 
-const RazorpayCheckout = ({ productId, quantity, selectedAddress }) => {
+const RazorpayCheckout = ({
+  productId,
+  quantity,
+  selectedAddress,
+  productArr,
+  cartId,
+  totalAmount,
+}) => {
   const [razorpayLoaded, setRazorpayLoaded] = useState(false);
   const [productData, setProductData] = useState({});
   const { user } = useUserStore();
-  const [totalPrice, setTotalPrice] = useState("");
+  const [totalPrice, setTotalPrice] = useState(0); // Initialize totalPrice as 0
   const [token, setToken] = useState(null);
   const router = useRouter();
 
-  const fetchProductData = async (productId) => {
-    if (!productId) {
+  const fetchProductData = async (id) => {
+    if (!id) {
       console.error("Product ID is not defined");
       return;
     }
 
     try {
       const res = await axios.get(
-        `${process.env.BACKEND_URL}api/v1/common/getProduct?productId=${productId}`
+        `${process.env.BACKEND_URL}api/v1/common/getProduct?productId=${id}`
       );
       if (res.data) {
-        setProductData(res.data.data);
-        const calculatedTotalPrice = res.data.data.price * quantity;
-        setTotalPrice(calculatedTotalPrice);
+        return res.data.data; // Return product data
       }
     } catch (error) {
       console.error("Error fetching product data:", error);
     }
   };
 
+  const loadRazorpaySDK = () => {
+    return new Promise((resolve, reject) => {
+      if (razorpayLoaded) {
+        resolve(); // SDK is already loaded
+        return;
+      }
+
+      const script = document.createElement("script");
+      script.src = "https://checkout.razorpay.com/v1/checkout.js";
+      script.onload = () => {
+        setRazorpayLoaded(true);
+        resolve(); // SDK loaded successfully
+      };
+      script.onerror = () => {
+        reject(new Error("Failed to load Razorpay SDK."));
+      };
+      document.body.appendChild(script);
+    });
+  };
+
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
     setToken(storedToken);
-    fetchProductData(productId);
 
-    if (typeof window !== "undefined") {
-      const loadRazorpay = () => {
-        const script = document.createElement("script");
-        script.src = "https://checkout.razorpay.com/v1/checkout.js";
-        script.onload = () => setRazorpayLoaded(true);
-        script.onerror = () => {
-          console.error("Failed to load Razorpay SDK.");
-          toast.error("Failed to load Razorpay SDK. Please try again later.");
-        };
-        document.body.appendChild(script);
-      };
-      loadRazorpay();
+    if (productArr && productArr.length > 0) {
+      // Calculate total price if productArr is provided
+      setTotalPrice(totalAmount);
+    } else if (productId) {
+      fetchProductData(productId).then((data) => {
+        setProductData(data);
+        setTotalPrice(data.price * quantity); // Calculate price for single product
+      });
     }
-  }, [productId]);
+
+    // Ensure Razorpay SDK is loaded
+    loadRazorpaySDK().catch((error) => {
+      console.error("Error loading Razorpay SDK:", error);
+      toast.error("Failed to load Razorpay SDK. Please try again later.");
+    });
+  }, [productId, quantity, productArr]);
 
   const verifyPayment = async (
     orderCreationId,
@@ -78,8 +104,7 @@ const RazorpayCheckout = ({ productId, quantity, selectedAddress }) => {
       if (response.data) {
         toast.success("Payment verified successfully!");
         router.push("/profile");
-      }
-      else {
+      } else {
         toast.error("Payment verification failed. Please contact support.");
       }
     } catch (error) {
@@ -99,9 +124,11 @@ const RazorpayCheckout = ({ productId, quantity, selectedAddress }) => {
       const orderResponse = await axios.post(
         `${process.env.BACKEND_URL}api/v1/user/createRazorpayOrder`,
         {
-          productId: productId,
-          quantity: quantity,
+          productId: productArr ? null : productId, // Null if it's an array
+          productArr: productArr || [{ productId, quantity }], // If it's an array of products
+          quantity: productArr ? undefined : quantity, // Only set for single product
           shippingAddress: selectedAddress,
+          cartId, // Include cartId for backend processing
         },
         {
           headers: {
@@ -110,6 +137,7 @@ const RazorpayCheckout = ({ productId, quantity, selectedAddress }) => {
           },
         }
       );
+
       const orderData = orderResponse.data;
       if (!orderData.success) {
         toast.error("Failed to create order. Please try again.");
@@ -121,7 +149,7 @@ const RazorpayCheckout = ({ productId, quantity, selectedAddress }) => {
         key:
           process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID ||
           "YOUR_TEST_RAZORPAY_KEY_ID",
-        amount: `${totalPrice * 100}`,
+        amount: `${totalPrice * 100}`, // Amount in paise
         currency: orderData.data.currency || "INR",
         name: `${productData.name}`,
         description: `${productData.description}`,
@@ -131,8 +159,6 @@ const RazorpayCheckout = ({ productId, quantity, selectedAddress }) => {
           const razorpayPaymentId = response.razorpay_payment_id;
           const razorpayOrderId = response.razorpay_order_id;
           const razorpaySignature = response.razorpay_signature;
-
-          // Verify payment by passing all necessary fields
           verifyPayment(
             orderCreationId,
             razorpayPaymentId,

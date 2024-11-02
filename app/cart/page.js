@@ -186,6 +186,7 @@ const Page = () => {
         isOpen={isModalOpen}
         onClose={() => setModalOpen(false)}
         cartProducts={storedProductData}
+        cartId={cartId}
       />
     </div>
   );
