@@ -1,12 +1,14 @@
 "use client";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation"; // Import useRouter
 import RazorpayCheckout from "../../razorpay/RazorpayCheckout"; // Ensure the path is correct
 import Button from "../button/Button";
-
+import { RiDeleteBin4Fill } from "@remixicon/react";
+import QuantityBtn from "../quantityBtn/QuantityBtn";
 const Product = (props) => {
-  const { productId } = props;
+  const { productId, removeProduct, items } = props;
+  const [quantity, setQuantity] = useState(items ? items : 1);
   const router = useRouter(); // Initialize the router
 
   const openPage = () => {
@@ -20,15 +22,23 @@ const Product = (props) => {
   return (
     <>
       <div className="card relative mx-auto bg-white border-[1px] border-[#0000003b] shadow-md flex flex-col xs:min-w-[21vmax] h-min-[25vmax] rounded-lg overflow-hidden transition-transform transform hover:scale-105">
-        <div className="md:h-[4.5vh] md:w-[40%] md:py-2 md:px-1 py-1 md:rounded-br-lg bg-[#897F7F80] flex items-center justify-center">
-          <div className="flex">
-            <span className="md:text-[12px] text-[2vmax]">⭐</span>
-            <span className="md:text-[12px] text-[2vmax]">⭐</span>
-            <span className="md:text-[12px] text-[2vmax]">⭐</span>
-            <span className="md:text-[12px] text-[2vmax]">⭐</span>
-            <span className="md:text-[12px] text-[2vmax]">⭐</span>
+        <div className="flex items-center justify-between">
+          <div className="md:h-[4.5vh] md:w-[40%] md:py-2 md:px-1 py-1 md:rounded-br-lg bg-[#897F7F80] flex items-center justify-center">
+            <div className="flex">
+              <span className="md:text-[12px] text-[2vmax]">⭐</span>
+              <span className="md:text-[12px] text-[2vmax]">⭐</span>
+              <span className="md:text-[12px] text-[2vmax]">⭐</span>
+              <span className="md:text-[12px] text-[2vmax]">⭐</span>
+              <span className="md:text-[12px] text-[2vmax]">⭐</span>
+            </div>
           </div>
+          {removeProduct && (
+            <div className="mx-3 text-red-400">
+              <RiDeleteBin4Fill />
+            </div>
+          )}
         </div>
+
         <div className="flex flex-col mx-auto py-1 md:mb-2 mb-1 items-center justify-around">
           <Link href={"/products/" + productId}>
             <div className="min-w-[18vmax] min-h-[16vmax] m-2 rounded-md bg-gray-200">
@@ -53,6 +63,14 @@ const Product = (props) => {
                 ? props.tagline
                 : "Better skin quality with natural herbs"}
             </p>
+
+            <div className="w-full flex items-center justify-center">
+              {items && (
+                <div className="w-[10vw] items-center">
+                  <QuantityBtn quantity={quantity} setQuantity={setQuantity} />
+                </div>
+              )}
+            </div>
             <div className="w-full mx-auto mt-3 flex items-center justify-center">
               <Button text={"Buy Now"} onClick={openPage} />
             </div>

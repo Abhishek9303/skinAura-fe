@@ -12,8 +12,10 @@ import { useParams } from "next/navigation";
 import PaymentModal from "@/app/components/payment/PaymentModal"; // Import the PaymentModal component
 import AddressModal from "@/app/components/addressModal/AddressModal";
 import withAuth from "@/store/user/userProtectionRoute";
-
+import useUserStore from "../../../store/user/userProfile";
+import useAddToCart from "@/app/components/hooks/useAddToCart";
 const SingleProduct = () => {
+  const { user } = useUserStore();
   const { productId } = useParams();
   const [productData, setProductData] = useState(null);
   const [otherProducts, setOtherProducts] = useState([]);
@@ -22,6 +24,10 @@ const SingleProduct = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
+  const { addToCart, loading, error, response } = useAddToCart();
+  const handleAddToCart = () => {
+    addToCart([{ productId, quantity }]);
+  };
   const fetchProductData = async (productId) => {
     if (!productId) {
       console.error("Product ID is not defined");
@@ -56,14 +62,11 @@ const SingleProduct = () => {
     fetchProductData(productId);
   }, [productId]);
 
-
-
   const handleBuyNow = () => {
     setIsAddressModalOpen(true); // Open address modal first
   };
 
   const handleAddressSave = (addressData) => {
-    
     setSelectedAddress(addressData); // Set the selected address
     setIsAddressModalOpen(false); // Close the AddressModal
     setIsModalOpen(true); // Open the PaymentModal
@@ -100,7 +103,11 @@ const SingleProduct = () => {
               <QuantityBtn quantity={quantity} setQuantity={setQuantity} />
             </div>
             <div className="flex items-center md:py-10 pt-10 gap-5">
-              <Button text="Add To Cart" className="rounded-lg" />
+              <Button
+                text={loading ? "Adding..." : "Add To Cart"}
+                className="rounded-lg"
+                onClick={handleAddToCart}
+              />
               <Button
                 text="Buy Now"
                 onClick={handleBuyNow}

@@ -13,7 +13,6 @@ export default function RootLayout({ children }) {
   const shouldShowNavAndFooter =
     path !== "/signup" &&
     path !== "/signin" &&
-    path !== "/cart" &&
     path !== "/adminLogin" &&
     path !== "/resetPassword" &&
     path !== "/resetPassword/token"

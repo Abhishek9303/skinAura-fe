@@ -8,8 +8,8 @@ const useUserStore = create((set) => ({
     mobileNo: "",
     role: "",
     isAuthorized: false,
-    authToken : "",
-    currentCart : "",
+    authToken: "",
+    currentCart: "",
   },
   // Actions to modify user data
   setUser: (newUser) =>
@@ -18,8 +18,19 @@ const useUserStore = create((set) => ({
     })),
   clearUser: () =>
     set(() => ({
-      user: { name: "", emailId: "", mobileNo: "", role: "" , isAuthorized: false },
+      user: {
+        name: "",
+        emailId: "",
+        mobileNo: "",
+        role: "",
+        isAuthorized: false,
+      },
     })),
+  clearCart: () => {
+    set((state) => ({
+      user: { ...state.user, currentCart: "" },
+    }));
+  },
 }));
 
 export default useUserStore;
