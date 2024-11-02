@@ -13,7 +13,10 @@ const RazorpayCheckout = ({
   totalAmount,
 }) => {
   const [razorpayLoaded, setRazorpayLoaded] = useState(false);
-  const [productData, setProductData] = useState({});
+  const [productData, setProductData] = useState({
+    name: "Cart",
+    description: "Cart",
+  });
   const { user } = useUserStore();
   const [totalPrice, setTotalPrice] = useState(0); // Initialize totalPrice as 0
   const [token, setToken] = useState(null);
@@ -139,6 +142,7 @@ const RazorpayCheckout = ({
       );
 
       const orderData = orderResponse.data;
+      console.log("Order Data:", orderData);
       if (!orderData.success) {
         toast.error("Failed to create order. Please try again.");
         return;
@@ -178,7 +182,7 @@ const RazorpayCheckout = ({
           color: "#3399cc",
         },
       };
-
+      console.log("Options:", options);
       const rzp1 = new window.Razorpay(options);
       rzp1.open();
     } catch (error) {
