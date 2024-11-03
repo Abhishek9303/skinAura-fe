@@ -14,11 +14,17 @@ import AddressModal from "@/app/components/addressModal/AddressModal";
 import withAuth from "@/store/user/userProtectionRoute";
 import useUserStore from "../../../store/user/userProfile";
 import useAddToCart from "@/app/components/hooks/useAddToCart";
+import { set } from "date-fns";
 
 const SingleProduct = () => {
   const { user } = useUserStore();
   const { productId } = useParams();
   const [productData, setProductData] = useState(null);
+  const [productImages, setProductImages] = useState({
+    mainImage: "",
+    otherImages: [],
+    certificates: [],
+  });
   const [otherProducts, setOtherProducts] = useState([]);
   const [quantity, setQuantity] = useState(1);
   const [isAddressModalOpen, setIsAddressModalOpen] = useState(false);
@@ -46,7 +52,13 @@ const SingleProduct = () => {
           (product) => product._id === productId
         );
         if (product) {
+          
           setProductData(product);
+          setProductImages({
+            mainImage: product.mainImage,
+            otherImages: product.images,
+            certificates: product.certificates,
+          });
         } else {
           console.error(`Product with ID ${productId} not found`);
         }
@@ -93,10 +105,13 @@ const SingleProduct = () => {
   return (
     <>
       <div className="md:w-[85vmax] w-full px-5 min-h-screen mx-auto">
-        {/* Product Details */}
         <div className="flex lg:flex-row flex-col md:py-10 py-8 items-center justify-center">
           <div className="lg:w-[35vw] w-[80vw] lg:h-[40vh] h-[40vh]">
-            <ProductImages height={"50vh"} />
+            <ProductImages
+              height={"50vh"}
+              productImages={productImages.mainImage}
+              otherImages={productImages.otherImages}
+            />
           </div>
           <div className="md:ml-16 lg:w-[45vw] md:w-[80vw] lg:h-[40vh] md:h-[28vh] h-auto w-full lg:px-10 p-5 lg:py-5 md:py-16">
             <h1 className="md:text-4xl text-[3vmax] mb-3 font-medium">

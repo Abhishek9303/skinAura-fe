@@ -1,8 +1,24 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import axios from "axios";
 import Link from "next/link";
+import { useTable, useGlobalFilter, useSortBy } from "react-table";
 import { toast } from "react-toastify";
+
+// Define a global filter component
+function GlobalFilter({ filter, setFilter }) {
+  return (
+    <span>
+      Search:{" "}
+      <input
+        value={filter || ""}
+        onChange={(e) => setFilter(e.target.value)}
+        className="border p-1 rounded"
+        placeholder="Search orders..."
+      />
+    </span>
+  );
+}
 
 const OrderHistoryTable = () => {
   const [orders, setOrders] = useState([]);
@@ -36,6 +52,66 @@ const OrderHistoryTable = () => {
     fetchOrderHistory();
   }, []);
 
+  const columns = useMemo(
+    () => [
+      {
+        Header: "Product Name",
+        accessor: "productDetails.name",
+        Cell: ({ row }) => (
+          <Link href={`/products/${row.original.productDetails._id}`}>
+            <p className="text-blue-500 hover:underline">
+              {row.original.productDetails.name}
+            </p>
+          </Link>
+        ),
+      },
+      {
+        Header: "Order Date",
+        accessor: "createdAt",
+        Cell: ({ value }) => new Date(value).toLocaleDateString(),
+      },
+      {
+        Header: "Quantity",
+        accessor: "quantity",
+      },
+      {
+        Header: "Price",
+        accessor: "productDetails.price",
+        Cell: ({ value }) => `${value.toFixed(2)}`,
+      },
+      {
+        Header: "Status",
+        accessor: "status",
+      },
+      {
+        Header: "Shipping Address",
+        accessor: "shippingAddress",
+        Cell: ({ value }) =>
+          `${value.addressLine1}, ${value.city}, ${value.state}, ${value.country}, ${value.pinCode}`,
+      },
+    ],
+    []
+  );
+
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    rows,
+    prepareRow,
+    state,
+    setGlobalFilter,
+  } = useTable(
+    {
+      columns,
+      data: orders,
+    },
+    useGlobalFilter, // Use global filter hook
+    useSortBy // Use sorting hook
+  );
+
+  const { globalFilter } = state;
+
   if (loading) {
     return <p>Loading order history...</p>;
   }
@@ -47,36 +123,47 @@ const OrderHistoryTable = () => {
   return (
     <div className="w-full overflow-auto p-5">
       <h2 className="text-2xl font-bold mb-4">Order History</h2>
-      <table className="min-w-full bg-white border border-gray-300">
+      <div className="mb-4">
+        <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
+      </div>
+      <table
+        {...getTableProps()}
+        className="min-w-full bg-white border border-gray-300"
+      >
         <thead>
-          <tr className="bg-gray-100 text-left">
-            <th className="px-4 py-2 border">Product Name</th>
-            <th className="px-4 py-2 border">Order Date</th>
-            <th className="px-4 py-2 border">Quantity</th>
-            <th className="px-4 py-2 border">Price</th>
-          </tr>
-        </thead>
-        <tbody>
-          {orders.map((order) => (
-            <tr key={order._id} className="hover:bg-gray-50">
-              <td className="px-4 py-2 border">
-                <Link
-                  href={`${process.env.BACKEND_URL}products/${order.productDetails._id}`}
+          {headerGroups.map((headerGroup) => (
+            <tr {...headerGroup.getHeaderGroupProps()} className="bg-gray-100">
+              {headerGroup.headers.map((column) => (
+                <th
+                  {...column.getHeaderProps(column.getSortByToggleProps())}
+                  className="px-4 py-2 border text-left"
                 >
-                  <a className="text-blue-500 hover:underline">
-                    {order.productDetails.name}
-                  </a>
-                </Link>
-              </td>
-              <td className="px-4 py-2 border">
-                {new Date(order.createdAt).toLocaleDateString()}
-              </td>
-              <td className="px-4 py-2 border">{order.quantity}</td>
-              <td className="px-4 py-2 border">{`$${order.productDetails.price.toFixed(
-                2
-              )}`}</td>
+                  {column.render("Header")}
+                  <span>
+                    {column.isSorted
+                      ? column.isSortedDesc
+                        ? " 🔽"
+                        : " 🔼"
+                      : ""}
+                  </span>
+                </th>
+              ))}
             </tr>
           ))}
+        </thead>
+        <tbody {...getTableBodyProps()}>
+          {rows.map((row) => {
+            prepareRow(row);
+            return (
+              <tr {...row.getRowProps()} className="hover:bg-gray-50">
+                {row.cells.map((cell) => (
+                  <td {...cell.getCellProps()} className="px-4 py-2 border">
+                    {cell.render("Cell")}
+                  </td>
+                ))}
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>
