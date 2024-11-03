@@ -8,12 +8,12 @@ import { toast } from "react-toastify";
 // Define a global filter component
 function GlobalFilter({ filter, setFilter }) {
   return (
-    <span>
+    <span className="block sm:inline-block mb-2 sm:mb-0">
       Search:{" "}
       <input
         value={filter || ""}
         onChange={(e) => setFilter(e.target.value)}
-        className="border p-1 rounded"
+        className="border p-1 rounded w-full sm:w-auto"
         placeholder="Search orders..."
       />
     </span>
@@ -45,6 +45,30 @@ const OrderHistoryTable = () => {
       toast.error("Error fetching order history.");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleCancelOrder = async (orderId) => {
+    try {
+      const authToken = localStorage.getItem("token");
+      const config = {
+        method: "post",
+        url: `${process.env.BACKEND_URL}api/v1/common/cancelOrder`, // Update with the actual cancel order endpoint
+        headers: {
+          "auth-token": authToken,
+        },
+        data: { orderId },
+      };
+      const res = await axios.request(config);
+      if (res.data.status) {
+        toast.success("Order cancelled successfully.");
+        fetchOrderHistory(); // Refresh order history after cancellation
+      } else {
+        toast.error("Failed to cancel the order.");
+      }
+    } catch (error) {
+      console.error("Error cancelling order:", error);
+      toast.error("Error cancelling order.");
     }
   };
 
@@ -89,6 +113,21 @@ const OrderHistoryTable = () => {
         Cell: ({ value }) =>
           `${value.addressLine1}, ${value.city}, ${value.state}, ${value.country}, ${value.pinCode}`,
       },
+      {
+        Header: "Actions",
+        accessor: "actions",
+        Cell: ({ row }) =>
+          ["Processing", "Pending"].includes(row.original.status) ? (
+            <button
+              onClick={() => handleCancelOrder(row.original._id)}
+              className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
+            >
+              Cancel
+            </button>
+          ) : (
+            <span className="text-gray-500">N/A</span>
+          ),
+      },
     ],
     []
   );
@@ -113,22 +152,24 @@ const OrderHistoryTable = () => {
   const { globalFilter } = state;
 
   if (loading) {
-    return <p>Loading order history...</p>;
+    return <p className="text-center py-10">Loading order history...</p>;
   }
 
   if (orders.length === 0) {
-    return <p>No orders found.</p>;
+    return <p className="text-center py-10">No orders found.</p>;
   }
 
   return (
-    <div className="w-full overflow-auto p-5">
-      <h2 className="text-2xl font-bold mb-4">Order History</h2>
-      <div className="mb-4">
+    <div className="w-full max-w-7xl mx-auto overflow-x-auto p-5">
+      <h2 className="text-2xl font-bold mb-4 text-center sm:text-left">
+        Order History
+      </h2>
+      <div className="flex justify-between mb-4 flex-col sm:flex-row items-center">
         <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
       </div>
       <table
         {...getTableProps()}
-        className="min-w-full bg-white border border-gray-300"
+        className="min-w-full bg-white border border-gray-300 text-sm sm:text-base"
       >
         <thead>
           {headerGroups.map((headerGroup) => (
@@ -136,7 +177,7 @@ const OrderHistoryTable = () => {
               {headerGroup.headers.map((column) => (
                 <th
                   {...column.getHeaderProps(column.getSortByToggleProps())}
-                  className="px-4 py-2 border text-left"
+                  className="px-2 sm:px-4 py-2 border text-left"
                 >
                   {column.render("Header")}
                   <span>
@@ -157,7 +198,10 @@ const OrderHistoryTable = () => {
             return (
               <tr {...row.getRowProps()} className="hover:bg-gray-50">
                 {row.cells.map((cell) => (
-                  <td {...cell.getCellProps()} className="px-4 py-2 border">
+                  <td
+                    {...cell.getCellProps()}
+                    className="px-2 sm:px-4 py-2 border"
+                  >
                     {cell.render("Cell")}
                   </td>
                 ))}
