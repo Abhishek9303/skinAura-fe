@@ -5,11 +5,14 @@ import ManageProducts from "./productComp/ProductManage";
 import Skeleton from "react-loading-skeleton";
 import adminStore from "@/store/admin/adminProfile";
 import ProtectedAdmin from "@/store/admin/adminProtectedRoute";
+import ManageOrder from "./adminComponent/ManageOrder";
 
 // Define components for each tab
 const tabs = [
   { id: 1, label: "Schedule Meeting", content: <MeetingApproval /> },
   { id: 2, label: "Manage Product", content: <ManageProducts /> },
+  { id: 3, label: "Manage Orders", content: <ManageOrder /> },
+
   // Add more tabs if needed
 ];
 
@@ -36,7 +39,6 @@ const Page = () => {
 
   return (
     <div className="flex flex-col md:flex-row">
-      {console.log(admin)}
       <div className="md:hidden flex justify-between items-center bg-slate-500 p-4">
         <h1 className="text-xl font-bold">Admin Page</h1>
         <button

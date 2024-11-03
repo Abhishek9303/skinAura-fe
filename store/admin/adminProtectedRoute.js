@@ -60,7 +60,6 @@ const ProtectedAdmin = (WrappedComponent) => {
         window.localStorage.setItem("isAuthenticate", false);
         router.push("/adminLogin");
       }
-      console.log(admin);
     }, [router]);
 
     // Only render the WrappedComponent if the token exists, and pass props and admin as separate props

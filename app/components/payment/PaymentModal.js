@@ -66,7 +66,7 @@ const PaymentModal = ({
           selectedAddress._id, // Use the selected address ID directly
           ""
         );
-        console.log(result); // For debugging purposes
+       
       } catch (error) {
         // Error toast will already be handled inside placeOrder
       }

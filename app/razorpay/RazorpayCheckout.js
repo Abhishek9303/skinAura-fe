@@ -142,7 +142,7 @@ const RazorpayCheckout = ({
       );
 
       const orderData = orderResponse.data;
-      console.log("Order Data:", orderData);
+  
       if (!orderData.success) {
         toast.error("Failed to create order. Please try again.");
         return;
