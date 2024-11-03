@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import UserInfoForm from "../components/userInfoForm/UserInfoForm";
 import OrderCard from "../components/orderCard/OrderCard";
 import useUserStore from "../../store/user/userProfile";
+import OrderHistoryTable from "../components/orderHistory/orderHistory";
 
 const Page = () => {
   const [isFormVisible, setIsFormVisible] = useState(false);
@@ -39,9 +40,7 @@ const Page = () => {
       <div className="w-full flex-grow">
         <h1 className="text-xl text-center py-2 font-bold">Recently Brought</h1>
         <div className="w-full overflow-y-auto flex flex-wrap items-center md:px-16 p-5 justify-center gap-5">
-          <OrderCard />
-          <OrderCard />
-          <OrderCard />
+          <OrderHistoryTable />
         </div>
       </div>
     </div>

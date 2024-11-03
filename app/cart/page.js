@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import React, { useEffect, useState } from "react";
 import Button from "../components/button/Button";
 import Product from "../components/product/Product";
@@ -8,6 +8,7 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import CheckoutModal from "../../app/components/checkoutModel/CheckoutModal";
 import { toast } from "react-toastify";
+import Link from "next/navigation";
 
 const Page = () => {
   const [token, setToken] = useState("");
@@ -82,9 +83,13 @@ const Page = () => {
   }, []);
 
   useEffect(() => {
-    if (cartProducts.length > 0) {
+    if (cartProducts && cartProducts.length > 0) {
+      // Check if cartProducts is defined and has length
       const productIds = cartProducts.map((product) => product.product);
       fetchAllProductDetails(productIds);
+    } else {
+      setLoading(false);
+      setStoredProductData([]);
     }
   }, [cartProducts]);
 

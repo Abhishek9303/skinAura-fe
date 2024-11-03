@@ -1,3 +1,4 @@
+'use client';
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
@@ -18,7 +19,8 @@ const RazorpayCheckout = ({
     description: "Cart",
   });
   const { user } = useUserStore();
-  const [totalPrice, setTotalPrice] = useState(0); // Initialize totalPrice as 0
+  const [singleProductPrice, setSingleProductPrice] = useState(0);
+  const [cartTotalPrice, setCartTotalPrice] = useState(0); // For multiple products
   const [token, setToken] = useState(null);
   const router = useRouter();
 
@@ -65,21 +67,29 @@ const RazorpayCheckout = ({
     setToken(storedToken);
 
     if (productArr && productArr.length > 0) {
-      // Calculate total price if productArr is provided
-      setTotalPrice(totalAmount);
+      // Set cart total amount when there are multiple products
+      console.log(
+        "Product Array:",
+        productArr,
+        "Total Cart Amount:",
+        totalAmount
+      );
+      setCartTotalPrice(totalAmount);
     } else if (productId) {
+      // For single product, fetch data and calculate total price
       fetchProductData(productId).then((data) => {
         setProductData(data);
-        setTotalPrice(data.price * quantity); // Calculate price for single product
+        const calculatedPrice = data.price * quantity;
+        console.log("Single Product Price Calculation:", calculatedPrice);
+        setSingleProductPrice(calculatedPrice);
       });
     }
 
-    // Ensure Razorpay SDK is loaded
     loadRazorpaySDK().catch((error) => {
       console.error("Error loading Razorpay SDK:", error);
       toast.error("Failed to load Razorpay SDK. Please try again later.");
     });
-  }, [productId, quantity, productArr]);
+  }, [productId, quantity, productArr, totalAmount]);
 
   const verifyPayment = async (
     orderCreationId,
@@ -104,7 +114,7 @@ const RazorpayCheckout = ({
         }
       );
 
-      if (response.data) {
+      if (response.data.success) {
         toast.success("Payment verified successfully!");
         router.push("/profile");
       } else {
@@ -142,38 +152,39 @@ const RazorpayCheckout = ({
       );
 
       const orderData = orderResponse.data;
-  
+      const razorpayOrderId = orderData.orderId;
       if (!orderData.success) {
         toast.error("Failed to create order. Please try again.");
         return;
       }
 
       // Step 2: Configure Razorpay options with handler function
+      const amountToCharge = productArr ? cartTotalPrice : singleProductPrice;
+      console.log("Amount to Charge:", amountToCharge);
+
       const options = {
         key:
           process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID ||
           "YOUR_TEST_RAZORPAY_KEY_ID",
-        amount: `${totalPrice * 100}`, // Amount in paise
+        amount: amountToCharge * 100, // Convert to smallest currency unit (paise)
         currency: orderData.data.currency || "INR",
         name: `${productData.name}`,
         description: `${productData.description}`,
-        order_id: orderData.data.orderId, // Store this as orderCreationId
+        order_id: razorpayOrderId,
         handler: function (response) {
-          const orderCreationId = orderData.data.orderId;
-          const razorpayPaymentId = response.razorpay_payment_id;
-          const razorpayOrderId = response.razorpay_order_id;
-          const razorpaySignature = response.razorpay_signature;
+          const { razorpay_payment_id, razorpay_order_id, razorpay_signature } =
+            response;
           verifyPayment(
-            orderCreationId,
-            razorpayPaymentId,
             razorpayOrderId,
-            razorpaySignature
+            razorpay_payment_id,
+            razorpay_order_id,
+            razorpay_signature
           );
         },
         prefill: {
-          name: `${user.name}`,
-          email: `${user.emailId}`,
-          contact: `${user.mobileNo}`,
+          name: user.name,
+          email: user.emailId,
+          contact: user.mobileNo,
         },
         notes: {
           address: selectedAddress,
@@ -182,7 +193,7 @@ const RazorpayCheckout = ({
           color: "#3399cc",
         },
       };
-      console.log("Options:", options);
+      console.log("Final Razorpay Options:", options); // Confirm amount is correct
       const rzp1 = new window.Razorpay(options);
       rzp1.open();
     } catch (error) {

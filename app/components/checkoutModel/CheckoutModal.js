@@ -16,6 +16,7 @@ const CheckoutModal = ({ isOpen, onClose, cartProducts, cartId }) => {
 
   // Calculate total amount based on cartProducts with updated quantities
   const totalAmount = cartProducts.reduce((total, product) => {
+    
     return total + product.price * product.quantity;
   }, 0);
 
@@ -30,7 +31,8 @@ const CheckoutModal = ({ isOpen, onClose, cartProducts, cartId }) => {
     setIsAddressModalOpen(false); // Close the AddressModal
     console.log("Product Details:", productDetails); // Log the array of product details
     console.log("Selected Address Details:", addressDetails);
-    console.log("Cart ID:", cartId); // Log selected address details
+    console.log("Cart ID:", cartId);
+    console.log("Total Amount:", totalAmount);
     setRazorpayCheckoutOpen(true);
   };
 
