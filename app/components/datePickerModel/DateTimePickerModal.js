@@ -83,11 +83,8 @@ const DateTimePickerModal = ({ isOpen, onClose, reason }) => {
         }
       })
       .catch((error) => {
-        if (error.response.status === 401) {
-          clearUser();
-          window.localStorage.removeItem("token");
-          window.location.href = "/signin";
-          toast.error("Please login to schedule a meeting");
+        if (error) {
+          toast.error("Error scheduling meeting" + error.message);
           return;
         }
         if (error.response.data.data.length > 0) {
@@ -97,7 +94,7 @@ const DateTimePickerModal = ({ isOpen, onClose, reason }) => {
         toast.error(error.response.data.error);
       })
       .finally(() => {
-        setIsLoading(false); // Stop loader
+        setIsLoading(false); 
         onClose();
       });
   };
