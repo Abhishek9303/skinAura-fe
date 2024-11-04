@@ -26,7 +26,14 @@ const Page = () => {
   const [products, setProducts] = useState([]);
   const [token, setToken] = useState(null);
 
-  const openModal = () => setIsModalOpen(true);
+  const openModal = () => {
+    if (user) {
+      setIsModalOpen(true);
+    } else {
+      toast("Please login to take the test")
+      router.push("/signin");
+    }
+  }
   const closeModal = () => setIsModalOpen(false);
 
   const getProducts = async () => {
@@ -48,26 +55,8 @@ const Page = () => {
 
   return (
     <>
-      {isModalOpen &&
-        (token ? (
-          <DateTimePickerModal isOpen={isModalOpen} onClose={closeModal} />
-        ) : (
-          (() => {
-            closeModal();
-            toast("Please Login First", {
-              position: "top-right",
-              autoClose: 5000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "dark",
-            });
-            router.push("/signin");
-            return null;
-          })()
-        ))}
+      {isModalOpen && (<DateTimePickerModal isOpen={isModalOpen} onClose={closeModal} />)
+      }
       <div className="relative">
         <HomeSwiper1 />
         <Scroller />
