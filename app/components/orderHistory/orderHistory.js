@@ -13,7 +13,7 @@ function GlobalFilter({ filter, setFilter }) {
       <input
         value={filter || ""}
         onChange={(e) => setFilter(e.target.value)}
-        className="border p-1 rounded"
+        className="border p-1 rounded w-full sm:w-auto"
         placeholder="Search orders..."
       />
     </span>
@@ -154,22 +154,24 @@ const OrderHistoryTable = () => {
   const { globalFilter } = state;
 
   if (loading) {
-    return <p>Loading order history...</p>;
+    return <p className="text-center py-10">Loading order history...</p>;
   }
 
   if (orders.length === 0) {
-    return <p>No orders found.</p>;
+    return <p className="text-center py-10">No orders found.</p>;
   }
 
   return (
-    <div className="w-full overflow-auto p-5">
-      <h2 className="text-2xl font-bold mb-4">Order History</h2>
-      <div className="mb-4">
+    <div className="w-full max-w-7xl mx-auto overflow-x-auto p-5">
+      <h2 className="text-2xl font-bold mb-4 text-center sm:text-left">
+        Order History
+      </h2>
+      <div className="flex justify-between mb-4 flex-col sm:flex-row items-center">
         <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
       </div>
       <table
         {...getTableProps()}
-        className="min-w-full bg-white border border-gray-300"
+        className="min-w-full bg-white border border-gray-300 text-sm sm:text-base"
       >
         <thead>
           {headerGroups.map((headerGroup) => (
@@ -177,7 +179,7 @@ const OrderHistoryTable = () => {
               {headerGroup.headers.map((column) => (
                 <th
                   {...column.getHeaderProps(column.getSortByToggleProps())}
-                  className="px-4 py-2 border text-left"
+                  className="px-2 sm:px-4 py-2 border text-left"
                 >
                   {column.render("Header")}
                 </th>
