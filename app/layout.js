@@ -6,7 +6,7 @@ import Footer from "../app/components/footer/Footer";
 import { usePathname } from "next/navigation";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import { Toaster } from "../components/ui/toaster";
 export default function RootLayout({ children }) {
   const path = usePathname();
 
@@ -35,6 +35,7 @@ export default function RootLayout({ children }) {
           pauseOnHover
           theme="dark"
         />
+        <Toaster />
       </body>
     </html>
   );

@@ -7,15 +7,14 @@ import adminStore from "@/store/admin/adminProfile";
 import ProtectedAdmin from "@/store/admin/adminProtectedRoute";
 import ManageOrder from "./adminComponent/ManageOrder";
 import ManageServiceBooking from "./adminComponent/ManageServiceBooking";
+import ManageDailyEntry from "./adminComponent/ManageDailyEntry";
 
-// Define components for each tab
 const tabs = [
+  { id: 0, label: "Daily Entry" , content  : <ManageDailyEntry/> },
   { id: 1, label: "Schedule Meeting", content: <MeetingApproval /> },
   { id: 2, label: "Manage Product", content: <ManageProducts /> },
   { id: 3, label: "Manage Orders", content: <ManageOrder /> },
   { id: 4, label: "Manage Service Booking", content: <ManageServiceBooking /> },
-
-  // Add more tabs if needed
 ];
 
 const Page = () => {

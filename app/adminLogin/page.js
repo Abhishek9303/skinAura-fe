@@ -66,7 +66,6 @@ const AdminLogin = () => {
             theme: "dark",
           });
           localStorage.setItem("token", response?.data?.data);
-
           localStorage.setItem("isAuthenticated", "true");
           router.push("/admin");
 

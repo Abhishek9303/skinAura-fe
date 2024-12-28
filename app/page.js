@@ -18,7 +18,7 @@ import "react-toastify/dist/ReactToastify.css";
 import DateTimePickerModal from "./components/datePickerModel/DateTimePickerModal";
 import { useRouter } from "next/navigation";
 import axios from "axios";
-
+import Head from "next/head";
 const Page = () => {
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -51,12 +51,17 @@ const Page = () => {
 
   useEffect(() => {
     getProducts();
-  }, []); // Ensure this array is empty to run only once
+  }, []);
 
   return (
     <>
-      {isModalOpen && (<DateTimePickerModal isOpen={isModalOpen} onClose={closeModal} />)
-      }
+      <Head>
+        <title>Skin Aura</title>
+        <meta property="og:title" content="Skin Aura" key="home" />
+      </Head>
+      {isModalOpen && (
+        <DateTimePickerModal isOpen={isModalOpen} onClose={closeModal} />
+      )}
       <div className="relative">
         <HomeSwiper1 />
         <Scroller />
