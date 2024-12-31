@@ -34,11 +34,14 @@ const AddExpense = () => {
         };
 
         try {
-            const response = await axios.request(config)
-            console.log(response)
-            // setExpenses(todayExpenses);
-            // const total = todayExpenses.reduce((sum, expense) => sum + parseFloat(expense.amount), 0);
-            // setTotalExpense(total);
+            const response = await axios.request(config);
+            const expensesData = response.data.data.map(expense => ({
+                ...expense,
+                createdAt: new Date(expense.createdAt)
+            }));
+            setExpenses(expensesData);
+            const total = expensesData.reduce((sum, expense) => sum + parseFloat(expense.amount), 0);
+            setTotalExpense(total);
         } catch (error) {
             console.error("Error fetching expenses:", error.response ? error.response.data : error.message);
         }
@@ -60,11 +63,12 @@ const AddExpense = () => {
                 'auth-token': admin.token, 
                 'Content-Type': 'application/json'
             },
+            data: newExpense
         };
 
         try {
             const response = await axios.request(config);
-            console.log(JSON.stringify(response.data));
+            // console.log(JSON.stringify(response.data));
             toast({
                 variant: "success",
                 title: "Expense Added Successfully"
@@ -139,18 +143,16 @@ const AddExpense = () => {
               </p>
             )}
           </div>
-          <Button
-            type="submit"
-          >
-            Add Expense
-          </Button>
+          <Button type="submit">Add Expense</Button>
         </form>
         <div style={{ flex: 1 }}>
           <h3 style={{ marginBottom: "10px" }}>Today's Expenses</h3>
           <ul style={{ listStyleType: "none", padding: "0" }}>
             {expenses?.map((expense, index) => (
               <li key={index} style={{ marginBottom: "5px" }}>
-                {expense.reason}: &#8377;{expense.amount} on {format(new Date(expense.createdAt), 'PPP')}
+                {console.log(expense,'expense')}
+                {expense.reason}: &#8377;{expense.amount} on{" "}
+                {format(expense.createdAt, "PPP")}
               </li>
             ))}
           </ul>

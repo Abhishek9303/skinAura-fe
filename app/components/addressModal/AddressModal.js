@@ -94,6 +94,26 @@ const AddressModal = ({
             pinCode: "",
             country: "",
           });
+
+          // Fetch addresses again to include the newly added address
+          const fetchAddresses = async () => {
+            try {
+              const response = await axios.get(
+                `${process.env.BACKEND_URL}api/v1/common/getAddress`,
+                {
+                  headers: {
+                    "auth-token": window.localStorage.getItem("token"),
+                  },
+                }
+              );
+              if (response.data.success) {
+                setAddresses(response.data.data);
+              }
+            } catch (error) {
+              console.error("Error fetching addresses:", error);
+            }
+          };
+          fetchAddresses();
         } else {
           console.error("Error adding address:", response.data.message);
         }
@@ -121,11 +141,9 @@ const AddressModal = ({
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white p-6 rounded-lg w-[80vw] md:w-[400px] relative">
-        <h2 className="text-2xl font-bold mb-4">Address</h2>
-
-        {/* Button to add new address */}
-        <div className="absolute top-4 right-4">
+      <div className="bg-white p-6 rounded-lg w-[80vw] md:w-[400px] relative h-[80vh]  overflow-y-auto flex flex-col justify-between">
+        <div className="flex justify-between items-center">
+        <div className="text-2xl font-bold ">Address</div >
           <Button
             text={showForm ? "X" : "New Address"}
             onClick={() => {
@@ -142,12 +160,9 @@ const AddressModal = ({
                 }); // Reset new address fields
               }
             }}
-            className="rounded-lg"
-          />
+            className="rounded-lg"/>
         </div>
-
-        {/* Existing addresses */}
-        {addresses.length > 0 && (
+        {addresses.length > 0 ? (
           <div className="mb-4">
             <h3 className="text-lg font-medium mb-2">
               Select Existing Address:
@@ -169,6 +184,10 @@ const AddressModal = ({
                 </span>
               </label>
             ))}
+          </div>
+        ) : !showForm && (
+          <div className="mb-4 text-center text-red-500">
+            No addresses available. Please add a new address.
           </div>
         )}
 

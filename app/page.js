@@ -149,9 +149,18 @@ const Page = () => {
         </h1>
         <p className="text-center xs:text-sm">“Family Members”</p>
         <div className="flex flex-col md:flex-col lg:flex-row items-center justify-center gap-10 mt-10">
-          <BeforeAfterReview />
-          <BeforeAfterReview />
-          <BeforeAfterReview />
+          <BeforeAfterReview
+            beforeImage={`https://res.cloudinary.com/den1739gv/image/upload/v1735615338/before03_pa0dxf.jpg`}
+            afterImage={`https://res.cloudinary.com/den1739gv/image/upload/v1735615348/after03_zgmdwn.jpg`}
+          />
+          <BeforeAfterReview
+            beforeImage={`https://res.cloudinary.com/den1739gv/image/upload/v1735615108/IMG_6567_czf1pj.jpg`}
+            afterImage={`https://res.cloudinary.com/den1739gv/image/upload/v1735615145/IMG_6931_f5qcf6.jpg`}
+          />
+          <BeforeAfterReview
+            beforeImage={`https://res.cloudinary.com/den1739gv/image/upload/v1735616539/IMG_3569_tv7s2q.png`}
+            afterImage={`https://res.cloudinary.com/den1739gv/image/upload/v1735616562/IMG_3568_jabu6b.png`}
+          />
         </div>
       </div>
       <div className="md:py-10 flex flex-col items-center justify-around md:gap-5 gap-3">

@@ -30,7 +30,7 @@ const ManageDailyEntry = () => {
      const { toast } = useToast();
   const [showTable, setShowTable] = useState(false);
   const [showFreeOption, setShowFreeOption] = useState(false);
-  const { register, handleSubmit, formState: { errors } } = useForm({
+  const { register, handleSubmit, formState: { errors }, reset } = useForm({
     resolver: zodResolver(schema),
     defaultValues: {
       name: '',
@@ -67,7 +67,6 @@ const ManageDailyEntry = () => {
   
     try {
       const response = await axios.request(config);
-      console.log(JSON.stringify(response.data));
         if(response.data.success){
             toast({
                 variant :"success",
@@ -84,6 +83,8 @@ const ManageDailyEntry = () => {
         "Error adding user entry:",
         error.response ? error.response.data : error.message
       );
+    } finally {
+      reset();
     }
   };
 

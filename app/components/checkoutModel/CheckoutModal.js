@@ -29,10 +29,10 @@ const CheckoutModal = ({ isOpen, onClose, cartProducts, cartId }) => {
   const handleAddressSelect = (addressDetails) => {
     setSelectedAddress(addressDetails); // Save the selected address details
     setIsAddressModalOpen(false); // Close the AddressModal
-    console.log("Product Details:", productDetails); // Log the array of product details
-    console.log("Selected Address Details:", addressDetails);
-    console.log("Cart ID:", cartId);
-    console.log("Total Amount:", totalAmount);
+    // console.log("Product Details:", productDetails); // Log the array of product details
+    // console.log("Selected Address Details:", addressDetails);
+    // console.log("Cart ID:", cartId);
+    // console.log("Total Amount:", totalAmount);
     setRazorpayCheckoutOpen(true);
   };
 

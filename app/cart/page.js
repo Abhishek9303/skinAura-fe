@@ -115,7 +115,7 @@ const Page = () => {
         },
         { headers: { "auth-token": token } }
       );
-      console.log("DB updated", response.data);
+  
     } catch (error) {
       console.error("Failed to update quantity in the database", error);
     }
