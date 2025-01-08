@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React, { useCallback, useEffect, useState } from "react";
 import { Input } from "../../../components/ui/input";
 import { useForm } from "react-hook-form";
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useToast } from "../../../hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import {
@@ -14,65 +14,104 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import AddExpense from "../../components/expenseModal/AddExpense";
-import axios from 'axios';
-import adminStore from '@/store/admin/adminProfile';
+import axios from "axios";
+import adminStore from "@/store/admin/adminProfile";
+import TodayEntryTable from "./entryTable/TodayEntryTable";
+import { format } from "date-fns";
 const schema = z.object({
   name: z.string().nonempty("Name is required"),
-  mobileNumber: z.string().nonempty("Mobile number is required").min(10).max(10),
-  paymentMethod: z.enum(["Cash", "Online",'Free'], "Payment method is required"),
+  mobileNumber: z
+    .string()
+    .nonempty("Mobile number is required")
+    .min(10)
+    .max(10),
+  paymentMethod: z.enum(
+    ["Cash", "Online", "Free"],
+    "Payment method is required"
+  ),
   amount: z.string().nonempty("Amount is required"),
   gender: z.enum(["Male", "Female"], "Gender is required"),
   notes: z.string().optional(),
+  purpose : z.string().optional()
 });
 
 const ManageDailyEntry = () => {
-      const { admin } = adminStore();
-     const { toast } = useToast();
+  const { admin } = adminStore();
+  const { toast } = useToast();
   const [showTable, setShowTable] = useState(false);
   const [showFreeOption, setShowFreeOption] = useState(false);
-  const { register, handleSubmit, formState: { errors }, reset } = useForm({
+  const [entries, setEntries] = useState([]);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm({
     resolver: zodResolver(schema),
     defaultValues: {
-      name: '',
-      mobileNumber: '',
-      paymentMethod: 'Cash',
-      amount: '',
-      token: '',
-      gender: '',
-      notes: ''
-    }
+      name: "",
+      mobileNumber: "",
+      paymentMethod: "Cash",
+      amount: "",
+      token: "",
+      gender: "",
+      notes: "",
+      purpose : "",
+    },
   });
-
-  const toggleTable = () => {
-    setShowTable(!showTable);
-  };
 
   const toggleFreeOption = (event) => {
     setShowFreeOption(event.target.checked);
   };
+    const getAllTodayEntry = useCallback(async () => {
+      const today = format(new Date , 'yyyy-MM-dd')
+      const config = {
+        method: "get",
+        maxBodyLength: Infinity,
+        url: `${process.env.BACKEND_URL}api/v1/admin/getAllTodaysEntry?startDate=${today}`,
+        headers: {
+          "auth-token": admin.token,
+        },
+      };
 
+      try {
+        const response = await axios.request(config);
+        setEntries(response.data.data || []);
+      } catch (error) {
+        toast({
+          variant: "destructive",
+          title: "Failed to Fetch Today's Entries",
+          description: error.message,
+        });
+        console.error(
+          "Error fetching today's entries:",
+          error.response ? error.response.data : error.message
+        );
+      }
+    }, []);
   const addUserEntry = async (newUserData) => {
     const data = JSON.stringify(newUserData);
-  
+
     const config = {
-      method: 'post',
+      method: "post",
       maxBodyLength: Infinity,
       url: `${process.env.BACKEND_URL}api/v1/admin/addUserEntry`,
-      headers: { 
-        'auth-token': admin.token, 
-        'Content-Type': 'application/json'
+      headers: {
+        "auth-token": admin.token,
+        "Content-Type": "application/json",
       },
-      data: data
+      data: data,
     };
-  
+
     try {
       const response = await axios.request(config);
-        if(response.data.success){
-            toast({
-                variant :"success",
-                title : "Patient Added Successfully"
-            })
-        }
+      if (response.data.success) {
+        toast({
+          variant: "success",
+          title: "Patient Added Successfully",
+        });
+        await getAllTodayEntry(); // Fetch updated entries
+      }
     } catch (error) {
       toast({
         variant: "destructive",
@@ -84,16 +123,20 @@ const ManageDailyEntry = () => {
         error.response ? error.response.data : error.message
       );
     } finally {
+      getAllTodayEntry();
       reset();
     }
   };
 
+
+
+  useEffect(() => {
+    getAllTodayEntry();
+  }, [getAllTodayEntry]);
+
   return (
     <div className="p-4">
-      <form
-        onSubmit={handleSubmit(addUserEntry)}
-        className="space-y-4"
-      >
+      <form onSubmit={handleSubmit(addUserEntry)} className="space-y-4">
         <div>
           <label className="block text-sm font-medium text-gray-700">
             Name:
@@ -142,16 +185,16 @@ const ManageDailyEntry = () => {
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700">
-            Token:
+            Purpose of visit:
           </label>
           <Input
-            {...register("token")}
+            {...register("purpose")}
             type="text"
-            placeholder="Enter token"
+            placeholder="Enter purpose"
             className="mt-1 block w-full"
           />
-          {errors.token && (
-            <span className="text-red-500 text-sm">{errors.token.message}</span>
+          {errors.purpose && (
+            <span className="text-red-500 text-sm">{errors.purpose?.message}</span>
           )}
         </div>
         <div>
@@ -191,7 +234,7 @@ const ManageDailyEntry = () => {
           <textarea
             {...register("notes")}
             placeholder="note here"
-            className='border-1 w-full h-10 p-2'
+            className="border-1 w-full h-10 p-2"
           ></textarea>
           {errors.notes && (
             <span className="text-red-500 text-sm">{errors.notes.message}</span>
@@ -219,12 +262,10 @@ const ManageDailyEntry = () => {
           <Button type="submit">Submit</Button>
         </div>
       </form>
-      <div className="mt-4">
-        <button onClick={toggleTable} className="text-blue-500">
-          {showTable ? "▲" : "▼"}
-        </button>
-      </div>
-      {showTable && <div></div>}
+
+      <hr className="my-5" />
+      <h2 className="font-bold">Today's Entry </h2>
+      {<TodayEntryTable entries={entries} />}
 
       <div>
         <div className="mt-4">

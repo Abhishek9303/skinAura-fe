@@ -151,8 +151,8 @@ const AddExpense = () => {
             {expenses?.map((expense, index) => (
               <li key={index} style={{ marginBottom: "5px" }}>
                 {console.log(expense,'expense')}
-                {expense.reason}: &#8377;{expense.amount} on{" "}
-                {format(expense.createdAt, "PPP")}
+                {expense.reason}: &#8377;{expense?.amount} on{" "}
+                {format(expense?.createdAt, "PPP")}
               </li>
             ))}
           </ul>
