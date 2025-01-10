@@ -78,19 +78,28 @@ const ProductImages = (props) => {
         </SplideTrack>
       </Splide>
       {isFullScreen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75" onWheel={handleZoom}>
-          <div className="relative w-4/5 h-4/5" onClick={(e) => e.stopPropagation()}>
-            <button
-              className="absolute top-4 right-4 text-white text-2xl cursor-pointer z-30"
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75"
+          onWheel={handleZoom}
+        >
+          <div
+            className="relative w-4/5 h-4/5 "
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div
+              className="absolute top-2 right-4 mix-blend-difference text-2xl cursor-pointer z-30 "
               onClick={() => setIsFullScreen(false)}
             >
-              &times;
-            </button>
+              <div className="flex items-center justify-center ">❌</div>
+            </div>
             <img
               src={fullScreenImage}
               alt="Full screen product"
               className="w-full h-full object-contain"
-              style={{ transform: `scale(${zoom})`, transformOrigin: `${offset.x}% ${offset.y}%` }}
+              style={{
+                transform: `scale(${zoom})`,
+                transformOrigin: `${offset.x}% ${offset.y}%`,
+              }}
               onMouseMove={handleMouseMove}
             />
           </div>
