@@ -270,7 +270,7 @@ const ProductForm = ({ onClose, setProducts, editingProduct }) => {
                 {formData.images.map((file, index) => (
                   <div key={index} className="relative">
                     <img
-                      src={URL.createObjectURL(file)}
+                      // src={URL?.createObjectURL(file)}
                       alt={`Image ${index}`}
                       className="h-20 w-20 object-cover"
                     />

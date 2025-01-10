@@ -20,8 +20,8 @@ const Product = (props) => {
     router.push("/products/" + productId);
   };
 
-  const truncateName = (name) => {
-    return name && name.length > 10 ? name.substring(0, 10) + "..." : name;
+  const truncateName = (name,length) => {
+    return name && name.length > length ? name.substring(0, length) + "..." : name;
   };
 
   const handleIncrement = () => {
@@ -97,10 +97,10 @@ const Product = (props) => {
         </Link>
         <div className="text-center md:py-2">
           <h3 className="font-semibold md:text-[1.8vmax] text-[1.5vmax] text-gray-800">
-            {truncateName(productData.name)}
+            {truncateName(productData.name, 10)}
           </h3>
           <p className="font-medium md:py-1 px-2 text-center text-[1.4vmax] lg:text-[1vmax] text-wrap text-gray-800">
-            {productData.description}
+            {truncateName(productData.description,20)}
           </p>
           <h1 className="font-bold md:py-1 md:mb-2 text-sm md:text-xl text-gray-800">
             &#8377; {productData.price}/-
