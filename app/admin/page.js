@@ -21,18 +21,16 @@ const Page = () => {
   const { admin } = adminStore();
   const [activeTab, setActiveTab] = useState(tabs[0].id);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  const [loading, setLoading] = useState(true); // Loading state
+  const [loading, setLoading] = useState(true); 
 
-  // Simulate loading content
   useEffect(() => {
     const timer = setTimeout(() => {
-      setLoading(false); // Set loading to false after 1 second
+      setLoading(false); 
     }, 1000);
 
-    return () => clearTimeout(timer); // Cleanup timer on unmount
+    return () => clearTimeout(timer); 
   }, []);
 
-  // Function to render the content of the active tab
   const renderContent = () => {
     const activeContent = tabs.find((tab) => tab.id === activeTab);
     return activeContent ? activeContent.content : null;
