@@ -4,14 +4,10 @@ import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { ChevronDown, MoreHorizontal } from "lucide-react";
-import adminStore from "@/store/admin/adminProfile";
 import {
   Table,
   TableBody,
@@ -20,7 +16,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useToast } from "@/hooks/use-toast";
 import {
   flexRender,
   getCoreRowModel,
@@ -29,18 +24,16 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { useRouter } from "next/navigation";
-import axios from "axios";
 import { format } from "date-fns";
 import {
   Sheet,
-  SheetTrigger,
   SheetContent,
   SheetHeader,
   SheetFooter,
   SheetTitle,
   SheetDescription,
 } from "@/components/ui/sheet";
+import { Separator } from "@/components/ui/separator";
 
 const globalFilterFn = (row, columnId, filterValue) => {
   const value = row.getValue(columnId);
@@ -56,20 +49,15 @@ const globalFilterFn = (row, columnId, filterValue) => {
 
 const TodayEntryTable = ({ entries, handleAddDiscount }) => {
   const [sorting, setSorting] = useState([]);
-  const { admin } = adminStore();
   const [columnFilters, setColumnFilters] = useState([]);
   const [columnVisibility, setColumnVisibility] = useState({});
   const [rowSelection, setRowSelection] = useState({});
   const [globalFilter, setGlobalFilter] = useState("");
-  const [clientID, setClientID] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
   const [selectedRow, setSelectedRow] = useState(null);
   const [discount, setDiscount] = useState("");
   const [remark, setRemark] = useState("");
-  const router = useRouter();
-  const { toast } = useToast();
 
   const truncateString = (str, num) => {
     if (str.length <= num) {
@@ -201,7 +189,7 @@ const TodayEntryTable = ({ entries, handleAddDiscount }) => {
     data.forEach((entry) => {
       totalCash += entry.cashPaid || 0;
       totalOnline += entry.onlinePaid || 0;
-      totalDiscount += entry.discount || 0;
+      totalDiscount += parseInt(entry.discount) || 0;
       overallTotal += (entry.cashPaid || 0) + (entry.onlinePaid || 0);
     });
   
@@ -343,6 +331,7 @@ const TodayEntryTable = ({ entries, handleAddDiscount }) => {
             </Button>
           </div>
         </div>
+        <Separator/>
         <div className="py-4">
           <div className="text-sm w-full flex items-center justify-between">
             <strong>Total Cash:</strong>  <p className="font-medium">{totalCash}</p>

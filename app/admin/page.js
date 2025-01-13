@@ -8,6 +8,8 @@ import ProtectedAdmin from "@/store/admin/adminProtectedRoute";
 import ManageOrder from "./adminComponent/ManageOrder";
 import ManageServiceBooking from "./adminComponent/ManageServiceBooking";
 import ManageDailyEntry from "./adminComponent/ManageDailyEntry";
+import SearchPatient from "./adminComponent/searchPatient/searchPatient";
+import SkeletonPage from "./SkeletonPage";
 
 const tabs = [
   { id: 0, label: "Daily Entry" , content  : <ManageDailyEntry/> },
@@ -15,6 +17,7 @@ const tabs = [
   { id: 2, label: "Manage Product", content: <ManageProducts /> },
   { id: 3, label: "Manage Orders", content: <ManageOrder /> },
   { id: 4, label: "Manage Service Booking", content: <ManageServiceBooking /> },
+  { id: 5, label: "Get All Details", content: <SearchPatient/> },
 ];
 
 const Page = () => {
@@ -80,7 +83,7 @@ const Page = () => {
           </h2>
           {/* Render the active tab's component or the loader */}
           <div>
-            {loading ? <Skeleton count={5} height={30} /> : renderContent()}
+            {loading ? <SkeletonPage /> : renderContent()}
           </div>
         </div>
       </div>

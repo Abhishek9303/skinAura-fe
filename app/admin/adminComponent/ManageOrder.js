@@ -55,7 +55,7 @@ const ManageOrder = () => {
         url: `${process.env.BACKEND_URL}api/v1/common/updateOrder?orderId=${updatedOrder.orderId}`,
         headers: { 
           'Content-Type': 'application/json', 
-          'auth-token': admin.token
+          'auth-token': admin?.token
         },
         data: data
       };
@@ -63,7 +63,7 @@ const ManageOrder = () => {
       await axios(config);
       setOrders((prevOrders) =>
         prevOrders.map((order) =>
-          order._id === updatedOrder._id ? updatedOrder : order
+          order?._id === updatedOrder?._id ? updatedOrder : order
         )
       );
     } catch (error) {

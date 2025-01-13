@@ -150,7 +150,7 @@ const ManageDailyEntry = () => {
     let config = {
       method: "put",
       maxBodyLength: Infinity,
-      url: "http://localhost:5000/api/v1/admin/updateDiscount",
+      url: `${process.env.BACKEND_URL}api/v1/admin/updateDiscount`,
       headers: {
         "auth-token": admin?.token,
         "Content-Type": "application/json",
