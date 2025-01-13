@@ -4,8 +4,8 @@
 const nextConfig = {
   productionBrowserSourceMaps: false,
   env: {
-    // BACKEND_URL: `https://skin-aura-be.vercel.app/`,
-    BACKEND_URL: `http://localhost:5000/`,
+    BACKEND_URL: `https://skin-aura-be.vercel.app/`,
+    // BACKEND_URL: `http://localhost:5000/`,
     NEXT_PUBLIC_RAZORPAY_KEY_ID: `rzp_test_IhkH6awJCWjYBT`,
   },
   webpack: (config, { isServer }) => {
