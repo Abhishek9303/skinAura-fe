@@ -70,26 +70,33 @@ const SearchPatient = () => {
       },
       data: data,
     };
-
     axios
       .request(config)
       .then((response) => {
-        if(response.data.success){
+        if (response.data.success) {
           toast({
             message: "Report downloaded successfully",
+          });
+        } else {
+          toast({
+            message: "Failed to download report",
+            variant: "destructive",
           });
         }
       })
       .catch((error) => {
+        console.error("Error downloading report:", error); 
         toast({
-         
           message: "Failed to download report",
           variant: "destructive",
         });
       })
       .finally(() => {
-        setShowSheet(false);
-      })
+        setDate(""); 
+        setEmail("");
+        setShowSheet(false); // Ensure the sheet is closed
+      });
+   
   };
 
   return (
@@ -104,10 +111,10 @@ const SearchPatient = () => {
         />
         <div className="flex gap-5">
           <Button onClick={handleSearch}>Search</Button>
-          <Sheet>
+          <Sheet open={showSheet} onOpenChange={setShowSheet}>
             <SheetTrigger asChild>
               <div>
-                <Button>Download Report</Button>
+                <Button onClick={() => setShowSheet(true)}>Download Report</Button>
               </div>
             </SheetTrigger>
             <SheetContent>

@@ -10,7 +10,7 @@ import ManageServiceBooking from "./adminComponent/ManageServiceBooking";
 import ManageDailyEntry from "./adminComponent/ManageDailyEntry";
 import SearchPatient from "./adminComponent/searchPatient/searchPatient";
 import SkeletonPage from "./SkeletonPage";
-
+import { Toaster } from "@/components/ui/toaster";
 const tabs = [
   { id: 0, label: "Daily Entry" , content  : <ManageDailyEntry/> },
   { id: 1, label: "Schedule Meeting", content: <MeetingApproval /> },
@@ -41,6 +41,7 @@ const Page = () => {
 
   return (
     <div className="flex flex-col md:flex-row">
+      <Toaster />
       <div className="md:hidden flex justify-between items-center bg-slate-500 p-4">
         <h1 className="text-xl font-bold">Admin Page</h1>
         <button
@@ -82,9 +83,7 @@ const Page = () => {
             {tabs.find((tab) => tab.id === activeTab)?.label}
           </h2>
           {/* Render the active tab's component or the loader */}
-          <div>
-            {loading ? <SkeletonPage /> : renderContent()}
-          </div>
+          <div>{loading ? <SkeletonPage /> : renderContent()}</div>
         </div>
       </div>
     </div>
