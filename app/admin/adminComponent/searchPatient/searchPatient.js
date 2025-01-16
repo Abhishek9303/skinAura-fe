@@ -4,7 +4,7 @@ import adminStore from "@/store/admin/adminProfile";
 import axios from "axios";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useToast } from "@/components/ui/toast";
+import { useToast } from "@/hooks/use-toast"
 import TodayEntryTable from "../entryTable/TodayEntryTable";
 import { Separator } from "@/components/ui/separator";
 import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet"; // Import Sheet components
@@ -17,7 +17,7 @@ const SearchPatient = () => {
   const [showTable, setShowTable] = useState(false);
   const [showSheet, setShowSheet] = useState(false);
   const [date, setDate] = useState("");
-  const toast = useToast();
+  const {toast} = useToast();
   const [email, setEmail] = useState("");
 
   const handleSearch = () => {
