@@ -76,14 +76,13 @@ const SearchPatient = () => {
       .then((response) => {
         if(response.data.success){
           toast({
-            type: "success",
             message: "Report downloaded successfully",
           });
         }
       })
       .catch((error) => {
         toast({
-          type: "error",
+         
           message: "Failed to download report",
           variant: "destructive",
         });
