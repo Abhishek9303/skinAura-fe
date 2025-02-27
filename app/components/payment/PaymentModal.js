@@ -12,7 +12,7 @@ const PaymentModal = ({
   quantity,
   selectedPaymentMethod,
   setSelectedPaymentMethod,
-  selectedAddress, // Pass the selected address from the parent
+  selectedAddress
 }) => {
   const router = useRouter();
   const placeOrder = async (
@@ -83,7 +83,8 @@ const PaymentModal = ({
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-white p-8 rounded-lg w-[80vw] md:w-[400px]">
         <h2 className="text-2xl font-medium mb-4">Confirm Payment</h2>
-
+        <h3 className="text-center"> If the order value is less than ₹1500 shipping of ₹50 will be charged </h3>
+          <br />
         <div className="mb-4">
           <label className="flex items-center">
             <input
@@ -92,7 +93,7 @@ const PaymentModal = ({
               checked={selectedPaymentMethod === "cod"}
               onChange={() => setSelectedPaymentMethod("cod")}
             />
-            <span className="ml-2">Cash on Delivery</span>
+            <span className="ml-2">Cash on Delivery </span>
           </label>
           <label className="flex items-center mt-2">
             <input

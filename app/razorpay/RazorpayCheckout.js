@@ -35,7 +35,7 @@ const RazorpayCheckout = ({
         `${process.env.BACKEND_URL}api/v1/common/getProduct?productId=${id}`
       );
       if (res.data) {
-        return res.data.data; // Return product data
+        return res.data.data;
       }
     } catch (error) {
       console.error("Error fetching product data:", error);
@@ -45,15 +45,14 @@ const RazorpayCheckout = ({
   const loadRazorpaySDK = () => {
     return new Promise((resolve, reject) => {
       if (razorpayLoaded) {
-        resolve(); // SDK is already loaded
-        return;
+        resolve(); 
       }
 
       const script = document.createElement("script");
       script.src = "https://checkout.razorpay.com/v1/checkout.js";
       script.onload = () => {
         setRazorpayLoaded(true);
-        resolve(); // SDK loaded successfully
+        resolve(); 
       };
       script.onerror = () => {
         reject(new Error("Failed to load Razorpay SDK."));
@@ -67,7 +66,6 @@ const RazorpayCheckout = ({
     setToken(storedToken);
 
     if (productArr && productArr.length > 0) {
-      // Set cart total amount when there are multiple products
       console.log(
         "Product Array:",
         productArr,
@@ -76,7 +74,6 @@ const RazorpayCheckout = ({
       );
       setCartTotalPrice(totalAmount);
     } else if (productId) {
-      // For single product, fetch data and calculate total price
       fetchProductData(productId).then((data) => {
         setProductData(data);
         const calculatedPrice = data.price * quantity;
@@ -158,15 +155,16 @@ const RazorpayCheckout = ({
         return;
       }
 
-      // Step 2: Configure Razorpay options with handler function
-      const amountToCharge = productArr ? cartTotalPrice : singleProductPrice;
-      console.log("Amount to Charge:", amountToCharge);
+      let amountToCharge = productArr ? cartTotalPrice : singleProductPrice;
+      if(parseInt(amountToCharge) <= 1500){
+        amountToCharge = parseInt(amountToCharge) + 50;
+      }
 
       const options = {
         key:
           process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID ||
           "YOUR_TEST_RAZORPAY_KEY_ID",
-        amount: amountToCharge * 100, // Convert to smallest currency unit (paise)
+        amount: amountToCharge * 100, 
         currency: orderData.data.currency || "INR",
         name: `${productData.name}`,
         description: `${productData.description}`,

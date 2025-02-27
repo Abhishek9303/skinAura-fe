@@ -48,7 +48,7 @@ const Products = () => {
           <p>“Healthy & Beautiful”</p>
         </div>
 
-        <div className="md:w-[85vmax] w-full px-2 mx-auto flex flex-wrap md:gap-8 gap-5 items-center justify-center md:pb-16 pb-8">
+        <div className="md:w-[85vmax] w-full px-2 mx-auto flex flex-wrap md:gap-8 gap-5 items-start justify-center md:pb-16 pb-8">
           {loading ? (
             <>
               <Skeleton height={500} width={350} />

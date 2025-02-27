@@ -6,6 +6,7 @@ import axios from "axios";
 import Button from "../button/Button";
 import { RiDeleteBin4Fill } from "@remixicon/react";
 import QuantityBtn from "../quantityBtn/QuantityBtn";
+import Skeleton from "react-loading-skeleton";
 
 const Product = (props) => {
   const { productId, removeProduct, items, onQuantityChange, removeFromCart } =props;
@@ -58,11 +59,11 @@ const Product = (props) => {
 
   // Conditional rendering to ensure productData is ready
   if (!productData || Object.keys(productData).length === 0) {
-    return <div>Loading...</div>; // Optional: You can add a loader or skeleton UI here
+    return <div> <Skeleton height={500} width={350} /></div>; 
   }
 
   return (
-    <div className="card relative mx-auto bg-white border-[1px] border-[#0000003b] shadow-md flex flex-col xs:min-w-[21vmax] h-min-[25vmax] rounded-lg overflow-hidden transition-transform transform hover:scale-105">
+    <div className="card relative mx-auto bg-white border-[1px] border-[#0000003b] shadow-md flex flex-col w-[21vmax] xs:min-w-[24vmax] h-min-[25vmax] rounded-lg overflow-hidden transition-transform transform hover:scale-105">
       <div className="flex items-center justify-between">
         <div className="md:h-[4.5vh] md:w-[40%] md:py-2 md:px-1 py-1 md:rounded-br-lg bg-[#897F7F80] flex items-center justify-center">
           <div className="flex">
@@ -90,7 +91,7 @@ const Product = (props) => {
               <img
                 src={productData.mainImage}
                 alt={productData.name}
-                className="w-full h-[16vmax] object-cover" // Adjust height to fit your design
+                className="w-full h-[16vmax] object-cover"
               />
             )}
           </div>
