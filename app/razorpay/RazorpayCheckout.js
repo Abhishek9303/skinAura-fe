@@ -76,7 +76,7 @@ const RazorpayCheckout = ({
     } else if (productId) {
       fetchProductData(productId).then((data) => {
         setProductData(data);
-        const calculatedPrice = data.price * quantity;
+        let calculatedPrice = data.price * quantity;
         console.log("Single Product Price Calculation:", calculatedPrice);
         setSingleProductPrice(calculatedPrice);
       });
