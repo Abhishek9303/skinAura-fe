@@ -40,6 +40,7 @@ const ManageProduct = () => {
   };
 
   const confirmDelete = async () => {
+    console.log('onconfirm', productToDelete);
     try {
       await axios.delete(
         `${process.env.BACKEND_URL}api/v1/admin/deleteProduct?productId=${productToDelete}`,
@@ -98,7 +99,7 @@ const ManageProduct = () => {
                 Edit
               </button>
               <button
-                onClick={() => handleDelete(product._id)}
+                onClick={() => {handleDelete(product._id)}}
                 className="bg-red-500 text-white p-2 rounded-md"
               >
                 Delete
