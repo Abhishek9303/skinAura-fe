@@ -32,6 +32,7 @@ const ManageProduct = () => {
   const handleEdit = (product) => {
     setEditingProduct(product);
     setShowModal(true);
+    fetchProducts();
   };
 
   const handleDelete = (productId) => {
@@ -66,7 +67,7 @@ const ManageProduct = () => {
 
   useEffect(() => {
     fetchProducts();
-  }, [handleEdit, handleAddProduct]);
+  }, []);
 
   return (
     <div className="container mx-auto p-4">
