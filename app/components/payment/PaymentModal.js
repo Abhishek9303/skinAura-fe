@@ -95,7 +95,7 @@ const PaymentModal = ({
             />
             <span className="ml-2">Cash on Delivery </span>
           </label>
-          <label className="flex items-center mt-2">
+          {/* <label className="flex items-center mt-2">
             <input
               type="radio"
               value="online"
@@ -103,7 +103,7 @@ const PaymentModal = ({
               onChange={() => setSelectedPaymentMethod("online")}
             />
             <span className="ml-2">Online Payment</span>
-          </label>
+          </label> */}
         </div>
 
         <div className="flex justify-around mt-6">
