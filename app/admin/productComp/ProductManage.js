@@ -66,7 +66,7 @@ const ManageProduct = () => {
 
   useEffect(() => {
     fetchProducts();
-  }, []);
+  }, [handleEdit, confirmDelete, handleAddProduct]);
 
   return (
     <div className="container mx-auto p-4">
