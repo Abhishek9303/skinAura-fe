@@ -85,21 +85,21 @@ const ManageProduct = () => {
               <img
                 src={product.mainImage}
                 alt={product.name}
-                className="w-full h-48 object-cover mb-2 rounded" // Adjust the height as needed
-              />
-            )}
-            <h2 className="text-xl font-semibold">{product.name}</h2>
-            <p className="mb-2">{product.description}</p>
-            <p className="mb-4">Price: ${product.price}</p>
-            <div className="flex space-x-2">
-              <button
-                onClick={() => handleEdit(product)}
-                className="bg-yellow-500 text-white p-2 rounded-md"
-              >
-                Edit
-              </button>
-              <button
-                onClick={() => {handleDelete(product._id)}}
+                 // Adjust the height as needed
+                        />
+                      )}
+                      <h2 className="text-xl font-semibold">{product.name}</h2>
+                      <p className="mb-2">{product.description}</p>
+                      <p className="mb-4">Price: ₹ {product.price}</p>
+                      <div className="flex space-x-2">
+                        <button
+                        onClick={() => handleEdit(product)}
+                        className="bg-yellow-500 text-white p-2 rounded-md"
+                        >
+                        Edit
+                        </button>
+                        <button
+                        onClick={() => {handleDelete(product._id)}}
                 className="bg-red-500 text-white p-2 rounded-md"
               >
                 Delete
