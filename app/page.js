@@ -132,7 +132,7 @@ const Page = () => {
           className="md:my-8 my-5 rounded-full"
         />
       </div> */}
-      <div className="flex flex-col items-center justify-center gap-2">
+      {/* <div className="flex flex-col items-center justify-center gap-2">
         <div className="text-center mt-[5vmax] mb-8">
           <h1 className="md:text-[3vmax] text-[3.4vmax] font-juanaMedium">
             Why We are India’s Choice ?
@@ -142,7 +142,7 @@ const Page = () => {
         <div className="md:w-[85vmax] w-full px-8 md:px-5 mx-auto">
           <VideoDiv text={"Complete Tea Video"} />
         </div>
-      </div>
+      </div> */}
       <div className="my-2 py-16">
         <h1 className="md:text-[3vmax] xs:text-[4vmax] font-juanaRegular text-center">
           Our Customers
