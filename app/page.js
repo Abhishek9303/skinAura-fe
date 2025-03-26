@@ -66,7 +66,7 @@ const Page = () => {
         <HomeSwiper1 />
         <Scroller />
       </div>
-      <div className="lg:h-[43vmax] h:[120vmax] lg:py-12 md:py-10 w-full flex flex-col items-center justify-center gap-3 md:gap-5 ">
+      {/* <div className="lg:h-[43vmax] h:[120vmax] lg:py-12 md:py-10 w-full flex flex-col items-center justify-center gap-3 md:gap-5 ">
         <h1 className="md:text-5xl text-[5vmax] font-juanaRegular leading-none text-center">
           We Are The Best
         </h1>
@@ -76,7 +76,7 @@ const Page = () => {
         <div className="mt-5">
           <ReviewSwiper />
         </div>
-      </div>
+      </div> */}
       <div className="flex flex-col items-center justify-center gap-8 mt-10 md:mt-[15vh]">
         <h1 className="md:text-[4vmax] md:whitespace-nowrap text-[4.1vmax] text-wrap lg:text-[3.5vmax] text-center md:py-5 pt-5 font-juanaSemibold text-[#6A4D6F]">
           Bad Skin Has Multiple Root Causes
@@ -125,13 +125,13 @@ const Page = () => {
       <div className="md:h-[50vh] mt-[7vmax]">
         <ProductPoster />
       </div>
-      <div className="flex flex-col justify-center items-center gap-5">
+      {/* <div className="flex flex-col justify-center items-center gap-5">
         <InfluencerSection />
         <Button
           text={"Take a Test Now"}
           className="md:my-8 my-5 rounded-full"
         />
-      </div>
+      </div> */}
       <div className="flex flex-col items-center justify-center gap-2">
         <div className="text-center mt-[5vmax] mb-8">
           <h1 className="md:text-[3vmax] text-[3.4vmax] font-juanaMedium">
@@ -163,7 +163,7 @@ const Page = () => {
           />
         </div>
       </div>
-      <div className="md:py-10 flex flex-col items-center justify-around md:gap-5 gap-3">
+      {/* <div className="md:py-10 flex flex-col items-center justify-around md:gap-5 gap-3">
         <div className="py-5">
           <h1 className="md:text-[3vmax] text-[4vmax] font-juanaRegular text-center">
             Safe And Proven
@@ -174,7 +174,7 @@ const Page = () => {
           <img src="" alt="product image" />
         </div>
         <Button text={"Take a Test Now"} className="mt-8 rounded-full" />
-      </div>
+      </div> */}
       <div className="w-full flex flex-col items-center justify-center">
         <div className="text-center my-10">
           <h1 className="md:text-[3vmax] text-[4vmax] font-juanaRegular">
@@ -199,12 +199,12 @@ const Page = () => {
         <Button text={"View All"} className="rounded-lg" />
       </div>
 
-      <div className="centerSwiper w-full md:w-[85vmax] md:px-8 px-5 mx-auto md:py-16 py-8">
+      {/* <div className="centerSwiper w-full md:w-[85vmax] md:px-8 px-5 mx-auto md:py-16 py-8">
         <CenterSwiper />
         <div className="google-reviews overflow-hidden w-full flex flex-wrap items-center justify-center gap-16 pt-[8vmax] pb-[5vmax]">
           <GoogleReviewSwiper />
         </div>
-      </div>
+      </div> */}
     </>
   );
 };
