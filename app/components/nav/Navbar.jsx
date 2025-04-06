@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
-import { RiUser3Line, RiHandbagLine, RiMenuLine } from "@remixicon/react";
+import { RiUser3Line, RiMenuLine ,RiShoppingCartFill } from "@remixicon/react";
 import { toast } from "react-toastify";
 import {useRouter} from "next/navigation";
 const Nav = () => {
@@ -74,8 +74,7 @@ const Nav = () => {
                         </Link>
                         <button
                           onClick={() => (
-                            setIsProfileOpen(!isProfileOpen),
-                            handleLogOut()
+                            setIsProfileOpen(!isProfileOpen), handleLogOut()
                           )}
                           className="block px-4 py-2 text-sm hover:bg-gray-200 w-full text-left"
                         >
@@ -104,7 +103,7 @@ const Nav = () => {
                 )}
               </div>
               <Link href="/cart">
-                <RiHandbagLine />
+                <RiShoppingCartFill />
               </Link>
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -134,7 +133,7 @@ const Nav = () => {
         </div>
       ) : (
         <div className="flex py-4 justify-between items-center px-10">
-          <Link href={'/'} className="logo">
+          <Link href={"/"} className="logo">
             <img src="/images/logo.png" className="sm:w-[80px] sm:h-[50px]" />
           </Link>
           <div
@@ -157,7 +156,7 @@ const Nav = () => {
           </div>
           <div className="navRight flex justify-center items-center gap-6">
             <Link href="/cart">
-              <RiHandbagLine />
+              <RiShoppingCartFill />
             </Link>
             {/* Desktop Profile Dropdown */}
             <div className="relative">
@@ -168,46 +167,45 @@ const Nav = () => {
                 <RiUser3Line size={24} />
               </button>
               {isProfileOpen && (
-                  <div className="absolute right-0 mt-2 w-auto px-3 bg-white shadow-inner rounded-lg py-2 z-10">
-                    {token ? (
-                      <div>
-                        <Link
-                          href="/profile"
-                          onClick={() => setIsProfileOpen(!isProfileOpen)}
-                          className="block px-4 py-2 text-sm hover:bg-gray-200"
-                        >
-                          Profile
-                        </Link>
-                        <button
-                          onClick={() => (
-                            setIsProfileOpen(!isProfileOpen),
-                            handleLogOut()
-                          )}
-                          className="block px-4 py-2 text-sm hover:bg-gray-200 w-full text-left"
-                        >
-                          Logout
-                        </button>
-                      </div>
-                    ) : (
-                      <div>
-                        <Link
-                          onClick={() => setIsProfileOpen(!isProfileOpen)}
-                          href="/signup"
-                          className="block px-4 py-2 text-sm hover:bg-gray-200"
-                        >
-                          Signup
-                        </Link>
-                        <Link
-                          onClick={() => setIsProfileOpen(!isProfileOpen)}
-                          href="/signin"
-                          className="block px-4 py-2 text-sm hover:bg-gray-200"
-                        >
-                          Login
-                        </Link>
-                      </div>
-                    )}
-                  </div>
-                )}
+                <div className="absolute right-0 mt-2 w-auto px-3 bg-white shadow-inner rounded-lg py-2 z-10">
+                  {token ? (
+                    <div>
+                      <Link
+                        href="/profile"
+                        onClick={() => setIsProfileOpen(!isProfileOpen)}
+                        className="block px-4 py-2 text-sm hover:bg-gray-200"
+                      >
+                        Profile
+                      </Link>
+                      <button
+                        onClick={() => (
+                          setIsProfileOpen(!isProfileOpen), handleLogOut()
+                        )}
+                        className="block px-4 py-2 text-sm hover:bg-gray-200 w-full text-left"
+                      >
+                        Logout
+                      </button>
+                    </div>
+                  ) : (
+                    <div>
+                      <Link
+                        onClick={() => setIsProfileOpen(!isProfileOpen)}
+                        href="/signup"
+                        className="block px-4 py-2 text-sm hover:bg-gray-200"
+                      >
+                        Signup
+                      </Link>
+                      <Link
+                        onClick={() => setIsProfileOpen(!isProfileOpen)}
+                        href="/signin"
+                        className="block px-4 py-2 text-sm hover:bg-gray-200"
+                      >
+                        Login
+                      </Link>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
           </div>
         </div>

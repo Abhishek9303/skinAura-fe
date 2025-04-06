@@ -3,6 +3,7 @@ import React from "react";
 import { Splide, SplideSlide, SplideTrack } from "@splidejs/react-splide";
 import "@splidejs/react-splide/css";
 import Button from "../button/Button";
+
 const HomeSwiper1 = () => {
   return (
     <Splide
@@ -15,37 +16,31 @@ const HomeSwiper1 = () => {
       }}
     >
       <SplideTrack>
-        <SplideSlide className="w-full bg-red-300 md:h-[50vh] h-[35vmax] flex items-center justify-end">
-          <div className="swiperContent  md:px-8 px-4 flex flex-col items-end z-10 md:mr-12">
-            <p className="whitespace-nowrap xs:text-sm">#India's top trusted skin care platform.</p>
-            <div className="flex items-center mt-5  justify-center gap-4">
-            <h1 className="text-[3vmax] whitespace-nowrap leading-none font-juanaRegular">UNCOVER YOUR</h1>
-            <h1 className=" text-[3vmax] whitespace-nowrap leading-none font-juanaSemibold"><i>SKIN’S</i></h1>
-            </div>
-            <h1 className="text-[3vmax] mb-8 whitespace-nowrap font-juanaRegular">ROOT CAUSE</h1>
-            <Button text='Take A Test Now' className='rounded-full' />
+        <SplideSlide className="w-[50vw]  md:h-[50vh] h-[35vmax] flex items-center justify-center">
+          <div className="swiperContent md:px-8 px-4 flex flex-col items-center z-10">
+            <img
+              className="object-cover object-center md:w-[80%] w-full"
+              src="https://res.cloudinary.com/den1739gv/image/upload/v1743923259/creating_a_comprehensive_poster_for_a_shopping_website_featuring_multiple_skinnaa_products_on_a_whi_3d0dots76cndax8uszyn_0_bcszon.png"
+              alt=""
+            />
           </div>
         </SplideSlide>
-        <SplideSlide className="w-full bg-red-300 md:h-[50vh] h-[35vmax] flex items-center justify-end">
-          <div className="swiperContent  md:px-8 px-4 flex flex-col items-end z-10 md:mr-12">
-            <p className="whitespace-nowrap xs:text-sm">#India's top trusted skin care platform.</p>
-            <div className="flex items-center mt-5  justify-center gap-4">
-            <h1 className="text-[3vmax] whitespace-nowrap leading-none font-juanaRegular">UNCOVER YOUR</h1>
-            <h1 className=" text-[3vmax] whitespace-nowrap leading-none font-juanaSemibold"><i>SKIN’S</i></h1>
-            </div>
-            <h1 className="text-[3vmax] mb-8 whitespace-nowrap font-juanaRegular">ROOT CAUSE</h1>
-            <Button text='Take A Test Now' className='rounded-full' />
+        <SplideSlide className="w-full  md:h-[50vh] h-[35vmax] flex items-center justify-center">
+          <div className="swiperContent flex items-center justify-center">
+            <img
+              className="object-cover object-center md:w-[80%] w-full"
+              src="https://res.cloudinary.com/den1739gv/image/upload/v1743924044/image_3_znojhc.jpg"
+              alt=""
+            />
           </div>
         </SplideSlide>
-        <SplideSlide className="w-full bg-red-300 md:h-[50vh] h-[35vmax] flex items-center justify-end">
-          <div className="swiperContent  md:px-8 px-4 flex flex-col items-end z-10 md:mr-12">
-            <p className="whitespace-nowrap xs:text-sm">#India's top trusted skin care platform.</p>
-            <div className="flex items-center mt-5  justify-center gap-4">
-            <h1 className="text-[3vmax] whitespace-nowrap leading-none font-juanaRegular">UNCOVER YOUR</h1>
-            <h1 className=" text-[3vmax] whitespace-nowrap leading-none font-juanaSemibold"><i>SKIN’S</i></h1>
-            </div>
-            <h1 className="text-[3vmax] mb-8 whitespace-nowrap font-juanaRegular">ROOT CAUSE</h1>
-            <Button text='Take A Test Now' className='rounded-full' />
+        <SplideSlide className="w-full md:h-[50vh] h-[35vmax] flex items-center justify-center">
+          <div className="swiperContent flex items-center justify-center">
+            <img
+              className="object-cover object-center md:w-[80%] w-full"
+              src="https://res.cloudinary.com/den1739gv/image/upload/v1743923909/image_1_zqmibq.jpg"
+              alt=""
+            />
           </div>
         </SplideSlide>
       </SplideTrack>

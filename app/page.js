@@ -117,10 +117,9 @@ const Page = () => {
 
       <div className="flex flex-col items-center justify-center mt-12">
         <Journey />
-        <Button
-          text={"Take a Test Now"}
-          className="md:mt-16 mt-8 rounded-full"
-        />
+        <button onClick={openModal} className="md:mt-10 mt-3">
+          <Button text={"Take a Test Now"} className="rounded-full" />
+        </button>
       </div>
       <div className="md:h-[50vh] mt-[7vmax]">
         <ProductPoster />
