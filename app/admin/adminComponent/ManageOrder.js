@@ -4,7 +4,25 @@ import { useTable, useGlobalFilter, useSortBy } from "react-table";
 import EditOrderModal from "../../admin/editOrderModel/EditOrderModal";
 import ViewOrderModal from "../editOrderModel/ViewOrderModal";
 import adminStore from "@/store/admin/adminProfile";
-import { RiEyeLine, RiDeleteBin4Fill, RiPencilLine } from "@remixicon/react";
+import { RiEyeLine, RiDeleteBin4Fill, RiPencilLine, RiSearchLine } from "@remixicon/react";
+
+const StatusBadge = ({ status }) => {
+  const styles = {
+    pending: "bg-amber-50 text-amber-600 border-amber-200",
+    completed: "bg-green-50 text-green-600 border-green-200",
+    cancelled: "bg-red-50 text-red-600 border-red-200",
+    delivered: "bg-blue-50 text-blue-600 border-blue-200",
+    processing: "bg-[#6A4D6F]/5 text-[#6A4D6F] border-[#6A4D6F]/20",
+  };
+
+  const currentStyle = styles[status?.toLowerCase()] || styles.pending;
+
+  return (
+    <span className={`px-3 py-1 rounded-full text-[10px] font-juanaBold uppercase tracking-widest border ${currentStyle}`}>
+      {status || "Pending"}
+    </span>
+  );
+};
 
 const ManageOrder = () => {
   const [orders, setOrders] = useState([]);
@@ -15,23 +33,23 @@ const ManageOrder = () => {
   const { admin } = adminStore();
   const [searchTerm, setSearchTerm] = useState("");
 
-   const fetchOrders = async () => {
-     try {
-       const response = await axios.get(
-         `${process.env.BACKEND_URL}api/v1/common/getAllOrders`,
-         {
-           headers: {
-             "auth-token": admin.token,
-           },
-         }
-       );
-       setOrders(response.data.data);
-       setLoading(false);
-     } catch (err) {
-       setError("Error fetching orders");
-       setLoading(false);
-     }
-   };
+  const fetchOrders = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.BACKEND_URL}api/v1/common/getAllOrders`,
+        {
+          headers: {
+            "auth-token": admin.token,
+          },
+        }
+      );
+      setOrders(response.data.data);
+      setLoading(false);
+    } catch (err) {
+      setError("Error fetching orders");
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     fetchOrders();
@@ -73,27 +91,76 @@ const ManageOrder = () => {
 
   const columns = React.useMemo(
     () => [
-      { Header: "Name", accessor: "userData.name" },
-      { Header: "Phone Number", accessor: "userData.mobileNo" },
-      {
-        Header: "Address",
-        accessor: (row) =>
-          `${row.orders.shippingAddress.addressLine1}, ${row.orders.shippingAddress.city}, ${row.orders.shippingAddress.state}, ${row.orders.shippingAddress.country}`,
+      { 
+        Header: "Customer", 
+        accessor: "userData.name",
+        Cell: ({ row }) => (
+          <div className="flex flex-col">
+            <span className="font-juanaBold text-[#6A4D6F]">{row.original.userData.name}</span>
+            <span className="text-[10px] text-gray-400 font-sans uppercase tracking-widest">{row.original.userData.mobileNo}</span>
+          </div>
+        )
       },
-      { Header: "Payment Mode", accessor: "orders.paymentMode" },
-      { Header: "Order Status", accessor: "orders.status" },
+      {
+        Header: "Date",
+        accessor: "orders.orderDate",
+        Cell: ({ value }) => (
+          <div className="flex flex-col">
+            <span className="font-juanaBold text-[#6A4D6F] text-xs">
+              {new Date(value).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })}
+            </span>
+            <span className="text-[10px] text-gray-400 font-juanaMedium uppercase tracking-widest">
+              {new Date(value).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })}
+            </span>
+          </div>
+        )
+      },
+      {
+        Header: "Location",
+        accessor: (row) => row.orders.shippingAddress.city,
+        Cell: ({ row }) => (
+          <div className="flex flex-col max-w-[200px]">
+             <span className="font-juanaMedium text-gray-700 text-sm truncate">
+               {row.original.orders.shippingAddress.addressLine1}
+             </span>
+             <span className="text-[10px] text-gray-400 font-juanaBold uppercase tracking-tighter">
+               {row.original.orders.shippingAddress.city}, {row.original.orders.shippingAddress.state}
+             </span>
+          </div>
+        )
+      },
+      { 
+        Header: "Payment", 
+        accessor: "orders.paymentMode",
+        Cell: ({ value }) => (
+          <span className="font-juanaBold text-[#DF9D43] text-[10px] uppercase tracking-widest">
+            {value}
+          </span>
+        )
+      },
+      { 
+        Header: "Status", 
+        accessor: "orders.status",
+        Cell: ({ value }) => <StatusBadge status={value} />
+      },
       {
         Header: "Actions",
         Cell: ({ row }) => (
-          <div className="flex space-x-2">
-            <button onClick={() => handleViewDetails(row.original)}>
-              <RiEyeLine className="text-blue-500 hover:text-blue-700" />
+          <div className="flex items-center gap-2">
+            <button 
+              onClick={() => handleViewDetails(row.original)}
+              className="w-8 h-8 flex items-center justify-center rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white transition-all"
+            >
+              <RiEyeLine size={16} />
             </button>
-            <button onClick={() => handleEdit(row.original)}>
-              <RiPencilLine className="text-yellow-500 hover:text-yellow-700" />
+            <button 
+              onClick={() => handleEdit(row.original)}
+              className="w-8 h-8 flex items-center justify-center rounded-lg bg-amber-50 text-amber-600 hover:bg-amber-600 hover:text-white transition-all"
+            >
+              <RiPencilLine size={16} />
             </button>
-            <button className="cursor-not-allowed">
-              <RiDeleteBin4Fill className="text-red-500 hover:text-red-700" />
+            <button className="w-8 h-8 flex items-center justify-center rounded-lg bg-red-50 text-red-400 cursor-not-allowed">
+              <RiDeleteBin4Fill size={16} />
             </button>
           </div>
         ),
@@ -113,83 +180,95 @@ const ManageOrder = () => {
     {
       columns,
       data: orders,
-      initialState: { sortBy: [{ id: "userData.name", desc: false }] }, // Default sorting by name
+      initialState: { sortBy: [{ id: "userData.name", desc: false }] },
     },
     useGlobalFilter,
     useSortBy
   );
 
-  // Function to filter data based on search term
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
-    setGlobalFilter(e.target.value); // Set global filter for search
+    setGlobalFilter(e.target.value);
   };
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>{error}</div>;
+  if (loading) return (
+    <div className="min-h-[400px] flex items-center justify-center">
+      <div className="w-12 h-12 border-4 border-[#6A4D6F]/20 border-t-[#6A4D6F] rounded-full animate-spin"></div>
+    </div>
+  );
+  
+  if (error) return (
+    <div className="min-h-[400px] flex items-center justify-center text-red-500 font-juanaBold">
+      {error}
+    </div>
+  );
 
   return (
-    <div>
-      <h1>Manage Orders</h1>
-      <div className="mb-4">
-        <input
-          type="text"
-          placeholder="Search..."
-          value={searchTerm}
-          onChange={handleSearchChange}
-          className="border border-gray-300 p-2"
-        />
+    <div className="w-full py-8 px-4 sm:px-6">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
+        <div>
+          <p className="text-[#DF9D43] font-juanaMedium uppercase tracking-[0.3em] text-[10px] mb-2">Admin Panel</p>
+          <h1 className="text-3xl font-juanaBold text-[#6A4D6F]">Manage Orders</h1>
+        </div>
+        
+        <div className="relative w-full md:w-80">
+          <input
+            type="text"
+            placeholder="Search orders..."
+            value={searchTerm}
+            onChange={handleSearchChange}
+            className="w-full pl-12 pr-4 py-3 bg-white border border-gray-100 rounded-2xl font-juanaMedium text-sm shadow-sm focus:ring-2 focus:ring-[#6A4D6F]/10 transition-all outline-none"
+          />
+          <RiSearchLine className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
+        </div>
       </div>
-      <table
-        {...getTableProps()}
-        className="w-full border-collapse border border-gray-300 mt-4"
-      >
-        <thead>
-          {headerGroups.map((headerGroup) => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column) => (
-                <th
-                  {...column.getHeaderProps(column.getSortByToggleProps())}
-                  className="border border-gray-300 p-2 text-left bg-gray-100"
-                >
-                  {column.render("Header")}
-                  <span>
-                    {column.isSorted
-                      ? column.isSortedDesc
-                        ? " 🔽"
-                        : " 🔼"
-                      : ""}
-                  </span>
-                </th>
+
+      <div className="bg-white rounded-[2.5rem] shadow-xl shadow-gray-100/50 border border-gray-50 overflow-hidden">
+        <div className="overflow-x-auto overflow-y-auto max-h-[70vh] custom-scrollbar">
+          <table {...getTableProps()} className="w-full text-left border-collapse">
+            <thead className="sticky top-0 z-10 bg-white shadow-sm">
+              {headerGroups.map((headerGroup) => (
+                <tr {...headerGroup.getHeaderGroupProps()} className="border-b border-gray-50">
+                  {headerGroup.headers.map((column) => (
+                    <th
+                      {...column.getHeaderProps(column.getSortByToggleProps())}
+                      className="px-8 py-6 text-[10px] font-juanaBold text-gray-400 uppercase tracking-widest whitespace-nowrap bg-white cursor-pointer hover:text-[#6A4D6F] transition-colors"
+                    >
+                      <div className="flex items-center gap-2">
+                        {column.render("Header")}
+                        <span className="text-[8px]">
+                          {column.isSorted ? (column.isSortedDesc ? "▼" : "▲") : ""}
+                        </span>
+                      </div>
+                    </th>
+                  ))}
+                </tr>
               ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody {...getTableBodyProps()}>
-          {rows.map((row) => {
-            prepareRow(row);
-            return (
-              <tr {...row.getRowProps()} className="hover:bg-gray-50">
-                {row.cells.map((cell) => (
-                  <td
-                    {...cell.getCellProps()}
-                    className="border border-gray-300 p-2"
-                  >
-                    {cell.render("Cell")}
-                  </td>
-                ))}
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+            </thead>
+            <tbody {...getTableBodyProps()}>
+              {rows.map((row) => {
+                prepareRow(row);
+                return (
+                  <tr {...row.getRowProps()} className="group border-b border-gray-50 hover:bg-gray-50/50 transition-colors">
+                    {row.cells.map((cell) => (
+                      <td {...cell.getCellProps()} className="px-8 py-6">
+                        {cell.render("Cell")}
+                      </td>
+                    ))}
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      </div>
 
       {/* Edit Order Modal */}
       {editOrder && (
         <EditOrderModal
           order={editOrder}
           onClose={() => setEditOrder(null)}
-          onSave={handleSave} // Pass handleSave to update the order
+          onSave={handleSave}
         />
       )}
 
@@ -202,3 +281,4 @@ const ManageOrder = () => {
 };
 
 export default ManageOrder;
+

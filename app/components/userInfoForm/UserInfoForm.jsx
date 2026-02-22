@@ -1,6 +1,7 @@
 import React from "react";
 import useUserStore from "../../../store/user/userProfile";
 import { RiCloseLine } from "@remixicon/react";
+import Button from "@/app/components/button/Button";
 
 const Profile = ({ closeForm }) => {
   const { user } = useUserStore();
@@ -13,168 +14,244 @@ const Profile = ({ closeForm }) => {
 
   const countries = ["India", "United States", "Canada", "United Kingdom"];
   const states = {
-    India: ["Maharashtra", "Gujarat", "Delhi", "Karnataka","Bhopal"]
+    India: ["Maharashtra", "Gujarat", "Delhi", "Karnataka", "Bhopal"],
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg shadow-xl w-full max-w-md max-h-[90vh] overflow-y-auto">
-        <div className="relative p-6">
+    <div className="fixed inset-0 z-[10000] flex items-center justify-center p-4">
+      {/* Backdrop */}
+      <div
+        className="absolute inset-0 bg-black/60 backdrop-blur-md transition-opacity duration-300"
+        onClick={closeForm}
+      />
+
+      {/* Modal Container */}
+      <div className="relative bg-white w-full max-w-lg rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col max-h-[90vh] animate-in fade-in zoom-in duration-300 border border-gray-100">
+        {/* Header */}
+        <div className="px-8 py-6 border-b border-gray-100 flex items-center justify-between bg-white sticky top-0 z-10">
+          <div>
+            <h2 className="text-2xl font-juanaBold text-[#6A4D6F]">
+              Edit Profile
+            </h2>
+            <p className="text-gray-400 text-[10px] font-juanaMedium uppercase tracking-widest mt-1">
+              Manage your account details & delivery info
+            </p>
+          </div>
           <button
             onClick={closeForm}
-            className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors duration-200"
-            aria-label="Close"
+            className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-50 text-gray-400 transition-colors"
           >
             <RiCloseLine className="w-6 h-6" />
           </button>
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <h1 className="text-2xl font-bold text-center text-gray-800 mb-6">
-              Edit Profile
-            </h1>
-            <div className="space-y-4">
-              <h2 className="text-xl font-semibold text-gray-700">
-                Contact Information
-              </h2>
-              <div>
-                <label
-                  htmlFor="userContact"
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                >
-                  Contact:
-                </label>
-                {user.mobileNo ? (
-                  <p className="text-gray-700 bg-gray-100 p-2 rounded">
-                    {user.mobileNo}
-                  </p>
-                ) : (
-                  <input
-                    type="tel"
-                    name="mobileNo"
-                    placeholder="Mobile Number"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                  />
-                )}
+        </div>
+
+        {/* Form Content - Scrollable */}
+        <div className="p-8 overflow-y-auto flex-grow custom-scrollbar">
+          <form onSubmit={handleSubmit} className="space-y-10">
+            {/* Contact Section */}
+            <div className="space-y-6">
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-[#6A4D6F]/5 flex items-center justify-center text-[#6A4D6F]">
+                  📞
+                </div>
+                <h3 className="text-xs font-juanaBold text-gray-800 uppercase tracking-widest">
+                  Contact Information
+                </h3>
               </div>
-              <div>
-                <label
-                  htmlFor="userEmail"
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                >
-                  Email:
-                </label>
-                {user.emailId ? (
-                  <p className="text-gray-700 bg-gray-100 p-2 rounded">
-                    {user.emailId}
-                  </p>
-                ) : (
-                  <input
-                    type="email"
-                    name="email"
-                    placeholder="Email Address"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                  />
-                )}
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div className="space-y-1">
+                  <label className="text-[10px] font-juanaBold text-gray-400 uppercase tracking-widest ml-1">
+                    Mobile Number
+                  </label>
+                  {user.mobileNo ? (
+                    <div className="w-full p-4 bg-gray-50 border border-transparent rounded-2xl font-juanaMedium text-gray-500 flex items-center">
+                      {user.mobileNo}
+                      <span className="ml-auto text-[8px] bg-green-50 text-green-600 px-1.5 py-0.5 rounded uppercase tracking-tighter">
+                        Verified
+                      </span>
+                    </div>
+                  ) : (
+                    <input
+                      type="tel"
+                      name="mobileNo"
+                      placeholder="Mobile Number"
+                      className="w-full p-4 bg-gray-50 border border-transparent rounded-2xl transition-all focus:bg-white focus:ring-2 focus:ring-[#6A4D6F]/20 font-juanaMedium text-[#6A4D6F]"
+                    />
+                  )}
+                </div>
+
+                <div className="space-y-1">
+                  <label className="text-[10px] font-juanaBold text-gray-400 uppercase tracking-widest ml-1">
+                    Email Address
+                  </label>
+                  {user.emailId ? (
+                    <div className="w-full p-4 bg-gray-50 border border-transparent rounded-2xl font-juanaMedium text-gray-500 truncate">
+                      {user.emailId}
+                    </div>
+                  ) : (
+                    <input
+                      type="email"
+                      name="email"
+                      placeholder="Email Address"
+                      className="w-full p-4 bg-gray-50 border border-transparent rounded-2xl transition-all focus:bg-white focus:ring-2 focus:ring-[#6A4D6F]/20 font-juanaMedium text-[#6A4D6F]"
+                    />
+                  )}
+                </div>
               </div>
             </div>
-            <div className="space-y-4">
-              <h2 className="text-xl font-semibold text-gray-700">
-                Shipping Address
-              </h2>
-              <div>
-                <label
-                  htmlFor="countries"
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                >
-                  Country:
-                </label>
-                <select
-                  name="countries"
-                  id="countries"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                >
-                  {countries.map((country, index) => (
-                    <option key={index} value={country.toLowerCase()}>
-                      {country}
-                    </option>
-                  ))}
-                </select>
+
+            {/* Shipping Section */}
+            <div className="space-y-6">
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-[#DF9D43]/5 flex items-center justify-center text-[#DF9D43]">
+                  🚚
+                </div>
+                <h3 className="text-xs font-juanaBold text-gray-800 uppercase tracking-widest">
+                  Shipping Address
+                </h3>
               </div>
-              <div className="grid grid-cols-2 gap-4">
-                <input
-                  type="text"
-                  placeholder="First name"
-                  name="firstname"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                />
-                <input
-                  type="text"
-                  placeholder="Last name"
-                  name="lastname"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                />
+
+              <div className="space-y-5">
+                <div className="space-y-1">
+                  <label className="text-[10px] font-juanaBold text-gray-400 uppercase tracking-widest ml-1">
+                    Country
+                  </label>
+                  <select
+                    name="countries"
+                    id="countries"
+                    className="w-full p-4 bg-gray-50 border border-transparent rounded-2xl transition-all focus:bg-white focus:ring-2 focus:ring-[#6A4D6F]/20 font-juanaMedium text-[#6A4D6F] appearance-none"
+                  >
+                    {countries.map((country, index) => (
+                      <option key={index} value={country.toLowerCase()}>
+                        {country}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-1">
+                    <label className="text-[10px] font-juanaBold text-gray-400 uppercase tracking-widest ml-1">
+                      First Name
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="E.g. Jane"
+                      name="firstname"
+                      className="w-full p-4 bg-gray-50 border border-transparent rounded-2xl transition-all focus:bg-white focus:ring-2 focus:ring-[#6A4D6F]/20 font-juanaMedium text-[#6A4D6F]"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="text-[10px] font-juanaBold text-gray-400 uppercase tracking-widest ml-1">
+                      Last Name
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Duo"
+                      name="lastname"
+                      className="w-full p-4 bg-gray-50 border border-transparent rounded-2xl transition-all focus:bg-white focus:ring-2 focus:ring-[#6A4D6F]/20 font-juanaMedium text-[#6A4D6F]"
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-1">
+                  <label className="text-[10px] font-juanaBold text-gray-400 uppercase tracking-widest ml-1">
+                    Street Address
+                  </label>
+                  <textarea
+                    name="address"
+                    id="address"
+                    placeholder="Building, street, and area info"
+                    className="w-full h-24 p-4 bg-gray-50 border border-transparent rounded-2xl transition-all focus:bg-white focus:ring-2 focus:ring-[#6A4D6F]/20 font-juanaMedium text-[#6A4D6F] resize-none"
+                  ></textarea>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-1">
+                    <label className="text-[10px] font-juanaBold text-gray-400 uppercase tracking-widest ml-1">
+                      City
+                    </label>
+                    <input
+                      type="text"
+                      name="city"
+                      placeholder="Delhi"
+                      className="w-full p-4 bg-gray-50 border border-transparent rounded-2xl transition-all focus:bg-white focus:ring-2 focus:ring-[#6A4D6F]/20 font-juanaMedium text-[#6A4D6F]"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="text-[10px] font-juanaBold text-gray-400 uppercase tracking-widest ml-1">
+                      State
+                    </label>
+                    <select
+                      name="state"
+                      className="w-full p-4 bg-gray-50 border border-transparent rounded-2xl transition-all focus:bg-white focus:ring-2 focus:ring-[#6A4D6F]/20 font-juanaMedium text-[#6A4D6F] appearance-none"
+                    >
+                      <option value="">Select State</option>
+                      {states["India"].map((state, index) => (
+                        <option key={index} value={state.toLowerCase()}>
+                          {state}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-1">
+                    <label className="text-[10px] font-juanaBold text-gray-400 uppercase tracking-widest ml-1">
+                      Pincode
+                    </label>
+                    <input
+                      type="text"
+                      name="pincode"
+                      placeholder="6 Digits"
+                      className="w-full p-4 bg-gray-50 border border-transparent rounded-2xl transition-all focus:bg-white focus:ring-2 focus:ring-[#6A4D6F]/20 font-juanaMedium text-[#6A4D6F]"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="text-[10px] font-juanaBold text-gray-400 uppercase tracking-widest ml-1">
+                      Alternate Phone
+                    </label>
+                    <input
+                      type="tel"
+                      name="contact"
+                      placeholder="Optional"
+                      className="w-full p-4 bg-gray-50 border border-transparent rounded-2xl transition-all focus:bg-white focus:ring-2 focus:ring-[#6A4D6F]/20 font-juanaMedium text-[#6A4D6F]"
+                    />
+                  </div>
+                </div>
               </div>
-              <div>
-                <label
-                  htmlFor="address"
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                >
-                  Address:
-                </label>
-                <textarea
-                  name="address"
-                  id="address"
-                  placeholder="Address"
-                  className="w-full h-20 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 resize-none"
-                ></textarea>
-              </div>
-              <div className="grid grid-cols-2 gap-4">
-                <input
-                  type="text"
-                  name="city"
-                  placeholder="City"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                />
-                <select
-                  name="state"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                >
-                  <option value="">Select State</option>
-                  {states["India"].map((state, index) => (
-                    <option key={index} value={state.toLowerCase()}>
-                      {state}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <input
-                type="text"
-                name="pincode"
-                placeholder="Pincode"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-              />
-              <input
-                type="tel"
-                name="contact"
-                placeholder="123-456-7890"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-              />
             </div>
-            <div className="flex items-center">
+
+            <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-2xl">
               <input
                 type="checkbox"
-                className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                className="w-5 h-5 text-[#6A4D6F] focus:ring-[#6A4D6F] border-gray-100 rounded-lg cursor-pointer transition-all"
               />
-              <label className="ml-2 block text-sm text-gray-900">
-                I agree to the terms and conditions
+              <label className="text-[10px] font-juanaMedium text-gray-500 uppercase tracking-wider leading-relaxed">
+                I agree to the{" "}
+                <span className="text-[#DF9D43] font-juanaBold hover:underline cursor-pointer">
+                  Terms and Conditions
+                </span>
               </label>
             </div>
-            <button
-              type="submit"
-              className="w-full px-4 py-2 bg-indigo-600 text-white font-semibold rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors duration-200"
-            >
-              Save Changes
-            </button>
           </form>
+        </div>
+
+        {/* Footer Actions */}
+        <div className="p-6 sm:p-8 border-t border-gray-100 flex gap-3 sm:gap-4 bg-white sticky bottom-0">
+          <button
+            onClick={closeForm}
+            className="flex-1 py-4 border border-gray-200 text-gray-500 !font-juanaBold rounded-2xl hover:bg-gray-50 transition-all uppercase tracking-wider !text-[10px] sm:!text-xs !leading-none whitespace-nowrap"
+          >
+            Cancel
+          </button>
+          <Button
+            text="Save Changes"
+            onClick={handleSubmit}
+            className="flex-1 !py-4 !h-auto uppercase tracking-wider !text-[10px] sm:!text-xs !font-juanaBold !leading-none shadow-xl shadow-[#6A4D6F]/20 rounded-2xl whitespace-nowrap"
+          />
         </div>
       </div>
     </div>

@@ -6,7 +6,7 @@ import { format } from "date-fns";
 import { toast } from "react-toastify";
 import useUserStore from "../../../store/user/userProfile";
 
-const timeSlots = ["12:00 - 2:00", "2:00 - 4:00", "4:00 - 6:00"];
+const timeSlots = ["2:00-2:30", "2:30-3:00", "3:00-3:30", "3:30-4:00", "4:00-4:30", "4:30-5:00", "5:00-5:30", "5:30-6:00"];
 const reasons = ["prp", "skin", "hair", "glow"];
 
 const DateTimePickerModal = ({ isOpen, onClose, reason }) => {

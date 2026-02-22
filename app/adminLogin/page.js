@@ -4,11 +4,13 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { toast, ToastContainer } from "react-toastify";
 import Skeleton from "react-loading-skeleton";
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "react-loading-skeleton/dist/skeleton.css";
 import adminStore from "@/store/admin/adminProfile";
+import { RiEyeLine, RiEyeOffLine } from "@remixicon/react";
+import Button from "@/app/components/button/Button";
 const AdminLogin = () => {
   const router = useRouter();
 
@@ -19,6 +21,7 @@ const AdminLogin = () => {
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false); // For form submission
   const [skeletonLoading, setSkeletonLoading] = useState(true); // For skeleton loader
+  const [showPassword, setShowPassword] = useState(false);
 
   const validateForm = () => {
     let isValid = true;
@@ -117,57 +120,76 @@ const AdminLogin = () => {
           </div>
         ) : (
           <form
-            className="w-full max-w-md p-8 border border-gray-300 shadow-md rounded-lg space-y-6"
+            className="w-full max-w-md p-10 bg-white rounded-[2.5rem] shadow-2xl shadow-gray-200 border border-gray-50 space-y-8"
             onSubmit={handleSubmit}
-            onKeyPress={handleKeyPress} // Handle Enter key
+            onKeyPress={handleKeyPress}
           >
-            <h1 className="md:text-3xl text-2xl text-center text-gray-800 font-bold">
-              Admin Login
-            </h1>
-            <div>
-              <label className="block text-gray-700 font-medium mb-2">
-                Mobile Number
-              </label>
-              <div className="flex">
-                <span className="bg-gray-200 p-3 rounded-l-lg">+91</span>
-                <input
-                  onChange={(e) =>
-                    setData({ ...data, mobileNo: e.target.value })
-                  }
-                  type="tel"
-                  placeholder="1234567890"
-                  name="mobileNo"
-                  className="w-full border border-gray-300 shadow-md rounded-r-lg p-3"
-                  maxLength="10"
-                  value={data.mobileNo}
-                />
+            <div className="text-center space-y-2">
+              <h1 className="text-3xl font-juanaBold text-[#6A4D6F]">
+                Admin Access
+              </h1>
+              <p className="text-[10px] font-juanaMedium text-gray-400 uppercase tracking-[0.2em]">
+                Enter your credentials to continue
+              </p>
+            </div>
+
+            <div className="space-y-6">
+              <div className="space-y-2">
+                <label className="text-[10px] font-juanaBold text-gray-400 uppercase tracking-widest ml-1">
+                  Mobile Number
+                </label>
+                <div className="flex group">
+                  <span className="bg-gray-50 border-r-0 border-transparent p-4 rounded-l-2xl font-juanaBold text-[#6A4D6F] text-sm">
+                    +91
+                  </span>
+                  <input
+                    onChange={(e) =>
+                      setData({ ...data, mobileNo: e.target.value })
+                    }
+                    type="tel"
+                    placeholder="1234567890"
+                    name="mobileNo"
+                    className="w-full bg-gray-50 border border-transparent rounded-r-2xl p-4 transition-all focus:bg-white focus:ring-2 focus:ring-[#6A4D6F]/10 font-juanaMedium text-[#6A4D6F]"
+                    maxLength="10"
+                    value={data.mobileNo}
+                  />
+                </div>
               </div>
-              {errors.mobileNo && (
-                <p className="text-red-500 text-sm mt-1">{errors.mobileNo}</p>
-              )}
+
+              <div className="space-y-2">
+                <label className="text-[10px] font-juanaBold text-gray-400 uppercase tracking-widest ml-1">
+                  Password
+                </label>
+                <div className="relative group">
+                  <input
+                    onChange={(e) => setData({ ...data, password: e.target.value })}
+                    type={showPassword ? "text" : "password"}
+                    placeholder="••••••••"
+                    className="w-full bg-gray-50 border border-transparent rounded-2xl p-4 pr-12 transition-all focus:bg-white focus:ring-2 focus:ring-[#6A4D6F]/10 font-juanaMedium text-[#6A4D6F]"
+                    value={data.password}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-[#6A4D6F] transition-colors"
+                  >
+                    {showPassword ? (
+                      <RiEyeOffLine className="w-5 h-5" />
+                    ) : (
+                      <RiEyeLine className="w-5 h-5" />
+                    )}
+                  </button>
+                </div>
+              </div>
             </div>
-            <div>
-              <label className="block text-gray-700 font-medium mb-2">
-                Password
-              </label>
-              <input
-                onChange={(e) => setData({ ...data, password: e.target.value })}
-                type="password"
-                placeholder="Password"
-                className="w-full border border-gray-300 shadow-md rounded-lg p-3"
-                value={data.password}
+
+            <div className="pt-2">
+              <Button
+                text={loading ? "Authenticating..." : "Sign In"}
+                onClick={handleSubmit}
+                className="w-full !py-4 !h-auto uppercase tracking-widest text-xs font-juanaBold shadow-xl shadow-[#6A4D6F]/20 rounded-2xl"
               />
-              {errors.password && (
-                <p className="text-red-500 text-sm mt-1">{errors.password}</p>
-              )}
             </div>
-            <button
-              type="submit"
-              className="w-full bg-purple-700 text-white font-medium py-2 rounded-lg shadow-md hover:bg-purple-800 transition duration-300"
-              disabled={loading} // Disable button when loading
-            >
-              {loading ? "Logging in..." : "Login"}
-            </button>
           </form>
         )}
       </div>

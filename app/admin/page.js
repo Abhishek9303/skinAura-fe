@@ -11,27 +11,32 @@ import ManageDailyEntry from "./adminComponent/ManageDailyEntry";
 import SearchPatient from "./adminComponent/searchPatient/searchPatient";
 import SkeletonPage from "./SkeletonPage";
 import { Toaster } from "@/components/ui/toaster";
+import NotificationBell from "@/components/admin/NotificationBell";
+import useOrderNotifications from "@/hooks/useOrderNotifications";
 const tabs = [
-  { id: 0, label: "Daily Entry" , content  : <ManageDailyEntry/> },
+  { id: 0, label: "Daily Entry", content: <ManageDailyEntry /> },
   { id: 1, label: "Schedule Meeting", content: <MeetingApproval /> },
   { id: 2, label: "Manage Product", content: <ManageProducts /> },
   { id: 3, label: "Manage Orders", content: <ManageOrder /> },
   { id: 4, label: "Manage Service Booking", content: <ManageServiceBooking /> },
-  { id: 5, label: "Get All Details", content: <SearchPatient/> },
+  { id: 5, label: "Get All Details", content: <SearchPatient /> },
 ];
 
 const Page = () => {
   const { admin } = adminStore();
   const [activeTab, setActiveTab] = useState(tabs[0].id);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  const [loading, setLoading] = useState(true); 
+  const [loading, setLoading] = useState(true);
+
+  // Initialize order notifications polling
+  useOrderNotifications();
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setLoading(false); 
+      setLoading(false);
     }, 1000);
 
-    return () => clearTimeout(timer); 
+    return () => clearTimeout(timer);
   }, []);
 
   const renderContent = () => {
@@ -44,30 +49,34 @@ const Page = () => {
       <Toaster />
       <div className="md:hidden flex justify-between items-center bg-slate-500 p-4">
         <h1 className="text-xl font-bold">Admin Page</h1>
-        <button
-          className="p-2 bg-blue-500 text-white rounded-lg"
-          onClick={() => setIsSidebarOpen(!isSidebarOpen)} // Toggle sidebar visibility
-        >
-          {isSidebarOpen ? "Close Menu" : "Open Menu"}
-        </button>
+        <div className="flex items-center gap-2">
+          <NotificationBell />
+          <button
+            className="p-2 bg-blue-500 text-white rounded-lg"
+            onClick={() => setIsSidebarOpen(!isSidebarOpen)} // Toggle sidebar visibility
+          >
+            {isSidebarOpen ? "Close Menu" : "Open Menu"}
+          </button>
+        </div>
       </div>
 
       {/* Sidebar */}
       <div
-        className={`${
-          isSidebarOpen ? "block" : "hidden"
-        } md:block md:w-[25vw] p-5 h-full md:h-screen`}
+        className={`${isSidebarOpen ? "block" : "hidden"
+          } md:block md:w-[25vw] p-5 h-full md:h-screen`}
       >
-        <h1 className="mb-5 text-xl font-bold hidden md:block">Admin Page</h1>
+        <div className="mb-5 text-xl font-bold hidden md:flex items-center justify-between">
+          <h1>Admin Page</h1>
+          <NotificationBell />
+        </div>
         <ul className="space-y-2">
           {tabs.map((tab) => (
             <li
               key={tab.id}
-              className={`p-3 rounded-lg cursor-pointer transition-colors duration-200 ${
-                activeTab === tab.id
-                  ? "bg-blue-500 text-white"
-                  : "bg-white hover:bg-blue-200"
-              }`}
+              className={`p-3 rounded-lg cursor-pointer transition-colors duration-200 ${activeTab === tab.id
+                ? "bg-blue-500 text-white"
+                : "bg-white hover:bg-blue-200"
+                }`}
               onClick={() => setActiveTab(tab.id)}
             >
               {tab.label}

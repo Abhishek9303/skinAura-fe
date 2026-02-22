@@ -1,114 +1,138 @@
 'use client';
-import axios from "axios";
-import React, { useEffect } from "react";
+import React from "react";
+import { RiCloseLine, RiUserLine, RiMapPinLine, RiMoneyDollarCircleLine, RiShoppingBag3Line, RiCalendarLine } from "@remixicon/react";
+
+const InfoItem = ({ label, value, icon: Icon }) => (
+  <div className="flex items-start gap-4 p-4 rounded-2xl bg-gray-50/50 border border-gray-100/50">
+    {Icon && (
+      <div className="w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center text-[#6A4D6F] flex-shrink-0">
+        <Icon size={20} />
+      </div>
+    )}
+    <div className="flex flex-col">
+      <span className="text-[10px] font-juanaBold text-gray-400 uppercase tracking-widest mb-1">{label}</span>
+      <span className="text-sm font-juanaMedium text-[#6A4D6F] leading-snug">{value || "N/A"}</span>
+    </div>
+  </div>
+);
+
 const ViewOrderModal = ({ order, onClose }) => {
-  const fetchOrderDetails = async (orderID) => {
-    try {
-      let res = await axios.get(
-        `${process.env.BACKEND_URL}api/v1/common/getOrder?orderId=${orderID}`,
-        {
-          headers: {
-            "auth-token": admin.token,
-          },
-        }
-      );
-    } catch (error) {
-      console.error("Error fetching order details:", error);
-    }
-  };
-  useEffect(() => {
-   
-    fetchOrderDetails(order._id.orderID);
-  },[order])
+  if (!order) return null;
   const { userData, orders, products } = order;
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="bg-white rounded-lg p-6 w-3/4 max-w-lg shadow-lg">
-        <h2 className="text-lg font-bold mb-4">Order Details</h2>
+    <div className="fixed inset-0 z-[10000] flex items-center justify-center p-4">
+      <div 
+        className="absolute inset-0 bg-[#6A4D6F]/20 backdrop-blur-md animate-in fade-in duration-300" 
+        onClick={onClose} 
+      />
+      
+      <div className="relative bg-white rounded-[2.5rem] w-full max-w-2xl max-h-[90vh] overflow-hidden shadow-2xl animate-in zoom-in-95 duration-300 flex flex-col">
+        {/* Header */}
+        <div className="p-8 border-b border-gray-100 flex items-center justify-between bg-white sticky top-0 z-20">
+          <div>
+            <p className="text-[#DF9D43] font-juanaMedium uppercase tracking-[0.3em] text-[10px] mb-2">Order Archive</p>
+            <h2 className="text-2xl font-juanaBold text-[#6A4D6F]">Order Details</h2>
+          </div>
+          <button 
+            onClick={onClose}
+            className="w-12 h-12 flex items-center justify-center rounded-2xl bg-gray-50 text-gray-400 hover:bg-red-50 hover:text-red-500 transition-all duration-300"
+          >
+            <RiCloseLine size={24} />
+          </button>
+        </div>
 
-        {/* General Order Details */}
-        <table className="w-full border-collapse border border-gray-300 mb-4">
-          <thead>
-            <tr>
-              <th className="border border-gray-300 p-2">Field</th>
-              <th className="border border-gray-300 p-2">Details</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td className="border border-gray-300 p-2">Name</td>
-              <td className="border border-gray-300 p-2">{userData.name}</td>
-            </tr>
-            <tr>
-              <td className="border border-gray-300 p-2">Phone Number</td>
-              <td className="border border-gray-300 p-2">
-                {userData.mobileNo}
-              </td>
-            </tr>
-            <tr>
-              <td className="border border-gray-300 p-2">Address</td>
-              <td className="border border-gray-300 p-2">
-                {`${orders.shippingAddress.addressLine1}, ${orders.shippingAddress.city}, ${orders.shippingAddress.state}, ${orders.shippingAddress.country}`}
-              </td>
-            </tr>
-            <tr>
-              <td className="border border-gray-300 p-2">Payment Mode</td>
-              <td className="border border-gray-300 p-2">
-                {orders.paymentMode}
-              </td>
-            </tr>
-            <tr>
-              <td className="border border-gray-300 p-2">Order Status</td>
-              <td className="border border-gray-300 p-2">{orders.status}</td>
-            </tr>
-            <tr>
-              <td className="border border-gray-300 p-2">Order Date</td>
-              <td className="border border-gray-300 p-2">
-                {new Date(orders.orderDate).toLocaleDateString()}
-              </td>
-            </tr>
-            <tr>
-              <td className="border border-gray-300 p-2">Payment Status</td>
-              <td className="border border-gray-300 p-2">
-                {orders.paymentStatus}
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        {/* Content */}
+        <div className="p-8 overflow-y-auto custom-scrollbar space-y-8">
+          {/* Customer & General Info */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <InfoItem 
+              icon={RiUserLine}
+              label="Customer"
+              value={userData.name}
+            />
+            <InfoItem 
+              icon={RiCalendarLine}
+              label="Order Date"
+              value={new Date(orders.orderDate).toLocaleDateString('en-IN', { 
+                day: 'numeric', 
+                month: 'long', 
+                year: 'numeric' 
+              })}
+            />
+            <InfoItem 
+              icon={RiMapPinLine}
+              label="Shipping Address"
+              value={`${orders.shippingAddress.addressLine1}, ${orders.shippingAddress.city}, ${orders.shippingAddress.state}, ${orders.shippingAddress.country}`}
+            />
+            <div className="grid grid-cols-1 gap-4">
+               <InfoItem 
+                icon={RiMoneyDollarCircleLine}
+                label="Payment Status"
+                value={`${orders.paymentMode} • ${orders.paymentStatus}`}
+              />
+            </div>
+          </div>
 
-        {/* Product Details */}
-        <h3 className="text-md font-semibold mb-2">Products</h3>
-        <table className="w-full border-collapse border border-gray-300">
-          <thead>
-            <tr>
-              <th className="border border-gray-300 p-2">Product Name</th>
-              <th className="border border-gray-300 p-2">Quantity</th>
-              <th className="border border-gray-300 p-2">Price</th>
-              <th className="border border-gray-300 p-2">Total</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td className="border border-gray-300 p-2">{products.name}</td>
-              <td className="border border-gray-300 p-2">{orders.quantity}</td>
-              <td className="border border-gray-300 p-2">{products.price}</td>
-              <td className="border border-gray-300 p-2">
-                {orders.quantity * products.price}
-              </td>
-            </tr>
-          </tbody>
-        </table>
+          {/* Product Section */}
+          <div>
+            <div className="flex items-center gap-3 mb-6">
+              <div className="h-px flex-grow bg-gray-100"></div>
+              <h3 className="text-[10px] font-juanaBold text-gray-400 uppercase tracking-[0.2em] whitespace-nowrap">
+                Items Purchased
+              </h3>
+              <div className="h-px flex-grow bg-gray-100"></div>
+            </div>
 
-        <button
-          onClick={onClose}
-          className="mt-4 p-2 bg-blue-500 text-white rounded"
-        >
-          Close
-        </button>
+            <div className="p-6 rounded-[2rem] border border-gray-100 bg-gray-50/30">
+              <div className="flex items-center gap-6">
+                <div className="w-24 h-24 rounded-2xl bg-white p-2 shadow-sm border border-gray-100 overflow-hidden flex-shrink-0">
+                  <img 
+                    src={products.mainImage || "https://images.unsplash.com/photo-1556228578-8c19684568e0?q=80&w=1887&auto=format&fit=crop"} 
+                    alt={products.name}
+                    className="w-full h-full object-cover rounded-xl"
+                  />
+                </div>
+                <div className="flex-grow">
+                  <h4 className="font-juanaBold text-[#6A4D6F] text-lg mb-1">{products.name}</h4>
+                  <p className="text-[10px] font-juanaMedium text-gray-400 uppercase tracking-widest mb-3">
+                    Quantity: <span className="text-[#DF9D43] font-juanaBold">{orders.quantity}</span>
+                  </p>
+                  <div className="flex items-center justify-between border-t border-gray-100 pt-3 mt-3">
+                    <span className="text-xs font-juanaMedium text-gray-400">Unit Price</span>
+                    <span className="font-juanaBold text-[#6A4D6F]">₹{products.price}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Total Summary */}
+          <div className="p-6 rounded-3xl bg-[#6A4D6F] text-white flex items-center justify-between shadow-xl shadow-[#6A4D6F]/20">
+            <div>
+              <p className="text-[10px] font-juanaMedium uppercase tracking-widest opacity-60 mb-1">Total Bill Amount</p>
+              <h3 className="text-2xl font-juanaBold">Order Total</h3>
+            </div>
+            <div className="text-right">
+              <span className="text-3xl font-juanaBold">₹{orders.quantity * products.price}</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Footer */}
+        <div className="p-8 border-t border-gray-100 bg-white sticky bottom-0 flex justify-end">
+          <button
+            onClick={onClose}
+            className="px-10 py-4 bg-gray-50 text-gray-500 font-juanaBold rounded-2xl hover:bg-gray-100 transition-all uppercase tracking-widest text-xs"
+          >
+            Close View
+          </button>
+        </div>
       </div>
     </div>
   );
 };
 
 export default ViewOrderModal;
+
+

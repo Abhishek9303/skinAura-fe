@@ -38,7 +38,6 @@ const Page = () => {
         </div>
       )}
       <div className="w-full flex-grow">
-        <h1 className="text-xl text-center py-2 font-bold">Recently Brought</h1>
         <div className="w-full overflow-y-auto flex flex-wrap items-center md:px-16 p-5 justify-center gap-5">
           <OrderHistoryTable />
         </div>

@@ -147,18 +147,33 @@ const Page = () => {
           Our Customers
         </h1>
         <p className="text-center xs:text-sm">“Family Members”</p>
-        <div className="flex flex-col md:flex-col lg:flex-row items-center justify-center gap-10 mt-10">
+        <div className="flex flex-col md:flex-row items-center justify-center gap-10 mt-10 px-4">
           <BeforeAfterReview
             beforeImage={`https://res.cloudinary.com/den1739gv/image/upload/v1735615338/before03_pa0dxf.jpg`}
             afterImage={`https://res.cloudinary.com/den1739gv/image/upload/v1735615348/after03_zgmdwn.jpg`}
+            title="Clearer Complexion"
+            name="Ananya Sharma"
+            rating={5}
+            date="Dec 2023"
+            description="I was skeptical at first, but the holistic approach really worked for my skin. The inflammation is completely gone."
           />
           <BeforeAfterReview
             beforeImage={`https://res.cloudinary.com/den1739gv/image/upload/v1735615108/IMG_6567_czf1pj.jpg`}
             afterImage={`https://res.cloudinary.com/den1739gv/image/upload/v1735615145/IMG_6931_f5qcf6.jpg`}
+            title="Hair Growth Success"
+            name="Vikram Singh"
+            rating={5}
+            date="Jan 2024"
+            description="The combination of Ayurveda and modern nutrition stopped my hair fall in just 2 months. Very impressed with the results."
           />
           <BeforeAfterReview
             beforeImage={`https://res.cloudinary.com/den1739gv/image/upload/v1735616539/IMG_3569_tv7s2q.png`}
             afterImage={`https://res.cloudinary.com/den1739gv/image/upload/v1735616562/IMG_3568_jabu6b.png`}
+            title="Dullness Gone"
+            name="Priya Patel"
+            rating={4}
+            date="Feb 2024"
+            description="My skin feels much more hydrated and the natural glow has returned. The personalized plan made all the difference."
           />
         </div>
       </div>

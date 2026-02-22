@@ -48,12 +48,19 @@ const Products = () => {
           <p>“Healthy & Beautiful”</p>
         </div>
 
-        <div className="md:w-[85vmax] w-full px-2 mx-auto flex flex-wrap md:gap-8 gap-5 items-start justify-center md:pb-16 pb-8">
+        <div className="max-w-7xl mx-auto px-4 md:px-8 grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-8 md:pb-16 pb-8">
           {loading ? (
             <>
-              <Skeleton height={500} width={350} />
-              <Skeleton height={500} width={350} />
-              <Skeleton height={500} width={350} />
+              {[1, 2, 3, 4].map((i) => (
+                <div key={i} className="rounded-[2.5rem] overflow-hidden p-4 bg-white border border-gray-50">
+                  <Skeleton height={350} className="rounded-3xl" />
+                  <div className="mt-4 space-y-2">
+                    <Skeleton height={24} width="70%" />
+                    <Skeleton height={16} width="40%" />
+                    <Skeleton height={40} className="rounded-2xl mt-4" />
+                  </div>
+                </div>
+              ))}
             </>
           ) : (
             products.map((product) => (
@@ -62,10 +69,10 @@ const Products = () => {
                 productId={product._id}
                 key={product._id}
                 name={product.name}
-                imgSrc={product.images[0]} // Assuming images is an array
+                imgSrc={product.images[0]} 
                 price={product.price}
                 description={product.description}
-                onClick={() => handleProductClick(product._id)} // Use the handleProductClick function for redirection
+                onClick={() => handleProductClick(product._id)} 
               />
             ))
           )}

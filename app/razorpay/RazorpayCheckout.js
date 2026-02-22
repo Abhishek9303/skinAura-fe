@@ -12,6 +12,7 @@ const RazorpayCheckout = ({
   productArr,
   cartId,
   totalAmount,
+  couponCode = "",
 }) => {
   const [razorpayLoaded, setRazorpayLoaded] = useState(false);
   const [productData, setProductData] = useState({
@@ -139,6 +140,7 @@ const RazorpayCheckout = ({
           quantity: productArr ? undefined : quantity, // Only set for single product
           shippingAddress: selectedAddress,
           cartId, // Include cartId for backend processing
+          couponCode,
         },
         {
           headers: {
@@ -156,10 +158,10 @@ const RazorpayCheckout = ({
       }
 
       let amountToCharge = productArr ? cartTotalPrice : singleProductPrice;
-      if(parseInt(amountToCharge) <= 1500){
+      if(parseInt(amountToCharge) <= 1000){
         amountToCharge = parseInt(amountToCharge) + 50;
       }
-
+      console.log(process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,"keys of razorpay")
       const options = {
         key:
           process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID ||
@@ -204,10 +206,10 @@ const RazorpayCheckout = ({
 
   return (
     <button
-      className={`bg-[#6A4D6F] hover:bg-[#4b334f] cursor-pointer flex items-center justify-center px-5 py-2 text-white md:px-12 md:py-3 text-[1.8vmax] md:text-[1.1vmax]`}
+      className="w-full h-full bg-[#6A4D6F] hover:bg-[#4b334f] text-white font-juanaBold !font-juanaBold uppercase tracking-[0.2em] !text-xs !leading-none transition-all active:scale-95 flex items-center justify-center rounded-2xl border-none outline-none cursor-pointer"
       onClick={buyNow}
     >
-      Buy Now
+      Complete Payment
     </button>
   );
 };
