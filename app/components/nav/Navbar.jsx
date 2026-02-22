@@ -2,20 +2,27 @@
 
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
-import { RiUser3Line, RiMenuLine ,RiShoppingCartFill } from "@remixicon/react";
+import {
+  RiUser3Line,
+  RiMenuLine,
+  RiShoppingCartFill,
+  RiNotification3Line,
+} from "@remixicon/react";
 import { toast } from "react-toastify";
-import {useRouter} from "next/navigation";
+import { useRouter } from "next/navigation";
+import NotificationDropdown from "../notifications/NotificationDropdown";
 const Nav = () => {
   const [isMobile, setIsMobile] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [isNotificationOpen, setIsNotificationOpen] = useState(false);
   const [token, setToken] = useState(null);
   const Router = useRouter();
-  const handleLogOut = ()=>{
-    window.localStorage.clear()
+  const handleLogOut = () => {
+    window.localStorage.clear();
     toast.success("Log-out Succesfully");
-    Router.push("/")
-  }
+    Router.push("/");
+  };
 
   useEffect(() => {
     (() => {
@@ -53,10 +60,35 @@ const Nav = () => {
               </Link>
             </div>
             <div className="navRight flex justify-center items-center gap-2">
+              {/* Notification Bell */}
+              {token && (
+                <div className="relative">
+                  <button
+                    onClick={() => {
+                      setIsNotificationOpen(!isNotificationOpen);
+                      setIsProfileOpen(false);
+                      setIsMenuOpen(false);
+                    }}
+                    className="relative flex items-center p-2 hover:bg-gray-100 rounded-full transition"
+                  >
+                    <RiNotification3Line size={24} />
+                    <span className="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border border-white"></span>
+                  </button>
+                  <NotificationDropdown
+                    isOpen={isNotificationOpen}
+                    onClose={() => setIsNotificationOpen(false)}
+                  />
+                </div>
+              )}
+
               {/* Profile Dropdown */}
               <div className="relative">
                 <button
-                  onClick={() => setIsProfileOpen(!isProfileOpen)}
+                  onClick={() => {
+                    setIsProfileOpen(!isProfileOpen);
+                    setIsNotificationOpen(false);
+                    setIsMenuOpen(false);
+                  }}
                   className="flex items-center p-2 hover:bg-gray-100 rounded-full transition"
                 >
                   <RiUser3Line size={24} />
@@ -74,7 +106,8 @@ const Nav = () => {
                         </Link>
                         <button
                           onClick={() => (
-                            setIsProfileOpen(!isProfileOpen), handleLogOut()
+                            setIsProfileOpen(!isProfileOpen),
+                            handleLogOut()
                           )}
                           className="block px-4 py-2 text-sm hover:bg-gray-200 w-full text-left"
                         >
@@ -155,13 +188,36 @@ const Nav = () => {
             })}
           </div>
           <div className="navRight flex justify-center items-center gap-6">
+            {/* Notification Bell */}
+            {token && (
+              <div className="relative">
+                <button
+                  onClick={() => {
+                    setIsNotificationOpen(!isNotificationOpen);
+                    setIsProfileOpen(false);
+                  }}
+                  className="relative flex items-center p-2 hover:bg-gray-100 rounded-full transition"
+                >
+                  <RiNotification3Line size={24} />
+                  <span className="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border border-white"></span>
+                </button>
+                <NotificationDropdown
+                  isOpen={isNotificationOpen}
+                  onClose={() => setIsNotificationOpen(false)}
+                />
+              </div>
+            )}
+
             <Link href="/cart">
               <RiShoppingCartFill />
             </Link>
             {/* Desktop Profile Dropdown */}
             <div className="relative">
               <button
-                onClick={() => setIsProfileOpen(!isProfileOpen)}
+                onClick={() => {
+                  setIsProfileOpen(!isProfileOpen);
+                  setIsNotificationOpen(false);
+                }}
                 className="flex items-center p-2 hover:bg-gray-100 rounded-full transition"
               >
                 <RiUser3Line size={24} />
@@ -179,7 +235,8 @@ const Nav = () => {
                       </Link>
                       <button
                         onClick={() => (
-                          setIsProfileOpen(!isProfileOpen), handleLogOut()
+                          setIsProfileOpen(!isProfileOpen),
+                          handleLogOut()
                         )}
                         className="block px-4 py-2 text-sm hover:bg-gray-200 w-full text-left"
                       >

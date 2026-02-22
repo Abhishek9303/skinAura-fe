@@ -13,7 +13,7 @@ function GlobalFilter({ filter, setFilter }) {
       <input
         value={filter || ""}
         onChange={(e) => setFilter(e.target.value)}
-        className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-transparent rounded-2xl font-juanaMedium text-sm focus:bg-white focus:ring-2 focus:ring-[#6A4D6F]/10 transition-all outline-none"
+        className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-transparent rounded-2xl font-sans font-medium text-sm focus:bg-white focus:ring-2 focus:ring-[#6A4D6F]/10 transition-all outline-none"
         placeholder="Search by product name..."
       />
       <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
@@ -37,7 +37,7 @@ const StatusBadge = ({ status }) => {
   const currentStyle = styles[status?.toLowerCase()] || styles.pending;
 
   return (
-    <span className={`px-3 py-1 rounded-full text-[10px] font-juanaBold uppercase tracking-widest border ${currentStyle}`}>
+    <span className={`px-3 py-1 rounded-full text-[10px] font-sans font-bold uppercase tracking-widest border ${currentStyle}`}>
       {status || "Pending"}
     </span>
   );
@@ -111,7 +111,7 @@ const OrderHistoryTable = () => {
         Header: "Date",
         accessor: "createdAt",
         Cell: ({ value }) => (
-          <span className="text-gray-500 font-juanaMedium text-sm">
+          <span className="text-gray-500 font-sans font-medium text-sm">
             {new Date(value).toLocaleDateString("en-IN", { day: 'numeric', month: 'short', year: 'numeric' })}
           </span>
         ),
@@ -125,7 +125,7 @@ const OrderHistoryTable = () => {
         Header: "Total",
         accessor: "productDetails.price",
         Cell: ({ row }) => (
-          <span className="font-juanaBold text-gray-900">
+          <span className="font-sans font-bold text-gray-900 leading-none">
             ₹{(row.original.productDetails.price * row.original.quantity).toLocaleString()}
           </span>
         ),
@@ -232,12 +232,12 @@ const OrderHistoryTable = () => {
                                 <p className="text-xs font-mono text-[#6A4D6F] truncate">{row.original._id}</p>
                               </div>
                               <div>
-                                <p className="text-[10px] font-juanaBold text-gray-400 uppercase tracking-widest mb-2">Quantity</p>
-                                <p className="text-sm font-juanaBold text-gray-800">{row.original.quantity} Unit(s)</p>
+                                <p className="text-[10px] font-sans font-bold text-gray-400 uppercase tracking-widest mb-2">Quantity</p>
+                                <p className="text-sm font-sans font-bold text-gray-800">{row.original.quantity} Unit(s)</p>
                               </div>
                               <div>
-                                <p className="text-[10px] font-juanaBold text-gray-400 uppercase tracking-widest mb-2">Unit Price</p>
-                                <p className="text-sm font-juanaBold text-gray-800">₹{row.original.productDetails.price.toLocaleString()}</p>
+                                <p className="text-[10px] font-sans font-bold text-gray-400 uppercase tracking-widest mb-2">Unit Price</p>
+                                <p className="text-sm font-sans font-bold text-gray-800">₹{row.original.productDetails.price.toLocaleString()}</p>
                               </div>
                               <div>
                                 <p className="text-[10px] font-juanaBold text-gray-400 uppercase tracking-widest mb-2">Payment</p>
@@ -249,7 +249,7 @@ const OrderHistoryTable = () => {
                             <div className="md:w-1/3 flex flex-col gap-6">
                               <div>
                                 <p className="text-[10px] font-juanaBold text-gray-400 uppercase tracking-widest mb-2 text-right">Delivery To</p>
-                                <p className="text-xs font-juanaMedium text-gray-500 text-right leading-relaxed">
+                                <p className="text-xs font-sans font-medium text-gray-500 text-right leading-relaxed">
                                   {row.original.shippingAddress.addressLine1}<br/>
                                   {row.original.shippingAddress.city}, {row.original.shippingAddress.state} - {row.original.pinCode || row.original.shippingAddress.pinCode}
                                 </p>

@@ -7,6 +7,7 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import Link from "next/link";
 import { RiEyeLine, RiEyeOffLine } from "@remixicon/react";
+import Button from "@/app/components/button/Button";
 
 const SignIn = () => {
   const router = useRouter();
@@ -109,86 +110,101 @@ const SignIn = () => {
           </div>
         ) : (
           <form
-            className="w-full max-w-md p-8 border-[0.5px] border-[#0000003b] shadow-md rounded-lg space-y-6"
+            className="w-full max-w-md p-10 bg-white rounded-[2.5rem] shadow-2xl shadow-gray-200 border border-gray-50 space-y-8"
             onKeyPress={handleKeyPress} // Handle Enter key
           >
-            <h1 className="md:text-3xl text-2xl text-center text-gray-600 font-bold">
-              Log In
-            </h1>
-            <div>
-              <label className="block text-gray-600 font-medium mb-2">
-                Phone No
-              </label>
-              <div className="flex">
-                <span className="bg-gray-200 p-3 rounded-l-lg">+91</span>
-                <input
-                  onChange={(e) =>
-                    setData({ ...data, mobileNo: e.target.value })
-                  }
-                  type="tel"
-                  placeholder="1234567890"
-                  name="mobileNo"
-                  className="w-full border-[0.5px] border-[#0000003b] shadow-md rounded-r-lg p-3"
-                  maxLength="10"
-                />
-              </div>
-              {errors.mobileNo && (
-                <p className="text-red-500 text-sm mt-1">{errors.mobileNo}</p>
-              )}
-            </div>
-            <div>
-              <label className="block text-gray-600 font-medium mb-2">
-                Password
-              </label>
-              <div className="relative flex items-center">
-                <input
-                  onChange={(e) =>
-                    setData({ ...data, password: e.target.value })
-                  }
-                  type={showPassword ? "text" : "password"}
-                  placeholder="Password"
-                  className="w-full border-[0.5px] border-[#0000003b] shadow-md rounded-lg p-3 pr-10"
-                />
-                <button
-                  type="button"
-                  className="absolute right-3 flex items-center"
-                  onClick={() => setShowPassword(!showPassword)}
-                >
-                  {showPassword ? (
-                    <RiEyeOffLine className="h-5 w-5 text-gray-500" />
-                  ) : (
-                    <RiEyeLine className="h-5 w-5 text-gray-500" />
-                  )}
-                </button>
-              </div>
-              {errors.password && (
-                <p className="text-red-500 text-sm mt-1">{errors.password}</p>
-              )}
-            </div>
-            <div className="flex justify-between items-center">
-              <Link
-                href="/resetPassword"
-                className="text-gray-600 hover:underline"
-              >
-                Forgot Password?
-              </Link>
+            <div className="text-center space-y-2">
+              <h1 className="text-3xl font-juanaBold text-[#6A4D6F]">
+                Welcome Back
+              </h1>
+              <p className="text-[10px] font-juanaMedium text-gray-400 uppercase tracking-[0.2em]">
+                Enter your credentials to continue
+              </p>
             </div>
 
-            <button
-              onClick={handleSubmit}
-              className="w-full bg-[#6A4D6F] text-white font-medium py-2 rounded-lg shadow-md hover:bg-gray-700 transition duration-300"
-              disabled={loading} // Disable button when loading
-            >
-              {loading ? "Signing in..." : "Login"}
-            </button>
-            <div className="text-center text-gray-600 mt-4">
-              Don't have an account?{" "}
-              <a
-                href="/signup"
-                className="text-gray-600 font-bold hover:underline"
-              >
-                Sign Up
-              </a>
+            <div className="space-y-6">
+              <div className="space-y-2">
+                <label className="text-[10px] font-juanaBold text-gray-400 uppercase tracking-widest ml-1">
+                  Phone Number
+                </label>
+                <div className="flex group">
+                  <span className="bg-gray-50 border-r-0 border-transparent p-4 rounded-l-2xl font-sans font-bold text-[#6A4D6F] text-sm">
+                    +91
+                  </span>
+                  <input
+                    onChange={(e) =>
+                      setData({ ...data, mobileNo: e.target.value })
+                    }
+                    type="tel"
+                    placeholder="1234567890"
+                    name="mobileNo"
+                    className="w-full bg-gray-50 border border-transparent rounded-r-2xl p-4 transition-all focus:bg-white focus:ring-2 focus:ring-[#6A4D6F]/10 font-sans font-medium text-[#6A4D6F] outline-none"
+                    maxLength="10"
+                    value={data.mobileNo}
+                  />
+                </div>
+                {errors.mobileNo && (
+                  <p className="text-red-500 text-[10px] pl-1 font-sans font-medium">{errors.mobileNo}</p>
+                )}
+              </div>
+
+              <div className="space-y-2">
+                <div className="flex justify-between items-center ml-1">
+                  <label className="text-[10px] font-juanaBold text-gray-400 uppercase tracking-widest">
+                    Password
+                  </label>
+                  <Link
+                    href="/resetPassword"
+                    className="text-[10px] font-sans font-bold text-[#DF9D43] uppercase tracking-widest hover:underline"
+                  >
+                    Forgot?
+                  </Link>
+                </div>
+                <div className="relative group">
+                  <input
+                    onChange={(e) =>
+                      setData({ ...data, password: e.target.value })
+                    }
+                    type={showPassword ? "text" : "password"}
+                    placeholder="••••••••"
+                    className="w-full bg-gray-50 border border-transparent rounded-2xl p-4 pr-12 transition-all focus:bg-white focus:ring-2 focus:ring-[#6A4D6F]/10 font-sans font-medium text-[#6A4D6F] outline-none"
+                    value={data.password}
+                  />
+                  <button
+                    type="button"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-[#6A4D6F] transition-colors"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? (
+                      <RiEyeOffLine className="w-5 h-5" />
+                    ) : (
+                      <RiEyeLine className="w-5 h-5" />
+                    )}
+                  </button>
+                </div>
+                {errors.password && (
+                  <p className="text-red-500 text-[10px] pl-1 font-sans font-medium">{errors.password}</p>
+                )}
+              </div>
+            </div>
+
+            <div className="space-y-6 pt-2">
+              <Button
+                text={loading ? "Authenticating..." : "Sign In"}
+                onClick={handleSubmit}
+                className="w-full !py-4 !h-auto uppercase tracking-widest text-xs font-sans font-bold shadow-xl shadow-[#6A4D6F]/20 rounded-2xl"
+                disabled={loading}
+              />
+              
+              <div className="text-center text-[11px] text-gray-400 uppercase tracking-widest">
+                Don't have an account?{" "}
+                <Link
+                  href="/signup"
+                  className="text-[#6A4D6F] font-bold hover:text-[#DF9D43] transition-colors"
+                >
+                  Join Us
+                </Link>
+              </div>
             </div>
           </form>
         )}

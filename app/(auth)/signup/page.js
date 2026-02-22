@@ -1,9 +1,13 @@
 "use client";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import Link from "next/link";
+import { RiEyeLine, RiEyeOffLine } from "@remixicon/react";
+import Button from "@/app/components/button/Button";
+import axios from "axios";
 
 const Signup = () => {
   const router = useRouter();
@@ -15,6 +19,7 @@ const Signup = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false); // To prevent multiple submissions
   const [loading, setLoading] = useState(true); // To handle skeleton loading
+  const [showPassword, setShowPassword] = useState(false); // For password visibility
 
   const validateEmail = (email) => {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -67,7 +72,6 @@ const Signup = () => {
 
     setIsSubmitting(true); // Set the submitting state to true
 
-    const axios = require("axios");
     let config = {
       method: "post",
       maxBodyLength: Infinity,
@@ -138,81 +142,110 @@ const Signup = () => {
           </div>
         ) : (
           <form
-            className="w-full max-w-md p-5 md:p-8 border-[0.5px] border-[#0000003b] shadow-md rounded-lg space-y-4"
+            className="w-full max-w-md p-10 bg-white rounded-[2.5rem] shadow-2xl shadow-gray-200 border border-gray-50 space-y-6"
             onSubmit={handleSubmit}
           >
-            <h1 className="md:text-3xl text-2xl text-center text-gray-600 font-bold">
-              Sign Up
-            </h1>
-            <div>
-              <label className="block text-gray-600 font-medium mb-2">
-                Full Name
-              </label>
-              <input
-                onChange={(e) => setData({ ...data, name: e.target.value })}
-                type="text"
-                placeholder="Full Name"
-                name="name"
-                className="w-full border-[0.5px] border-[#0000003b] shadow-md rounded-lg p-3"
-              />
+            <div className="text-center space-y-2">
+              <h1 className="text-3xl font-juanaBold text-[#6A4D6F]">
+                Create Account
+              </h1>
+              <p className="text-[10px] font-juanaMedium text-gray-400 uppercase tracking-[0.2em]">
+                Join our premium wellness community
+              </p>
             </div>
-            <div>
-              <label className="block text-gray-600 font-medium mb-2">
-                Email
-              </label>
-              <input
-                onChange={(e) => setData({ ...data, emailId: e.target.value })}
-                type="email"
-                placeholder="Email"
-                name="emailId"
-                className="w-full border-[0.5px] border-[#0000003b] shadow-md rounded-lg p-3"
-              />
-            </div>
-            <div>
-              <label className="block text-gray-600 font-medium mb-2">
-                Phone No
-              </label>
-              <div className="flex">
-                <span className="bg-gray-200 p-3 rounded-l-lg">+91</span>
+
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <label className="text-[10px] font-juanaBold text-gray-400 uppercase tracking-widest ml-1">
+                  Full Name
+                </label>
                 <input
-                  onChange={(e) =>
-                    setData({ ...data, mobileNo: e.target.value })
-                  }
-                  type="tel"
-                  placeholder="1234567890"
-                  name="mobileNo"
-                  className="w-full border-[0.5px] border-[#0000003b] shadow-md rounded-r-lg p-3"
-                  maxLength="10"
+                  onChange={(e) => setData({ ...data, name: e.target.value })}
+                  type="text"
+                  placeholder="John Doe"
+                  name="name"
+                  className="w-full bg-gray-50 border border-transparent rounded-2xl p-4 transition-all focus:bg-white focus:ring-2 focus:ring-[#6A4D6F]/10 font-sans font-medium text-[#6A4D6F] outline-none"
                 />
               </div>
+
+              <div className="space-y-2">
+                <label className="text-[10px] font-juanaBold text-gray-400 uppercase tracking-widest ml-1">
+                  Email Address
+                </label>
+                <input
+                  onChange={(e) => setData({ ...data, emailId: e.target.value })}
+                  type="email"
+                  placeholder="john@example.com"
+                  name="emailId"
+                  className="w-full bg-gray-50 border border-transparent rounded-2xl p-4 transition-all focus:bg-white focus:ring-2 focus:ring-[#6A4D6F]/10 font-sans font-medium text-[#6A4D6F] outline-none"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-[10px] font-juanaBold text-gray-400 uppercase tracking-widest ml-1">
+                  Phone Number
+                </label>
+                <div className="flex group">
+                  <span className="bg-gray-50 border-r-0 border-transparent p-4 rounded-l-2xl font-sans font-bold text-[#6A4D6F] text-sm">
+                    +91
+                  </span>
+                  <input
+                    onChange={(e) =>
+                      setData({ ...data, mobileNo: e.target.value })
+                    }
+                    type="tel"
+                    placeholder="1234567890"
+                    name="mobileNo"
+                    className="w-full bg-gray-50 border border-transparent rounded-r-2xl p-4 transition-all focus:bg-white focus:ring-2 focus:ring-[#6A4D6F]/10 font-sans font-medium text-[#6A4D6F] outline-none"
+                    maxLength="10"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-[10px] font-juanaBold text-gray-400 uppercase tracking-widest ml-1">
+                  Password
+                </label>
+                <div className="relative group">
+                  <input
+                    onChange={(e) => setData({ ...data, password: e.target.value })}
+                    type={showPassword ? "text" : "password"}
+                    placeholder="••••••••"
+                    name="password"
+                    className="w-full bg-gray-50 border border-transparent rounded-2xl p-4 pr-12 transition-all focus:bg-white focus:ring-2 focus:ring-[#6A4D6F]/10 font-sans font-medium text-[#6A4D6F] outline-none"
+                  />
+                  <button
+                    type="button"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-[#6A4D6F] transition-colors"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? (
+                      <RiEyeOffLine className="w-5 h-5" />
+                    ) : (
+                      <RiEyeLine className="w-5 h-5" />
+                    )}
+                  </button>
+                </div>
+              </div>
             </div>
-            <div>
-              <label className="block text-gray-600 font-medium mb-2">
-                Password
-              </label>
-              <input
-                onChange={(e) => setData({ ...data, password: e.target.value })}
-                type="password"
-                placeholder="Password (min 6 characters)"
-                name="password"
-                className="w-full mb-5 border-[0.5px] border-[#0000003b] shadow-md rounded-lg p-3"
+
+            <div className="space-y-6 pt-4">
+              <Button
+                text={isSubmitting ? "Creating Account..." : "Sign Up"}
+                onClick={handleSubmit}
+                className="w-full !py-4 !h-auto uppercase tracking-widest text-xs font-sans font-bold shadow-xl shadow-[#6A4D6F]/20 rounded-2xl"
+                disabled={isSubmitting}
               />
-            </div>
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="w-full bg-[#6A4D6F] text-white font-medium py-2 rounded-lg shadow-md hover:bg-gray-700 transition duration-300 disabled:opacity-50"
-            >
-              {isSubmitting ? "Signing Up..." : "Sign Up"}
-            </button>
-            <div className="text-center text-gray-600 mt-4">
-              Already have an account?{" "}
-              <a
-                href="/signin"
-                className="text-gray-600 font-bold hover:underline"
-              >
-                Log In
-              </a>
+              
+              <div className="text-center text-[11px] text-gray-400 uppercase tracking-widest">
+                Already have an account?{" "}
+                <Link
+                  href="/signin"
+                  className="text-[#6A4D6F] font-bold hover:text-[#DF9D43] transition-colors"
+                >
+                  Log In
+                </Link>
+              </div>
             </div>
           </form>
         )}

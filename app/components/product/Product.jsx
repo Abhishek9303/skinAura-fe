@@ -73,7 +73,7 @@ const Product = (props) => {
       <div className="absolute top-4 left-4 right-4 sm:top-6 sm:left-6 sm:right-6 z-10 flex items-center justify-between pointer-events-none">
         <div className="flex items-center gap-1 bg-white/90 backdrop-blur px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full shadow-sm border border-gray-100/50">
           <span className="text-[8px] sm:text-[10px] text-amber-500">★</span>
-          <span className="text-[8px] sm:text-[10px] font-juanaBold text-[#6A4D6F]">
+          <span className="text-[8px] sm:text-[10px] font-sans font-bold text-[#6A4D6F]">
             4.9
           </span>
         </div>
@@ -109,7 +109,7 @@ const Product = (props) => {
             <h3 className="font-juanaSemibold text-[14px] sm:text-[18px] text-[#6A4D6F] leading-tight group-hover:text-[#DF9D43] transition-colors duration-300 line-clamp-1">
               {productData.name}
             </h3>
-            <span className="font-juanaBold text-[13px] sm:text-[16px] text-gray-900 whitespace-nowrap">
+            <span className="font-sans font-bold text-[13px] sm:text-[16px] text-gray-900 whitespace-nowrap">
               ₹{productData.price}
             </span>
           </div>

@@ -106,10 +106,10 @@ const ManageOrder = () => {
         accessor: "orders.orderDate",
         Cell: ({ value }) => (
           <div className="flex flex-col">
-            <span className="font-juanaBold text-[#6A4D6F] text-xs">
+            <span className="font-sans font-bold text-[#6A4D6F] text-xs">
               {new Date(value).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })}
             </span>
-            <span className="text-[10px] text-gray-400 font-juanaMedium uppercase tracking-widest">
+            <span className="text-[10px] text-gray-400 font-sans font-medium uppercase tracking-widest">
               {new Date(value).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })}
             </span>
           </div>
@@ -133,7 +133,7 @@ const ManageOrder = () => {
         Header: "Payment", 
         accessor: "orders.paymentMode",
         Cell: ({ value }) => (
-          <span className="font-juanaBold text-[#DF9D43] text-[10px] uppercase tracking-widest">
+          <span className="font-sans font-bold text-[#DF9D43] text-[10px] uppercase tracking-widest leading-none">
             {value}
           </span>
         )
@@ -217,7 +217,7 @@ const ManageOrder = () => {
             placeholder="Search orders..."
             value={searchTerm}
             onChange={handleSearchChange}
-            className="w-full pl-12 pr-4 py-3 bg-white border border-gray-100 rounded-2xl font-juanaMedium text-sm shadow-sm focus:ring-2 focus:ring-[#6A4D6F]/10 transition-all outline-none"
+            className="w-full pl-12 pr-4 py-3 bg-white border border-gray-100 rounded-2xl font-sans font-medium text-sm shadow-sm focus:ring-2 focus:ring-[#6A4D6F]/10 transition-all outline-none"
           />
           <RiSearchLine className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
         </div>

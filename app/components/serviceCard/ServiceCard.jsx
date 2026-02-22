@@ -10,7 +10,7 @@ const ServiceCard = ({
   return (
     <div className="md:px-20 md:py-5 p-5 bg-[#D9D9D9] w-full flex md:flex-row flex-col-reverse justify-between rounded-lg items-center">
       <div className="flex flex-col gap-5 md:py-16 py-5 w-full rounded-lg">
-        <span className="md:text-[2vmax] text-[3vmax] hidden md:block leading-none">
+        <span className="md:text-[2vmax] text-[3vmax] hidden md:block leading-none font-sans font-bold">
           # {cardNumber}
         </span>
         <h1 className="md:text-[3vmax] text-[4vmax] md:text-start text-center leading-none font-juanaRegular">

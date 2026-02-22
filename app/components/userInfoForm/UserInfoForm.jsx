@@ -30,10 +30,10 @@ const Profile = ({ closeForm }) => {
         {/* Header */}
         <div className="px-8 py-6 border-b border-gray-100 flex items-center justify-between bg-white sticky top-0 z-10">
           <div>
-            <h2 className="text-2xl font-juanaBold text-[#6A4D6F]">
+            <h2 className="text-2xl font-sans font-bold text-[#6A4D6F]">
               Edit Profile
             </h2>
-            <p className="text-gray-400 text-[10px] font-juanaMedium uppercase tracking-widest mt-1">
+            <p className="text-gray-400 text-[10px] font-sans font-medium uppercase tracking-widest mt-1">
               Manage your account details & delivery info
             </p>
           </div>
@@ -65,7 +65,7 @@ const Profile = ({ closeForm }) => {
                     Mobile Number
                   </label>
                   {user.mobileNo ? (
-                    <div className="w-full p-4 bg-gray-50 border border-transparent rounded-2xl font-juanaMedium text-gray-500 flex items-center">
+                    <div className="w-full p-4 bg-gray-50 border border-transparent rounded-2xl font-sans font-medium text-gray-500 flex items-center">
                       {user.mobileNo}
                       <span className="ml-auto text-[8px] bg-green-50 text-green-600 px-1.5 py-0.5 rounded uppercase tracking-tighter">
                         Verified
@@ -76,7 +76,7 @@ const Profile = ({ closeForm }) => {
                       type="tel"
                       name="mobileNo"
                       placeholder="Mobile Number"
-                      className="w-full p-4 bg-gray-50 border border-transparent rounded-2xl transition-all focus:bg-white focus:ring-2 focus:ring-[#6A4D6F]/20 font-juanaMedium text-[#6A4D6F]"
+                      className="w-full p-4 bg-gray-50 border border-transparent rounded-2xl transition-all focus:bg-white focus:ring-2 focus:ring-[#6A4D6F]/20 font-sans font-medium text-[#6A4D6F]"
                     />
                   )}
                 </div>
@@ -86,7 +86,7 @@ const Profile = ({ closeForm }) => {
                     Email Address
                   </label>
                   {user.emailId ? (
-                    <div className="w-full p-4 bg-gray-50 border border-transparent rounded-2xl font-juanaMedium text-gray-500 truncate">
+                    <div className="w-full p-4 bg-gray-50 border border-transparent rounded-2xl font-sans font-medium text-gray-500 truncate">
                       {user.emailId}
                     </div>
                   ) : (
@@ -94,7 +94,7 @@ const Profile = ({ closeForm }) => {
                       type="email"
                       name="email"
                       placeholder="Email Address"
-                      className="w-full p-4 bg-gray-50 border border-transparent rounded-2xl transition-all focus:bg-white focus:ring-2 focus:ring-[#6A4D6F]/20 font-juanaMedium text-[#6A4D6F]"
+                      className="w-full p-4 bg-gray-50 border border-transparent rounded-2xl transition-all focus:bg-white focus:ring-2 focus:ring-[#6A4D6F]/20 font-sans font-medium text-[#6A4D6F]"
                     />
                   )}
                 </div>
@@ -120,7 +120,7 @@ const Profile = ({ closeForm }) => {
                   <select
                     name="countries"
                     id="countries"
-                    className="w-full p-4 bg-gray-50 border border-transparent rounded-2xl transition-all focus:bg-white focus:ring-2 focus:ring-[#6A4D6F]/20 font-juanaMedium text-[#6A4D6F] appearance-none"
+                    className="w-full p-4 bg-gray-50 border border-transparent rounded-2xl transition-all focus:bg-white focus:ring-2 focus:ring-[#6A4D6F]/20 font-sans font-medium text-[#6A4D6F] appearance-none"
                   >
                     {countries.map((country, index) => (
                       <option key={index} value={country.toLowerCase()}>
@@ -139,7 +139,7 @@ const Profile = ({ closeForm }) => {
                       type="text"
                       placeholder="E.g. Jane"
                       name="firstname"
-                      className="w-full p-4 bg-gray-50 border border-transparent rounded-2xl transition-all focus:bg-white focus:ring-2 focus:ring-[#6A4D6F]/20 font-juanaMedium text-[#6A4D6F]"
+                      className="w-full p-4 bg-gray-50 border border-transparent rounded-2xl transition-all focus:bg-white focus:ring-2 focus:ring-[#6A4D6F]/20 font-sans font-medium text-[#6A4D6F]"
                     />
                   </div>
                   <div className="space-y-1">
@@ -150,7 +150,7 @@ const Profile = ({ closeForm }) => {
                       type="text"
                       placeholder="Duo"
                       name="lastname"
-                      className="w-full p-4 bg-gray-50 border border-transparent rounded-2xl transition-all focus:bg-white focus:ring-2 focus:ring-[#6A4D6F]/20 font-juanaMedium text-[#6A4D6F]"
+                      className="w-full p-4 bg-gray-50 border border-transparent rounded-2xl transition-all focus:bg-white focus:ring-2 focus:ring-[#6A4D6F]/20 font-sans font-medium text-[#6A4D6F]"
                     />
                   </div>
                 </div>
@@ -163,7 +163,7 @@ const Profile = ({ closeForm }) => {
                     name="address"
                     id="address"
                     placeholder="Building, street, and area info"
-                    className="w-full h-24 p-4 bg-gray-50 border border-transparent rounded-2xl transition-all focus:bg-white focus:ring-2 focus:ring-[#6A4D6F]/20 font-juanaMedium text-[#6A4D6F] resize-none"
+                    className="w-full h-24 p-4 bg-gray-50 border border-transparent rounded-2xl transition-all focus:bg-white focus:ring-2 focus:ring-[#6A4D6F]/20 font-sans font-medium text-[#6A4D6F] resize-none"
                   ></textarea>
                 </div>
 
@@ -176,7 +176,7 @@ const Profile = ({ closeForm }) => {
                       type="text"
                       name="city"
                       placeholder="Delhi"
-                      className="w-full p-4 bg-gray-50 border border-transparent rounded-2xl transition-all focus:bg-white focus:ring-2 focus:ring-[#6A4D6F]/20 font-juanaMedium text-[#6A4D6F]"
+                      className="w-full p-4 bg-gray-50 border border-transparent rounded-2xl transition-all focus:bg-white focus:ring-2 focus:ring-[#6A4D6F]/20 font-sans font-medium text-[#6A4D6F]"
                     />
                   </div>
                   <div className="space-y-1">
@@ -185,7 +185,7 @@ const Profile = ({ closeForm }) => {
                     </label>
                     <select
                       name="state"
-                      className="w-full p-4 bg-gray-50 border border-transparent rounded-2xl transition-all focus:bg-white focus:ring-2 focus:ring-[#6A4D6F]/20 font-juanaMedium text-[#6A4D6F] appearance-none"
+                      className="w-full p-4 bg-gray-50 border border-transparent rounded-2xl transition-all focus:bg-white focus:ring-2 focus:ring-[#6A4D6F]/20 font-sans font-medium text-[#6A4D6F] appearance-none"
                     >
                       <option value="">Select State</option>
                       {states["India"].map((state, index) => (
@@ -206,7 +206,7 @@ const Profile = ({ closeForm }) => {
                       type="text"
                       name="pincode"
                       placeholder="6 Digits"
-                      className="w-full p-4 bg-gray-50 border border-transparent rounded-2xl transition-all focus:bg-white focus:ring-2 focus:ring-[#6A4D6F]/20 font-juanaMedium text-[#6A4D6F]"
+                      className="w-full p-4 bg-gray-50 border border-transparent rounded-2xl transition-all focus:bg-white focus:ring-2 focus:ring-[#6A4D6F]/20 font-sans font-medium text-[#6A4D6F]"
                     />
                   </div>
                   <div className="space-y-1">
@@ -217,7 +217,7 @@ const Profile = ({ closeForm }) => {
                       type="tel"
                       name="contact"
                       placeholder="Optional"
-                      className="w-full p-4 bg-gray-50 border border-transparent rounded-2xl transition-all focus:bg-white focus:ring-2 focus:ring-[#6A4D6F]/20 font-juanaMedium text-[#6A4D6F]"
+                      className="w-full p-4 bg-gray-50 border border-transparent rounded-2xl transition-all focus:bg-white focus:ring-2 focus:ring-[#6A4D6F]/20 font-sans font-medium text-[#6A4D6F]"
                     />
                   </div>
                 </div>
@@ -243,14 +243,14 @@ const Profile = ({ closeForm }) => {
         <div className="p-6 sm:p-8 border-t border-gray-100 flex gap-3 sm:gap-4 bg-white sticky bottom-0">
           <button
             onClick={closeForm}
-            className="flex-1 py-4 border border-gray-200 text-gray-500 !font-juanaBold rounded-2xl hover:bg-gray-50 transition-all uppercase tracking-wider !text-[10px] sm:!text-xs !leading-none whitespace-nowrap"
+            className="flex-1 py-4 border border-gray-200 text-gray-500 font-sans font-bold rounded-2xl hover:bg-gray-50 transition-all uppercase tracking-wider !text-[10px] sm:!text-xs !leading-none whitespace-nowrap"
           >
             Cancel
           </button>
           <Button
             text="Save Changes"
             onClick={handleSubmit}
-            className="flex-1 !py-4 !h-auto uppercase tracking-wider !text-[10px] sm:!text-xs !font-juanaBold !leading-none shadow-xl shadow-[#6A4D6F]/20 rounded-2xl whitespace-nowrap"
+            className="flex-1 !py-4 !h-auto uppercase tracking-wider !text-[10px] sm:!text-xs font-sans !font-bold !leading-none shadow-xl shadow-[#6A4D6F]/20 rounded-2xl whitespace-nowrap"
           />
         </div>
       </div>

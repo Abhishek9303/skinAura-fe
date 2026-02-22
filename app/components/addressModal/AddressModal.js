@@ -153,8 +153,8 @@ const AddressModal = ({
         {/* Header */}
         <div className="px-8 py-6 border-b border-gray-100 flex items-center justify-between bg-white sticky top-0 z-10">
           <div>
-            <h2 className="text-2xl font-juanaBold text-[#6A4D6F]">Delivery Address</h2>
-            <p className="text-gray-400 text-[10px] font-juanaMedium uppercase tracking-widest mt-1">Select or add a new shipping destination</p>
+            <h2 className="text-2xl font-sans font-bold text-[#6A4D6F] leading-tight">Delivery Address</h2>
+            <p className="text-gray-400 text-[10px] font-sans font-medium uppercase tracking-widest mt-1">Select or add a new shipping destination</p>
           </div>
           <button 
             onClick={onClose}
@@ -222,7 +222,7 @@ const AddressModal = ({
                         {address.addressLine2 && (
                           <p className="text-gray-500 text-sm mt-1">{address.addressLine2}</p>
                         )}
-                        <p className="text-gray-500 text-sm font-juanaMedium mt-2 italic px-2 py-0.5 bg-gray-50 rounded-md inline-block">
+                        <p className="text-gray-500 text-sm font-sans font-medium mt-2 italic px-2 py-0.5 bg-gray-50 rounded-md inline-block">
                           {address.city}, {address.state} - {address.pinCode}
                         </p>
                       </div>
@@ -242,7 +242,7 @@ const AddressModal = ({
                 <label className="text-[10px] font-juanaBold text-gray-400 uppercase tracking-widest ml-1">Building/Street</label>
                 <input
                   type="text"
-                  className={`w-full p-4 bg-gray-50 border rounded-2xl transition-all focus:bg-white focus:ring-2 focus:ring-[#6A4D6F]/20 font-juanaMedium ${
+                  className={`w-full p-4 bg-gray-50 border rounded-2xl transition-all focus:bg-white focus:ring-2 focus:ring-[#6A4D6F]/20 font-sans font-medium ${
                     errors.addressLine1 ? "border-red-300" : "border-transparent"
                   }`}
                   placeholder="Address Line 1"
@@ -257,7 +257,7 @@ const AddressModal = ({
                 <label className="text-[10px] font-juanaBold text-gray-400 uppercase tracking-widest ml-1">Area/Landmark (Optional)</label>
                 <input
                   type="text"
-                  className="w-full p-4 bg-gray-50 border border-transparent rounded-2xl transition-all focus:bg-white focus:ring-2 focus:ring-[#6A4D6F]/20 font-juanaMedium"
+                  className="w-full p-4 bg-gray-50 border border-transparent rounded-2xl transition-all focus:bg-white focus:ring-2 focus:ring-[#6A4D6F]/20 font-sans font-medium"
                   placeholder="Address Line 2"
                   value={newAddress.addressLine2}
                   onChange={(e) => setNewAddress({ ...newAddress, addressLine2: e.target.value })}
@@ -269,7 +269,7 @@ const AddressModal = ({
                   <label className="text-[10px] font-juanaBold text-gray-400 uppercase tracking-widest ml-1">City</label>
                   <input
                     type="text"
-                    className={`w-full p-4 bg-gray-50 border rounded-2xl transition-all focus:bg-white focus:ring-2 focus:ring-[#6A4D6F]/20 font-juanaMedium ${
+                    className={`w-full p-4 bg-gray-50 border rounded-2xl transition-all focus:bg-white focus:ring-2 focus:ring-[#6A4D6F]/20 font-sans font-medium ${
                       errors.city ? "border-red-300" : "border-transparent"
                     }`}
                     placeholder="E.g. Delhi"
@@ -283,7 +283,7 @@ const AddressModal = ({
                   <label className="text-[10px] font-juanaBold text-gray-400 uppercase tracking-widest ml-1">Pincode</label>
                   <input
                     type="text"
-                    className={`w-full p-4 bg-gray-50 border rounded-2xl transition-all focus:bg-white focus:ring-2 focus:ring-[#6A4D6F]/20 font-juanaMedium ${
+                    className={`w-full p-4 bg-gray-50 border rounded-2xl transition-all focus:bg-white focus:ring-2 focus:ring-[#6A4D6F]/20 font-sans font-medium ${
                       errors.pinCode ? "border-red-300" : "border-transparent"
                     }`}
                     placeholder="6 Digits"
@@ -300,7 +300,7 @@ const AddressModal = ({
                   <label className="text-[10px] font-juanaBold text-gray-400 uppercase tracking-widest ml-1">State</label>
                   <input
                     type="text"
-                    className={`w-full p-4 bg-gray-50 border rounded-2xl transition-all focus:bg-white focus:ring-2 focus:ring-[#6A4D6F]/20 font-juanaMedium ${
+                    className={`w-full p-4 bg-gray-50 border rounded-2xl transition-all focus:bg-white focus:ring-2 focus:ring-[#6A4D6F]/20 font-sans font-medium ${
                       errors.state ? "border-red-300" : "border-transparent"
                     }`}
                     placeholder="E.g. Delhi"
@@ -314,7 +314,7 @@ const AddressModal = ({
                   <label className="text-[10px] font-juanaBold text-gray-400 uppercase tracking-widest ml-1">Country</label>
                   <input
                     type="text"
-                    className={`w-full p-4 bg-gray-50 border rounded-2xl transition-all focus:bg-white focus:ring-2 focus:ring-[#6A4D6F]/20 font-juanaMedium ${
+                    className={`w-full p-4 bg-gray-50 border rounded-2xl transition-all focus:bg-white focus:ring-2 focus:ring-[#6A4D6F]/20 font-sans font-medium ${
                       errors.country ? "border-red-300" : "border-transparent"
                     }`}
                     placeholder="India"
@@ -340,7 +340,7 @@ const AddressModal = ({
             text={showForm ? "Save & Proceed" : "Proceed"}
             onClick={handleSubmit}
             disabled={!selectedAddressId && !showForm}
-            className={`flex-1 py-4 !h-auto uppercase tracking-widest text-xs font-juanaBold ${
+            className={`flex-1 py-4 !h-auto uppercase tracking-widest text-xs font-sans font-bold ${
               !selectedAddressId && !showForm
                 ? "!bg-gray-200 !text-gray-400 cursor-not-allowed border-none"
                 : ""

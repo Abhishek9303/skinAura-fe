@@ -113,8 +113,8 @@ const PaymentModal = ({
           {/* Shipping Notice Card */}
           <div className="bg-[#DF9D43]/5 border border-[#DF9D43]/20 p-5 rounded-2xl flex items-start gap-4">
             <span className="text-xl">🚚</span>
-            <p className="text-[#6A4D6F] text-xs font-juanaMedium leading-relaxed">
-              Orders below <span className="font-juanaBold">₹1,000</span> attract a nominal shipping fee of <span className="font-juanaBold">₹50</span>. Consider adding more to your cart for free shipping!
+            <p className="text-[#6A4D6F] text-xs font-sans font-medium leading-relaxed">
+              Orders below <span className="font-bold">₹1,000</span> attract a nominal shipping fee of <span className="font-bold">₹50</span>. Consider adding more to your cart for free shipping!
             </p>
           </div>
 
@@ -202,7 +202,7 @@ const PaymentModal = ({
               <Button 
                 text="Confirm Purchase" 
                 onClick={handlePaymentConfirm}
-                className={`w-full h-full !py-0 !px-0 uppercase tracking-[0.2em] !text-xs !font-juanaBold !leading-none shadow-xl shadow-[#6A4D6F]/20 transition-all active:scale-95 rounded-2xl flex items-center justify-center ${
+                className={`w-full h-full !py-0 !px-0 uppercase tracking-[0.2em] !text-xs !font-sans !font-bold !leading-none shadow-xl shadow-[#6A4D6F]/20 transition-all active:scale-95 rounded-2xl flex items-center justify-center ${
                   !selectedPaymentMethod ? "grayscale cursor-not-allowed opacity-50" : ""
                 }`}
               />

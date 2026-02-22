@@ -54,11 +54,11 @@ const ViewOrderModal = ({ order, onClose }) => {
             <InfoItem 
               icon={RiCalendarLine}
               label="Order Date"
-              value={new Date(orders.orderDate).toLocaleDateString('en-IN', { 
+              value={<span className="font-sans font-bold">{new Date(orders.orderDate).toLocaleDateString('en-IN', { 
                 day: 'numeric', 
                 month: 'long', 
                 year: 'numeric' 
-              })}
+              })}</span>}
             />
             <InfoItem 
               icon={RiMapPinLine}
@@ -95,12 +95,12 @@ const ViewOrderModal = ({ order, onClose }) => {
                 </div>
                 <div className="flex-grow">
                   <h4 className="font-juanaBold text-[#6A4D6F] text-lg mb-1">{products.name}</h4>
-                  <p className="text-[10px] font-juanaMedium text-gray-400 uppercase tracking-widest mb-3">
-                    Quantity: <span className="text-[#DF9D43] font-juanaBold">{orders.quantity}</span>
+                  <p className="text-[10px] font-sans font-medium text-gray-400 uppercase tracking-widest mb-3 whitespace-nowrap">
+                    Quantity: <span className="text-[#DF9D43] font-bold">{orders.quantity}</span>
                   </p>
                   <div className="flex items-center justify-between border-t border-gray-100 pt-3 mt-3">
-                    <span className="text-xs font-juanaMedium text-gray-400">Unit Price</span>
-                    <span className="font-juanaBold text-[#6A4D6F]">₹{products.price}</span>
+                    <span className="text-xs font-sans font-medium text-gray-400">Unit Price</span>
+                    <span className="font-sans font-bold text-[#6A4D6F]">₹{products.price}</span>
                   </div>
                 </div>
               </div>
@@ -110,11 +110,11 @@ const ViewOrderModal = ({ order, onClose }) => {
           {/* Total Summary */}
           <div className="p-6 rounded-3xl bg-[#6A4D6F] text-white flex items-center justify-between shadow-xl shadow-[#6A4D6F]/20">
             <div>
-              <p className="text-[10px] font-juanaMedium uppercase tracking-widest opacity-60 mb-1">Total Bill Amount</p>
-              <h3 className="text-2xl font-juanaBold">Order Total</h3>
+              <p className="text-[10px] font-sans font-medium uppercase tracking-widest opacity-60 mb-1">Total Bill Amount</p>
+              <h3 className="text-2xl font-sans font-bold leading-none">Order Total</h3>
             </div>
             <div className="text-right">
-              <span className="text-3xl font-juanaBold">₹{orders.quantity * products.price}</span>
+              <span className="text-3xl font-sans font-bold">₹{orders.quantity * products.price}</span>
             </div>
           </div>
         </div>

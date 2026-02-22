@@ -79,7 +79,7 @@ const CouponInput = ({ onCouponApply, productId }) => {
               setCouponStatus("idle");
             }}
             placeholder="ENTER CODE"
-            className={`w-full p-4 bg-gray-50 border rounded-2xl font-juanaBold text-sm tracking-widest transition-all outline-none focus:bg-white focus:ring-2 ${
+            className={`w-full p-4 bg-gray-50 border rounded-2xl font-sans font-bold text-sm tracking-widest transition-all outline-none focus:bg-white focus:ring-2 ${
               couponStatus === "success"
                 ? "border-green-500 text-green-700 bg-green-50/30"
                 : couponStatus === "error"
@@ -104,7 +104,7 @@ const CouponInput = ({ onCouponApply, productId }) => {
         <button
           onClick={handleApplyCoupon}
           disabled={loading || !couponCode || couponStatus === "success"}
-          className={`px-6 rounded-2xl font-juanaBold text-[10px] uppercase tracking-widest transition-all ${
+          className={`px-6 rounded-2xl font-sans font-bold text-[10px] uppercase tracking-widest transition-all ${
             couponStatus === "success"
               ? "bg-green-100 text-green-700 cursor-default"
               : "bg-[#6A4D6F] text-white hover:bg-[#4b334f] active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"

@@ -206,7 +206,7 @@ const RazorpayCheckout = ({
 
   return (
     <button
-      className="w-full h-full bg-[#6A4D6F] hover:bg-[#4b334f] text-white font-juanaBold !font-juanaBold uppercase tracking-[0.2em] !text-xs !leading-none transition-all active:scale-95 flex items-center justify-center rounded-2xl border-none outline-none cursor-pointer"
+      className="w-full h-full bg-[#6A4D6F] hover:bg-[#4b334f] text-white font-sans font-bold uppercase tracking-[0.2em] text-xs leading-none transition-all active:scale-95 flex items-center justify-center rounded-2xl border-none outline-none cursor-pointer"
       onClick={buyNow}
     >
       Complete Payment

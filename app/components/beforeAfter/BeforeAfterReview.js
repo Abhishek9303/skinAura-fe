@@ -28,7 +28,7 @@ const BeforeAfterReview = ({
           {Array.from({ length: 5 }).map((_, i) => (
             <span key={i} className={`text-sm ${i < rating ? "text-[#DF9D43]" : "text-gray-200"}`}>★</span>
           ))}
-          <span className="ml-2 text-[10px] text-gray-400 font-juanaMedium tracking-widest uppercase">{date}</span>
+          <span className="ml-2 text-[10px] text-gray-400 font-sans font-medium tracking-widest uppercase">{date}</span>
         </div>
 
         <h3 className="text-xl font-juanaSemibold text-[#6A4D6F] mb-3 leading-tight group-hover:text-[#4b334f] transition-colors duration-300">

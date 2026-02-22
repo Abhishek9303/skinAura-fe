@@ -7,13 +7,13 @@ import ProductImages from "@/app/components/swiper/ProductImages";
 import ReviewSwiper from "@/app/components/swiper/ReviewSwiper";
 import VideoDiv from "@/app/components/videoDiv/VideoDiv"; // Correct the import path if necessary
 import Button from "@/app/components/button/Button";
-import QuantityBtn from "@/app/components/quantityBtn/QuantityBtn";
 import { useParams } from "next/navigation";
 import PaymentModal from "@/app/components/payment/PaymentModal"; // Import the PaymentModal component
 import AddressModal from "@/app/components/addressModal/AddressModal";
 import withAuth from "@/store/user/userProtectionRoute";
 import useUserStore from "../../../store/user/userProfile";
 import useAddToCart from "@/app/components/hooks/useAddToCart";
+import { RiAddLine, RiSubtractLine } from "@remixicon/react";
 import { set } from "date-fns";
 
 const SingleProduct = () => {
@@ -84,7 +84,7 @@ const SingleProduct = () => {
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-12 py-12 md:py-20">
           <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-start">
             {/* Left: Product Images */}
-            <div className="w-full lg:w-[55%] sticky top-24">
+            <div className="w-full lg:w-[55%] lg:sticky top-24">
               <div className="aspect-[4/5] md:aspect-[3/4] w-full">
                 <ProductImages
                   productImages={productImages.mainImage}
@@ -101,7 +101,7 @@ const SingleProduct = () => {
                     <span key={i}>★</span>
                   ))}
                 </div>
-                <span className="text-gray-400 text-xs font-juanaMedium uppercase tracking-widest pl-2 border-l border-gray-200">
+                <span className="text-gray-400 text-xs font-sans font-medium uppercase tracking-widest pl-2 border-l border-gray-200 leading-none">
                   {productData?.rating || "4.9"} (128 Reviews)
                 </span>
               </div>
@@ -111,7 +111,7 @@ const SingleProduct = () => {
               </h1>
 
               <div className="flex items-center gap-4 mb-8">
-                <p className="text-2xl md:text-3xl font-juanaBold text-gray-900">
+                <p className="text-2xl md:text-3xl font-sans font-bold text-gray-900">
                   ₹{productData?.price}
                 </p>
                 <div className="bg-green-50 text-green-600 text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wider">
@@ -131,14 +131,20 @@ const SingleProduct = () => {
                   <div>
                     <h3 className="text-sm font-juanaBold text-gray-800 uppercase tracking-widest mb-3">Quantity</h3>
                     <div className="flex items-center border border-gray-100 rounded-2xl overflow-hidden bg-white h-14 shadow-sm">
-                      <button onClick={handleDecrement} className="w-14 h-full flex items-center justify-center hover:bg-gray-50 transition-colors text-[#6A4D6F] font-juanaBold text-lg">-</button>
-                      <span className="w-10 h-full flex items-center justify-center font-juanaBold text-[#6A4D6F] border-x border-gray-50 bg-gray-50/30 text-sm">{quantity}</span>
-                      <button onClick={handleIncrement} className="w-14 h-full flex items-center justify-center hover:bg-gray-50 transition-colors text-[#6A4D6F] font-juanaBold text-lg">+</button>
+                      <button onClick={handleDecrement} className="w-14 h-full flex items-center justify-center hover:bg-gray-50 transition-colors text-[#6A4D6F] active:scale-95" aria-label="Decrease quantity">
+                        <RiSubtractLine size={20} />
+                      </button>
+                      <span className="w-10 h-full flex items-center justify-center font-sans font-bold text-[#6A4D6F] border-x border-gray-50 bg-gray-50/30 text-sm">
+                        {quantity}
+                      </span>
+                      <button onClick={handleIncrement} className="w-14 h-full flex items-center justify-center hover:bg-gray-50 transition-colors text-[#6A4D6F] active:scale-95" aria-label="Increase quantity">
+                        <RiAddLine size={20} />
+                      </button>
                     </div>
                   </div>
                   <div className="flex-grow pt-8">
-                    <p className="text-[11px] text-gray-400 italic">
-                      * 53 people ordered this in the last week
+                    <p className="text-[11px] text-gray-400 italic font-sans">
+                      * <span className="font-bold">53</span> people ordered this in the last week
                     </p>
                   </div>
                 </div>

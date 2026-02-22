@@ -2,7 +2,9 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { toast } from "react-toastify";
+import Link from "next/link";
+import Button from "@/app/components/button/Button";
+import { RiMailLine } from "@remixicon/react";
 
 const SendToken = () => {
   const router = useRouter();
@@ -59,33 +61,53 @@ const SendToken = () => {
   };
 
   return (
-    <div className="w-full h-screen flex items-center justify-center bg-gray-100 p-4 sm:p-8">
-      <div className="w-full max-w-lg p-8 border-[0.5px] border-[#0000003b] shadow-md rounded-lg bg-white space-y-6">
-        <h1 className="text-xl sm:text-2xl md:text-3xl text-center text-gray-600 font-bold">
-          Forgot Password
-        </h1>
-        <form onSubmit={handleSubmit}>
-          <div>
-            <label className="block text-gray-600 font-medium mb-2">
-              Enter your email
+    <div className="w-full h-screen flex items-center justify-center bg-white p-4">
+      <div className="w-full max-w-md p-10 bg-white rounded-[2.5rem] shadow-2xl shadow-gray-200 border border-gray-50 space-y-8">
+        <div className="text-center space-y-2">
+          <h1 className="text-3xl font-juanaBold text-[#6A4D6F]">
+            Forgot Password
+          </h1>
+          <p className="text-[10px] font-juanaMedium text-gray-400 uppercase tracking-[0.2em]">
+            Enter your email to receive a reset link
+          </p>
+        </div>
+
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="space-y-2">
+            <label className="text-[10px] font-juanaBold text-gray-400 uppercase tracking-widest ml-1">
+              Email Address
             </label>
-            <input
-              onChange={(e) => setData({ ...data, email: e.target.value })}
-              type="email"
-              placeholder="Email"
-              className="w-full mb-5 border-[0.5px] border-[#0000003b] shadow-md rounded-lg p-3 text-sm md:text-base"
-            />
+            <div className="relative group">
+              <input
+                onChange={(e) => setData({ ...data, email: e.target.value })}
+                type="email"
+                placeholder="john@example.com"
+                className="w-full bg-gray-50 border border-transparent rounded-2xl p-4 transition-all focus:bg-white focus:ring-2 focus:ring-[#6A4D6F]/10 font-sans font-medium text-[#6A4D6F] outline-none"
+              />
+            </div>
             {errors.email && (
-              <p className="text-red-500 text-sm mt-1">{errors.email}</p>
+              <p className="text-red-500 text-[10px] pl-1 font-sans font-medium">{errors.email}</p>
             )}
           </div>
-          <button
-            type="submit"
-            className="w-full bg-[#6A4D6F] text-white font-medium py-2 rounded-lg shadow-md hover:bg-gray-700 transition duration-300 text-sm md:text-base"
-            disabled={loading}
-          >
-            {loading ? "Sending..." : "Submit"}
-          </button>
+
+          <div className="space-y-6 pt-2">
+            <Button
+              text={loading ? "Sending..." : "Submit"}
+              onClick={handleSubmit}
+              className="w-full !py-4 !h-auto uppercase tracking-widest text-xs font-sans font-bold shadow-xl shadow-[#6A4D6F]/20 rounded-2xl"
+              disabled={loading}
+            />
+            
+            <div className="text-center text-[11px] text-gray-400 uppercase tracking-widest">
+              Remember your password?{" "}
+              <Link
+                href="/signin"
+                className="text-[#6A4D6F] font-bold hover:text-[#DF9D43] transition-colors"
+              >
+                Back to Login
+              </Link>
+            </div>
+          </div>
         </form>
       </div>
     </div>

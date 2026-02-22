@@ -334,7 +334,7 @@ const ProductForm = ({ onClose, setProducts, editingProduct }) => {
           <Button 
             text={editingProduct ? "Update Collection" : "Publish Product"}
             onClick={handleSubmit}
-            className="!px-12 !py-4 rounded-2xl shadow-xl shadow-[#6A4D6F]/20 uppercase tracking-widest text-xs md:text-sm font-juanaBold"
+            className="!px-12 !py-4 rounded-2xl shadow-xl shadow-[#6A4D6F]/20 uppercase tracking-widest text-xs md:text-sm font-sans font-bold"
           />
         </div>
       </div>

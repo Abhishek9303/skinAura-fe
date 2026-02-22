@@ -59,7 +59,7 @@ const EditOrderModal = ({ order, onClose, onSave }) => {
               name="status"
               value={editedOrder.status}
               onChange={handleChange}
-              className="w-full bg-gray-50 border border-transparent rounded-2xl p-4 transition-all focus:bg-white focus:ring-2 focus:ring-[#6A4D6F]/10 font-juanaMedium text-[#6A4D6F] appearance-none cursor-pointer outline-none shadow-sm"
+              className="w-full bg-gray-50 border border-transparent rounded-2xl p-4 transition-all focus:bg-white focus:ring-2 focus:ring-[#6A4D6F]/10 font-sans font-semibold text-[#6A4D6F] appearance-none cursor-pointer outline-none shadow-sm capitalize"
             >
               <option value="pending">Pending</option>
               <option value="processing">Processing</option>
@@ -72,7 +72,7 @@ const EditOrderModal = ({ order, onClose, onSave }) => {
 
           {/* Payment Status */}
           <div className="space-y-3">
-            <label className="flex items-center gap-2 text-[10px] font-juanaBold text-gray-400 uppercase tracking-widest ml-1">
+            <label className="flex items-center gap-2 text-[10px] font-sans font-bold text-gray-400 uppercase tracking-widest ml-1">
               <RiShieldFlashLine size={14} className="text-[#DF9D43]" />
               Payment Status
             </label>
@@ -80,7 +80,7 @@ const EditOrderModal = ({ order, onClose, onSave }) => {
               name="paymentStatus"
               value={editedOrder.paymentStatus}
               onChange={handleChange}
-              className="w-full bg-gray-50 border border-transparent rounded-2xl p-4 transition-all focus:bg-white focus:ring-2 focus:ring-[#6A4D6F]/10 font-juanaMedium text-[#6A4D6F] appearance-none cursor-pointer outline-none shadow-sm"
+              className="w-full bg-gray-50 border border-transparent rounded-2xl p-4 transition-all focus:bg-white focus:ring-2 focus:ring-[#6A4D6F]/10 font-sans font-semibold text-[#6A4D6F] appearance-none cursor-pointer outline-none shadow-sm capitalize"
             >
               <option value="created">Created</option>
               <option value="paid">Paid</option>

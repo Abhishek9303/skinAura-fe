@@ -135,11 +135,11 @@ const AdminLogin = () => {
 
             <div className="space-y-6">
               <div className="space-y-2">
-                <label className="text-[10px] font-juanaBold text-gray-400 uppercase tracking-widest ml-1">
+                <label className="text-[10px]  text-gray-400 uppercase tracking-widest ml-1">
                   Mobile Number
                 </label>
                 <div className="flex group">
-                  <span className="bg-gray-50 border-r-0 border-transparent p-4 rounded-l-2xl font-juanaBold text-[#6A4D6F] text-sm">
+                  <span className="bg-gray-50 border-r-0 border-transparent p-4 rounded-l-2xl font-sans font-bold text-[#6A4D6F] text-sm">
                     +91
                   </span>
                   <input
@@ -149,7 +149,7 @@ const AdminLogin = () => {
                     type="tel"
                     placeholder="1234567890"
                     name="mobileNo"
-                    className="w-full bg-gray-50 border border-transparent rounded-r-2xl p-4 transition-all focus:bg-white focus:ring-2 focus:ring-[#6A4D6F]/10 font-juanaMedium text-[#6A4D6F]"
+                    className="w-full bg-gray-50 border border-transparent rounded-r-2xl p-4 transition-all focus:bg-white focus:ring-2 focus:ring-[#6A4D6F]/10 font-sans font-medium text-[#6A4D6F]"
                     maxLength="10"
                     value={data.mobileNo}
                   />
@@ -165,7 +165,7 @@ const AdminLogin = () => {
                     onChange={(e) => setData({ ...data, password: e.target.value })}
                     type={showPassword ? "text" : "password"}
                     placeholder="••••••••"
-                    className="w-full bg-gray-50 border border-transparent rounded-2xl p-4 pr-12 transition-all focus:bg-white focus:ring-2 focus:ring-[#6A4D6F]/10 font-juanaMedium text-[#6A4D6F]"
+                    className="w-full bg-gray-50 border border-transparent rounded-2xl p-4 pr-12 transition-all focus:bg-white focus:ring-2 focus:ring-[#6A4D6F]/10 font-sans font-medium text-[#6A4D6F]"
                     value={data.password}
                   />
                   <button
@@ -187,7 +187,7 @@ const AdminLogin = () => {
               <Button
                 text={loading ? "Authenticating..." : "Sign In"}
                 onClick={handleSubmit}
-                className="w-full !py-4 !h-auto uppercase tracking-widest text-xs font-juanaBold shadow-xl shadow-[#6A4D6F]/20 rounded-2xl"
+                className="w-full !py-4 !h-auto uppercase tracking-widest text-xs font-sans font-bold shadow-xl shadow-[#6A4D6F]/20 rounded-2xl"
               />
             </div>
           </form>
