@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from "react";
+"use client";
+import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { RiCloseLine, RiImageAddLine, RiPriceTag3Line, RiInformationLine, RiDeleteBinLine, RiStarLine, RiPaletteLine } from "@remixicon/react";
 import Button from "@/app/components/button/Button";
+import InputWrapper from "./InputWrapper";
 
 const ProductForm = ({ onClose, setProducts, editingProduct }) => {
-  const authToken = localStorage.getItem("token");
+  const authToken = typeof window !== "undefined" ? localStorage.getItem("token") : null;
 
   const [formData, setFormData] = useState({
     name: "",
@@ -38,13 +40,13 @@ const ProductForm = ({ onClose, setProducts, editingProduct }) => {
     }
   }, [editingProduct]);
 
-  const handleInputChange = (e) => {
+  const handleInputChange = useCallback((e) => {
     const { name, value, type, checked } = e.target;
-    setFormData({
-      ...formData,
+    setFormData((prev) => ({
+      ...prev,
       [name]: type === "checkbox" ? checked : value,
-    });
-  };
+    }));
+  }, []);
 
   const handleFileChange = (e) => {
     const { name, files } = e.target;
@@ -57,11 +59,11 @@ const ProductForm = ({ onClose, setProducts, editingProduct }) => {
         imagePreviews: [...prevState.imagePreviews, ...previews],
       }));
     } else if (name === "mainImage") {
-      setFormData({
-        ...formData,
+      setFormData((prev) => ({
+        ...prev,
         mainImage: files[0],
         mainImagePreview: URL.createObjectURL(files[0]),
-      });
+      }));
     }
   };
 
@@ -74,11 +76,11 @@ const ProductForm = ({ onClose, setProducts, editingProduct }) => {
   };
 
   const handleRemoveMainImage = () => {
-    setFormData({
-      ...formData,
+    setFormData((prev) => ({
+      ...prev,
       mainImage: null,
       mainImagePreview: null,
-    });
+    }));
   };
 
   const handleSubmit = async (e) => {
@@ -135,16 +137,6 @@ const ProductForm = ({ onClose, setProducts, editingProduct }) => {
     }
   };
 
-  const InputWrapper = ({ label, icon: Icon, children }) => (
-    <div className="space-y-2">
-      <label className="flex items-center gap-2 text-[10px] font-juanaBold text-gray-400 uppercase tracking-widest ml-1">
-        {Icon && <Icon size={14} className="text-[#DF9D43]" />}
-        {label}
-      </label>
-      {children}
-    </div>
-  );
-
   return (
     <div className="fixed inset-0 z-[10000] flex items-center justify-center p-4">
       {/* Backdrop */}
@@ -173,12 +165,13 @@ const ProductForm = ({ onClose, setProducts, editingProduct }) => {
 
         {/* Form Content */}
         <div className="flex-grow p-8 overflow-y-auto custom-scrollbar">
-          <form className="grid grid-cols-1 lg:grid-cols-12 gap-10">
+          <form className="grid grid-cols-1 lg:grid-cols-12 gap-10" onSubmit={(e) => e.preventDefault()}>
             {/* Left Column: Essential Data */}
             <div className="lg:col-span-7 space-y-8">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <InputWrapper label="Product Identity" icon={RiInformationLine}>
                   <input 
+                    key="name-input"
                     type="text" 
                     name="name" 
                     placeholder="E.g. Radiance Serum"
@@ -190,6 +183,7 @@ const ProductForm = ({ onClose, setProducts, editingProduct }) => {
                 </InputWrapper>
                 <InputWrapper label="Category" icon={RiPriceTag3Line}>
                   <input 
+                    key="category-input"
                     type="text" 
                     name="category" 
                     placeholder="Skin Care"
@@ -204,6 +198,7 @@ const ProductForm = ({ onClose, setProducts, editingProduct }) => {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <InputWrapper label="Base Price (₹)" icon={RiPriceTag3Line}>
                   <input 
+                    key="price-input"
                     type="number" 
                     name="price" 
                     value={formData.price} 
@@ -214,6 +209,7 @@ const ProductForm = ({ onClose, setProducts, editingProduct }) => {
                 </InputWrapper>
                 <InputWrapper label="Discount (%)" icon={RiPriceTag3Line}>
                   <input 
+                    key="discount-input"
                     type="number" 
                     name="discount" 
                     value={formData.discount} 
@@ -223,6 +219,7 @@ const ProductForm = ({ onClose, setProducts, editingProduct }) => {
                 </InputWrapper>
                 <InputWrapper label="Rating" icon={RiStarLine}>
                   <input 
+                    key="rating-input"
                     type="number" 
                     name="rating" 
                     value={formData.rating} 
@@ -236,6 +233,7 @@ const ProductForm = ({ onClose, setProducts, editingProduct }) => {
               <InputWrapper label="Aesthetic Color" icon={RiPaletteLine}>
                 <div className="flex items-center gap-4">
                   <input 
+                    key="color-input"
                     type="color" 
                     name="backgroundColor" 
                     value={formData.backgroundColor} 
@@ -253,6 +251,7 @@ const ProductForm = ({ onClose, setProducts, editingProduct }) => {
 
               <InputWrapper label="Detailed Description" icon={RiInformationLine}>
                 <textarea 
+                  key="description-input"
                   name="description" 
                   value={formData.description} 
                   onChange={handleInputChange} 
@@ -343,4 +342,3 @@ const ProductForm = ({ onClose, setProducts, editingProduct }) => {
 };
 
 export default ProductForm;
-

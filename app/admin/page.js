@@ -14,12 +14,12 @@ import { Toaster } from "@/components/ui/toaster";
 import NotificationBell from "@/components/admin/NotificationBell";
 import useOrderNotifications from "@/hooks/useOrderNotifications";
 const tabs = [
-  { id: 0, label: "Daily Entry", content: <ManageDailyEntry /> },
-  { id: 1, label: "Schedule Meeting", content: <MeetingApproval /> },
-  { id: 2, label: "Manage Product", content: <ManageProducts /> },
-  { id: 3, label: "Manage Orders", content: <ManageOrder /> },
-  { id: 4, label: "Manage Service Booking", content: <ManageServiceBooking /> },
-  { id: 5, label: "Get All Details", content: <SearchPatient /> },
+  { id: 0, label: "Daily Entry", component: ManageDailyEntry },
+  { id: 1, label: "Schedule Meeting", component: MeetingApproval },
+  { id: 2, label: "Manage Product", component: ManageProducts },
+  { id: 3, label: "Manage Orders", component: ManageOrder },
+  { id: 4, label: "Manage Service Booking", component: ManageServiceBooking },
+  { id: 5, label: "Get All Details", component: SearchPatient },
 ];
 
 const Page = () => {
@@ -40,8 +40,10 @@ const Page = () => {
   }, []);
 
   const renderContent = () => {
-    const activeContent = tabs.find((tab) => tab.id === activeTab);
-    return activeContent ? activeContent.content : null;
+    const activeTabItem = tabs.find((tab) => tab.id === activeTab);
+    if (!activeTabItem) return null;
+    const Component = activeTabItem.component;
+    return <Component />;
   };
 
   return (
