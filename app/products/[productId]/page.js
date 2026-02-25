@@ -276,6 +276,7 @@ const SingleProduct = () => {
         onClose={handleModalClose}
         productId={productId}
         quantity={quantity}
+        productPrice={productData?.price}
         selectedPaymentMethod={selectedPaymentMethod}
         setSelectedPaymentMethod={setSelectedPaymentMethod}
         selectedAddress={selectedAddress}

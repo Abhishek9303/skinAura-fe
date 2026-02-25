@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useTable, useGlobalFilter, useSortBy } from "react-table";
-import EditOrderModal from "../../admin/editOrderModel/EditOrderModal";
+import EditOrderModal from "../editOrderModel/EditOrderModal";
 import ViewOrderModal from "../editOrderModel/ViewOrderModal";
 import adminStore from "@/store/admin/adminProfile";
 import { RiEyeLine, RiDeleteBin4Fill, RiPencilLine, RiSearchLine } from "@remixicon/react";

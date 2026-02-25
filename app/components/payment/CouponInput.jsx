@@ -1,9 +1,9 @@
 "use client";
 import React, { useState } from "react";
-import axios from "axios";
 import { toast } from "react-toastify";
+import { couponService } from "@/services/couponService";
 
-const CouponInput = ({ onCouponApply, productId }) => {
+const CouponInput = ({ onCouponApply, productId, totalAmount }) => {
   const [couponCode, setCouponCode] = useState("");
   const [loading, setLoading] = useState(false);
   const [couponStatus, setCouponStatus] = useState("idle"); // idle, success, error
@@ -16,17 +16,9 @@ const CouponInput = ({ onCouponApply, productId }) => {
 
     setLoading(true);
     try {
-      const response = await axios.post(
-        `${process.env.BACKEND_URL}api/v1/user/applyCoupon`,
-        { couponCode, productId },
-        {
-          headers: {
-            "auth-token": window.localStorage.getItem("token"),
-          },
-        },
-      );
+      const response = await couponService.applyCoupon(couponCode, totalAmount);
 
-      if (response.data.success) {
+      if (response.success) {
         setCouponStatus("success");
         toast.success("Coupon applied successfully!");
         onCouponApply({
@@ -36,7 +28,7 @@ const CouponInput = ({ onCouponApply, productId }) => {
         });
       } else {
         setCouponStatus("error");
-        toast.error(response.data.message || "Invalid coupon code");
+        toast.error(response.data || "Invalid coupon code");
         onCouponApply({
           code: couponCode,
           discount: 0,
@@ -45,7 +37,9 @@ const CouponInput = ({ onCouponApply, productId }) => {
       }
     } catch (error) {
       setCouponStatus("error");
-      toast.error("Error applying coupon");
+      const errorMessage =
+        error.response?.data?.data || "Error applying coupon";
+      toast.error(errorMessage);
       onCouponApply({
         code: couponCode,
         discount: 0,

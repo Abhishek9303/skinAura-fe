@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import Button from "@/app/components/button/Button";
 import AddressModal from "@/app/components/addressModal/AddressModal"; // Adjust the import path as necessary
 import RazorpayCheckout from "@/app/razorpay/RazorpayCheckout"; // Import RazorpayCheckout
+import CouponInput from "../payment/CouponInput";
 
 const CheckoutModal = ({ isOpen, onClose, cartProducts, cartId }) => {
   const [isAddressModalOpen, setIsAddressModalOpen] = useState(false);
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [isRazorpayCheckoutOpen, setRazorpayCheckoutOpen] = useState(false); // State to manage Razorpay checkout
+  const [couponData, setCouponData] = useState(null);
 
   // Prepare the product details in the required format
   const productDetails = cartProducts.map((product) => ({
@@ -61,9 +63,30 @@ const CheckoutModal = ({ isOpen, onClose, cartProducts, cartId }) => {
         </div>
 
         {/* Display Total Amount */}
-        <div className="mt-4 flex justify-between">
-          <p className="font-medium">Total Amount:</p>
-          <p className="font-semibold">{totalAmount}</p>
+        <div className="mt-4 space-y-2 border-t pt-4">
+          <div className="flex justify-between text-sm text-gray-600">
+            <p>Subtotal:</p>
+            <p>₹{totalAmount}</p>
+          </div>
+          
+          {couponData?.status === "applied" && (
+            <div className="flex justify-between text-sm text-green-600">
+              <p>Coupon Discount ({couponData.code}):</p>
+              <p>- ₹{couponData.discount}</p>
+            </div>
+          )}
+
+          <div className="flex justify-between font-bold text-lg text-[#6A4D6F] pt-2 border-t">
+            <p>Final Total:</p>
+            <p>₹{totalAmount - (couponData?.status === "applied" ? couponData.discount : 0)}</p>
+          </div>
+        </div>
+
+        <div className="mt-6">
+          <CouponInput 
+            totalAmount={totalAmount}
+            onCouponApply={(data) => setCouponData(data)}
+          />
         </div>
 
         <div className="mt-6 flex items-center justify-center w-full">
@@ -81,6 +104,8 @@ const CheckoutModal = ({ isOpen, onClose, cartProducts, cartId }) => {
               selectedAddress={selectedAddress} // Pass the selected address
               cartId={cartId} // Pass the cart ID
               totalAmount={totalAmount} // Pass the total amount
+              couponCode={couponData?.status === "applied" ? couponData.code : ""}
+              couponDiscount={couponData?.status === "applied" ? couponData.discount : 0}
               onClose={() => setRazorpayCheckoutOpen(false)} // Function to close Razorpay checkout
             />
           )}

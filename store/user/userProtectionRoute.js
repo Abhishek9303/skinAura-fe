@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import useUserStore from "../../store/user/userProfile";
+import useUserStore from "./userProfile";
 import { toast } from "react-toastify";
 const withAuth = (WrappedComponent) => {
     return (props) => {

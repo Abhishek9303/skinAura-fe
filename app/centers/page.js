@@ -1,6 +1,6 @@
 "use client"
 import React, { useState } from 'react'
-import DateTimePickerModal from '../../app/components/datePickerModel/DateTimePickerModal'
+import DateTimePickerModal from '../components/datePickerModel/DateTimePickerModal'
 import CenterCard from '../components/centers/CenterCard'
 import Button from '../components/button/Button'
 

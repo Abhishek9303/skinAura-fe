@@ -11,6 +11,7 @@ const PaymentModal = ({
   onClose,
   productId,
   quantity,
+  productPrice,
   selectedPaymentMethod,
   setSelectedPaymentMethod,
   selectedAddress
@@ -118,11 +119,44 @@ const PaymentModal = ({
             </p>
           </div>
 
-          {/* Coupon Section */}
-          <CouponInput 
-            productId={productId} 
-            onCouponApply={(data) => setCouponData(data)} 
-          />
+          {/* Order Summary & Coupon Section */}
+          <div className="space-y-6">
+            <div className="bg-gray-50/50 p-6 rounded-3xl border border-gray-100 flex flex-col gap-3">
+              <div className="flex justify-between items-center text-sm font-juanaMedium">
+                <span className="text-gray-400 uppercase tracking-widest">Subtotal ({quantity} items)</span>
+                <span className="text-[#6A4D6F] font-bold">₹{productPrice * quantity}</span>
+              </div>
+              
+              {couponData?.status === "applied" && (
+                <div className="flex justify-between items-center text-sm font-juanaMedium text-green-600">
+                  <span className="uppercase tracking-widest">Coupon Discount ({couponData.code})</span>
+                  <span className="font-bold">- ₹{couponData.discount}</span>
+                </div>
+              )}
+
+              {(productPrice * quantity) < 1000 && (
+                <div className="flex justify-between items-center text-sm font-juanaMedium text-[#DF9D43]">
+                  <span className="uppercase tracking-widest">Shipping Fee</span>
+                  <span className="font-bold">₹50</span>
+                </div>
+              )}
+
+              <div className="h-px bg-gray-100 my-1"></div>
+              
+              <div className="flex justify-between items-center">
+                <span className="text-sm font-juanaBold text-[#6A4D6F] uppercase tracking-[0.2em]">Total Amount</span>
+                <span className="text-xl font-sans font-black text-[#6A4D6F]">
+                  ₹{(productPrice * quantity) - (couponData?.status === "applied" ? couponData.discount : 0) + ((productPrice * quantity) < 1000 ? 50 : 0)}
+                </span>
+              </div>
+            </div>
+
+            <CouponInput 
+              productId={productId} 
+              totalAmount={productPrice * quantity}
+              onCouponApply={(data) => setCouponData(data)} 
+            />
+          </div>
 
           <div className="space-y-4">
             <h3 className="text-sm font-juanaBold text-gray-800 uppercase tracking-widest mb-4">Payment Options</h3>
@@ -196,6 +230,7 @@ const PaymentModal = ({
                   quantity={quantity} 
                   selectedAddress={selectedAddress} 
                   couponCode={couponData?.status === "applied" ? couponData.code : ""}
+                  couponDiscount={couponData?.status === "applied" ? couponData.discount : 0}
                 />
               </div>
             ) : (

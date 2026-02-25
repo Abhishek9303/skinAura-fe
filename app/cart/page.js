@@ -6,7 +6,7 @@ import withAuth from "@/store/user/userProtectionRoute";
 import axios from "axios";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import CheckoutModal from "../../app/components/checkoutModel/CheckoutModal";
+import CheckoutModal from "../components/checkoutModel/CheckoutModal";
 import { useToast } from "@/hooks/use-toast";
 import Link from "next/link";
 import { RiShoppingBagLine, RiArrowRightLine } from "@remixicon/react";

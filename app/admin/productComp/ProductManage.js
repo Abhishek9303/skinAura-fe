@@ -116,6 +116,7 @@ const ManageProduct = () => {
           authToken={authToken} // Pass the auth token
           setProducts={setProducts}
           editingProduct={editingProduct}
+          fetchProducts={fetchProducts}
         />
       )}
       {showDeleteModal && (

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import useAdminStore from "../../store/admin/adminProfile";
+import useAdminStore from "./adminProfile";
 import { toast } from "react-toastify";
 
 const ProtectedAdmin = (WrappedComponent) => {

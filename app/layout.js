@@ -1,8 +1,8 @@
 "use client";
 import { Poppins } from "next/font/google";
 import "./globals.css";
-import Nav from "../app/components/nav/Navbar";
-import Footer from "../app/components/footer/Footer";
+import Nav from "./components/nav/Navbar";
+import Footer from "./components/footer/Footer";
 import { usePathname } from "next/navigation";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";

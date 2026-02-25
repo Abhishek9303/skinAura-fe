@@ -8,7 +8,6 @@ import Skeleton from "react-loading-skeleton";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "react-loading-skeleton/dist/skeleton.css";
-import adminStore from "@/store/admin/adminProfile";
 import { RiEyeLine, RiEyeOffLine } from "@remixicon/react";
 import Button from "@/app/components/button/Button";
 const AdminLogin = () => {
@@ -53,6 +52,7 @@ const AdminLogin = () => {
       setLoading(true); // Start form submission loader
 
       // Replace with your actual API endpoint
+      console.log(process.env.BACKEND_URL, "/api/v1/admin/login");
       let config = {
         method: "post",
         url: `${process.env.BACKEND_URL}api/v1/admin/login`,

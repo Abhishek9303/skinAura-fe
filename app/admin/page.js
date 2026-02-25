@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import MeetingApproval from "../../app/admin/adminComponent/MeetingApproval";
+import MeetingApproval from "./adminComponent/MeetingApproval";
 import ManageProducts from "./productComp/ProductManage";
 import Skeleton from "react-loading-skeleton";
 import adminStore from "@/store/admin/adminProfile";
@@ -9,6 +9,7 @@ import ManageOrder from "./adminComponent/ManageOrder";
 import ManageServiceBooking from "./adminComponent/ManageServiceBooking";
 import ManageDailyEntry from "./adminComponent/ManageDailyEntry";
 import SearchPatient from "./adminComponent/searchPatient/searchPatient";
+import ManageCoupons from "./adminComponent/ManageCoupons/ManageCoupons";
 import SkeletonPage from "./SkeletonPage";
 import { Toaster } from "@/components/ui/toaster";
 import NotificationBell from "@/components/admin/NotificationBell";
@@ -20,6 +21,7 @@ const tabs = [
   { id: 3, label: "Manage Orders", component: ManageOrder },
   { id: 4, label: "Manage Service Booking", component: ManageServiceBooking },
   { id: 5, label: "Get All Details", component: SearchPatient },
+  { id: 6, label: "Manage Coupons", component: ManageCoupons },
 ];
 
 const Page = () => {

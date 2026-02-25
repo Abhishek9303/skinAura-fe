@@ -13,6 +13,7 @@ const RazorpayCheckout = ({
   cartId,
   totalAmount,
   couponCode = "",
+  couponDiscount = 0,
 }) => {
   const [razorpayLoaded, setRazorpayLoaded] = useState(false);
   const [productData, setProductData] = useState({
@@ -158,6 +159,8 @@ const RazorpayCheckout = ({
       }
 
       let amountToCharge = productArr ? cartTotalPrice : singleProductPrice;
+      amountToCharge = amountToCharge - couponDiscount;
+      
       if(parseInt(amountToCharge) <= 1000){
         amountToCharge = parseInt(amountToCharge) + 50;
       }

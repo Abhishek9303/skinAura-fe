@@ -6,8 +6,9 @@ import { RiCloseLine, RiImageAddLine, RiPriceTag3Line, RiInformationLine, RiDele
 import Button from "@/app/components/button/Button";
 import InputWrapper from "./InputWrapper";
 
-const ProductForm = ({ onClose, setProducts, editingProduct }) => {
+const ProductForm = ({ onClose, setProducts, editingProduct, fetchProducts }) => {
   const authToken = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+  const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -85,6 +86,7 @@ const ProductForm = ({ onClose, setProducts, editingProduct }) => {
 
   const handleSubmit = async (e) => {
     if (e) e.preventDefault();
+    setLoading(true);
     const data = new FormData();
 
     for (const key in formData) {
@@ -130,10 +132,18 @@ const ProductForm = ({ onClose, setProducts, editingProduct }) => {
         setProducts((prevProducts) => [...prevProducts, response.data]);
         toast.success("Product created successfully!");
       }
+
+      // Refresh the product list if fetchProducts is provided
+      if (fetchProducts) {
+        fetchProducts();
+      }
+
       onClose();
     } catch (error) {
       console.error("Error submitting product:", error);
       toast.error("Failed to submit product. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -331,8 +341,15 @@ const ProductForm = ({ onClose, setProducts, editingProduct }) => {
             Cancel Draft
           </button>
           <Button 
-            text={editingProduct ? "Update Collection" : "Publish Product"}
-            onClick={handleSubmit}
+            text={loading ? (
+              <div className="flex items-center gap-2">
+                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                Processing...
+              </div>
+            ) : (
+              editingProduct ? "Update Collection" : "Publish Product"
+            )}
+            onClick={loading ? null : handleSubmit}
             className="!px-12 !py-4 rounded-2xl shadow-xl shadow-[#6A4D6F]/20 uppercase tracking-widest text-xs md:text-sm font-sans font-bold"
           />
         </div>
