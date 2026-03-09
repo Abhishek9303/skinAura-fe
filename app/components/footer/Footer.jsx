@@ -32,7 +32,7 @@ const Footer = () => {
             </ul>
             <h3 className="flex gap-2">
               <RiPhoneLine />
-              +91 123-456-4561
+              +91 8357982366
             </h3>
           </div>
         </div>
@@ -71,10 +71,10 @@ const Footer = () => {
         </div>
         <div className="lg:block hidden">
           <h3>Contact Us</h3>
-          <h3>+91 123-456-4561</h3>
+          <h3>+91 8357982366</h3>
           <h3 className="flex gap-2">
             <RiMailLine />
-            skinaura@gmail.com
+            fineaurah@gmail.com
           </h3>
         </div>
           <h2 className='text-center py-2 lg:hidden'>@ 2024 copyright All Right Reserved</h2>

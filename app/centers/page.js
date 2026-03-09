@@ -7,12 +7,12 @@ import Button from '../components/button/Button'
 const offlineCenters = [
   {
     id: 1,
-    name: "Skin Aura Elite - South Delhi",
-    location: "New Delhi",
+    name: "Fine Aura ",
+    location: "Bhopal",
     image: "https://images.unsplash.com/photo-1519494140281-89ac7d4d94d7?q=80&w=800&h=600&fit=crop",
     rating: 4.9,
     totalReviews: 856,
-    address: "B-12, Greater Kailash Part 1, Near M-Block Market, New Delhi - 110048",
+    address: "",
     phone: "+91 98765 43210",
     additionalInfo: "Our flagship center with advanced dermatology wing and private consultation suites.",
     mapLink: "https://goo.gl/maps/example1",
