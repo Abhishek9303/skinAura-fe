@@ -6,7 +6,7 @@ const nextConfig = {
   env: {
     BACKEND_URL: `https://skin-aura-be.vercel.app/`,
     // BACKEND_URL: `http://localhost:8000/`,
-    NEXT_PUBLIC_RAZORPAY_KEY_ID: `rzp_live_SFkndfQfuCHhAb`,
+    NEXT_PUBLIC_RAZORPAY_KEY_ID: `rzp_live_SPzIBV1aNmQH6C`,
   },
   webpack: (config, { isServer }) => {
     if (!isServer) {
