@@ -172,7 +172,7 @@ const RazorpayCheckout = ({
         amount: amountToCharge * 100, 
         currency: orderData.data.currency || "INR",
         name: `${productData.name}`,
-        description: `${productData.description}`,
+        description: `${cartId}`,
         order_id: razorpayOrderId,
         handler: function (response) {
           const { razorpay_payment_id, razorpay_order_id, razorpay_signature } =
