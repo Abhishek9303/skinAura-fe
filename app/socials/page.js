@@ -52,7 +52,7 @@ export default function Home() {
 
         {/* Footer */}
         <p className="text-center text-xs text-gray-400 mt-6">
-          © 2026 Your Name
+          © 2026 Fine Aura
         </p>
 
       </div>
