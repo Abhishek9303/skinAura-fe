@@ -10,7 +10,7 @@ export default function Home() {
   },
   {
     name: "WhatsApp",
-    url: "https://wa.me/8770348810",
+    url: "https://wa.me/+918770348810",
   },
   {
     name: "Website",
