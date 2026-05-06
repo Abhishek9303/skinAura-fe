@@ -2,11 +2,11 @@ export default function Home() {
   const links = [
   {
     name: "Personal Instagram",
-    url: "https://instagram.com/yourpersonal",
+    url: "https://www.instagram.com/dr_shahid__",
   },
   {
     name: "Business Instagram",
-    url: "https://instagram.com/yourbusiness",
+    url: "https://www.instagram.com/skin_aura_",
   },
   {
     name: "WhatsApp",
@@ -14,7 +14,7 @@ export default function Home() {
   },
   {
     name: "Website",
-    url: "https://yourwebsite.com",
+    url: "https://www.fine-aura.com/",
   },
 ];
 
